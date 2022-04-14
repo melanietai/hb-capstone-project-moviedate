@@ -15,7 +15,7 @@ class User(db.Model):
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
 
-    # events = a list of Event objects
+    # invitations = a list of Invitation objects
 
     def __repr__(self):
         return f"<User user_id={self.id} email={self.email}>"
@@ -35,6 +35,7 @@ class Event(db.Model):
     def __repr__(self):
         return f"<Event event_id={self.id} title={self.title} movie={self.movie}>"
 
+    # invitations = a list of Invitation objects
 
 class Invitation(db.Model):
     """An invitation."""
@@ -53,7 +54,7 @@ class Invitation(db.Model):
         return f"<Invitation_id={self.id} email={self.email}>"
 
 
-def connect_to_db(flask_app, db_uri="postgresql:///ratings", echo=True):
+def connect_to_db(flask_app, db_uri="postgresql:///moviedate", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

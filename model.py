@@ -1,4 +1,12 @@
-"""Models for movie date app."""
+"""Models for movie date app.
+
+Relationships:
+A user can be many event participants.
+An event can have many event participants.
+An event participant wil be associated with one event and one user (
+    if the event participant signed up as an user.)
+
+"""
 
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
@@ -11,15 +19,14 @@ class User(db.Model):
 
     __tablename__ = "users"
 
-    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
 
-    # invitations = a list of Invitation objects
-    # events = a list of Event objects
+    # participants = a list of Participant objects
 
     def __repr__(self):
-        return f"<User user_id={self.id} email={self.email}>"
+        return f"<User user_id={self.user_id} email={self.email}>"
 
 
 class Event(db.Model):
@@ -27,35 +34,36 @@ class Event(db.Model):
 
     __tablename__ = "events"
 
-    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    event_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     title = db.Column(db.String)
-    date_and_time = db.Column(db.DateTime, nullable=False)
+    event_at = db.Column(db.DateTime, nullable=False)
     movie = db.Column(db.String, nullable=False)
     key = db.Column(db.String, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-
-    user = db.relationship("User", backref="events")
+    
+    # participants = a list of Participant objects
 
     def __repr__(self):
-        return f"<Event event_id={self.id} title={self.title} movie={self.movie}>"
+        return f"<Event event_id={self.event_id} title={self.title} movie={self.movie}>"
 
-    # invitations = a list of Invitation objects
+    
 
-class Invitation(db.Model):
-    """An invitation."""
+class Participant(db.Model):
+    """Each event participant."""
 
-    __tablename__ = "invitations"
+    __tablename__ = "participants"
 
-    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    participant_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     email = db.Column(db.String, nullable=False)
-    event_id = db.Column(db.Integer, db.ForeignKey("events.id"))
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    event_id = db.Column(db.Integer, db.ForeignKey("events.event_id"))
+    invitee_user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    host_user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
 
-    event = db.relationship("Event", backref="invitations")
-    user = db.relationship("User", backref="invitations")
+    event = db.relationship("Event", backref="participants")
+    invitee_user = db.relationship("User", backref="participants")
+    host_user = db.relationship("User", backref="participants")
 
     def __repr__(self):
-        return f"<Invitation_id={self.id} email={self.email}>"
+        return f"<Invitation_id={self.participant_id} email={self.email}>"
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///moviedate", echo=True):

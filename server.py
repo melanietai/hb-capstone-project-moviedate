@@ -11,6 +11,7 @@ from flask import (Flask, render_template, redirect, flash, jsonify, request, se
 import jinja2
 from model import connect_to_db, db
 import crud
+from sqlalchemy import update
 
 import sys
 import os
@@ -18,6 +19,7 @@ import os
 
 app = Flask(__name__)
 
+# Store secret key in secrets.sh file if you deploy your application
 # A secret key is needed to use Flask sessioning features
 app.secret_key = 'dev'
 
@@ -51,7 +53,9 @@ def register_user():
         flash("Cannot create an account with that email. Try again.")
     else:
         user = crud.create_user(email, password)
-        db.session.add(user)
+        # update invitee_user_id to user.id to allow association of events
+        stmt = update(crud.Participant).where(crud.Participant.email==email).values(invitee_user_id=user.id)
+        db.session.add([user, stmt])
         db.session.commit()
         flash('Account created! Please log in.')
 
@@ -74,6 +78,15 @@ def process_login():
         flash(f'Welcome back, {user.email}!')
 
     return render_template('events.html')
+
+
+@app.route("/logout")
+def process_logout():
+    """Log user out."""
+
+    del session["logged_in_customer_email"]
+    flash("Logged out.")
+    return redirect("/melons")
 
 
 @app.route('/events')

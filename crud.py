@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, Event, Invitation, connect_to_db
+from model import db, User, Event, Participant, connect_to_db
 from datetime import datetime
 import secrets
 

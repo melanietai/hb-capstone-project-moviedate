@@ -16,6 +16,7 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
 
     # invitations = a list of Invitation objects
+    # events = a list of Event objects
 
     def __repr__(self):
         return f"<User user_id={self.id} email={self.email}>"
@@ -31,6 +32,9 @@ class Event(db.Model):
     date_and_time = db.Column(db.DateTime, nullable=False)
     movie = db.Column(db.String, nullable=False)
     key = db.Column(db.String, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
+    user = db.relationship("User", backref="events")
 
     def __repr__(self):
         return f"<Event event_id={self.id} title={self.title} movie={self.movie}>"

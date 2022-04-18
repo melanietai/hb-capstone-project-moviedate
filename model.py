@@ -43,7 +43,7 @@ class Event(db.Model):
     # participants = a list of Participant objects
 
     def __repr__(self):
-        return f"<Event event_id={self.event_id} title={self.title} movie={self.movie}>"
+        return f"<Event event_id={self.event_id} movie={self.movie} event_at={self.event_at}>"
 
     
 
@@ -54,16 +54,17 @@ class Participant(db.Model):
 
     participant_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     email = db.Column(db.String, nullable=False)
+    is_host = db.Column(db.Boolean, default=False)
+    RSVP = db.Column(db.Boolean, default=False)
     event_id = db.Column(db.Integer, db.ForeignKey("events.event_id"))
-    invitee_user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    host_user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
 
     event = db.relationship("Event", backref="participants")
-    invitee_user = db.relationship("User", backref="participants")
-    host_user = db.relationship("User", backref="participants")
+    user = db.relationship("User", backref="participants")
+    
 
     def __repr__(self):
-        return f"<Invitation_id={self.participant_id} email={self.email}>"
+        return f"<Participant participant_id={self.participant_id} email={self.email}>"
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///moviedate", echo=True):

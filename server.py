@@ -53,9 +53,12 @@ def register_user():
         flash("Cannot create an account with that email. Try again.")
     else:
         user = crud.create_user(email, password)
-        # update invitee_user_id to user.id to allow association of events
-        stmt = update(crud.Participant).where(crud.Participant.email==email).values(invitee_user_id=user.id)
-        db.session.add([user, stmt])
+        db.session.add(user)
+
+        # update user_id in Participant table to allow association of events
+        stmt = update(crud.Participant).where(crud.Participant.email==email).values(user_id=user.user_id)
+        db.session.execute(stmt)
+
         db.session.commit()
         flash('Account created! Please log in.')
 
@@ -74,39 +77,39 @@ def process_login():
         flash('The email or password you entered was incorrect.')
     else:
         # Log in user by storing the user's email in session
-        session['user_email'] = user.email
+        session['current_user_email'] = user.email
         flash(f'Welcome back, {user.email}!')
 
-    return render_template('events.html')
+        events = crud.get_events_by_user_id(user.user_id)
+
+    return render_template('events.html', events=events)
 
 
-@app.route("/logout")
+@app.route('/logout')
 def process_logout():
     """Log user out."""
 
-    del session["logged_in_customer_email"]
-    flash("Logged out.")
-    return redirect("/melons")
+    del session['user_email']
+    flash('Logged out.')
+    return redirect('/')
 
 
 @app.route('/events')
-def show_invitation(key):
+def show_event():
     """Show details on a particular invitation."""
 
     email = request.args.get('email')
     key = request.args.get('key')
 
-    invitation = crud.get_invitation_by_email(email)
-
+    event = crud.get_event_by_email_and_key(email=email, key=key)
    
-    if invitation.event.key == key:
+    if event:
         flash('Redirecting you to your event page.')
-        return render_template('event_details.html', event = {invitation.event})
+        return render_template('event_details.html', event = {event.event})
     
     else:
         flash('Your email and invitation key does not match')
         redirect ('/')
-
 
 
 

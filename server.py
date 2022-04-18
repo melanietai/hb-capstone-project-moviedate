@@ -54,6 +54,8 @@ def register_user():
     else:
         user = crud.create_user(email, password)
         db.session.add(user)
+        db.session.flush()
+        print(user.user_id)
 
         # update user_id in Participant table to allow association of events
         stmt = update(crud.Participant).where(crud.Participant.email==email).values(user_id=user.user_id)
@@ -94,9 +96,9 @@ def process_logout():
     return redirect('/')
 
 
-@app.route('/events')
-def show_event():
-    """Show details on a particular invitation."""
+@app.route('/invitation')
+def show_invitation():
+    """Show details on an event by an invitation."""
 
     email = request.args.get('email')
     key = request.args.get('key')
@@ -105,11 +107,24 @@ def show_event():
    
     if event:
         flash('Redirecting you to your event page.')
-        return render_template('event_details.html', event = {event.event})
+        return render_template('event_details.html', event = event)
     
     else:
         flash('Your email and invitation key does not match')
         redirect ('/')
+
+
+@app.route('/events/<event_id>')
+def show_event(event_id):
+    """Show details on a participant event"""
+    
+    return render_template("event_details.html", event_id=event_id)
+
+
+@app.route('/create-event')
+def create_event():
+
+    return render_template("create_event.html")
 
 
 

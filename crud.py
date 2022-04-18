@@ -73,6 +73,7 @@ def get_events_by_user_id(user_id):
         .filter(Participant.user_id == user_id)
         .all()
     )
+    print(events)
 
     return events
 

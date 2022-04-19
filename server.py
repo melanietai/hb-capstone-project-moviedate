@@ -11,7 +11,6 @@ from flask import (Flask, render_template, redirect, flash, jsonify, request, se
 import jinja2
 from model import connect_to_db, db
 import crud
-from sqlalchemy import update
 
 import sys
 import os
@@ -53,15 +52,7 @@ def register_user():
         flash("Cannot create an account with that email. Try again.")
     else:
         user = crud.create_user(email, password)
-        db.session.add(user)
-        db.session.flush()
-        print(user.user_id)
-
-        # update user_id in Participant table to allow association of events
-        stmt = update(crud.Participant).where(crud.Participant.email==email).values(user_id=user.user_id)
-        db.session.execute(stmt)
-
-        db.session.commit()
+        
         flash('Account created! Please log in.')
 
     return redirect("/")

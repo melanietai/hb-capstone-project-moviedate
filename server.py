@@ -4,13 +4,13 @@ Provides web interface for creating events, searching movies,
 sending out RSVPs to friends, adding new events
 to events page, and voting for movies.
 
-Author: Melanie Tai.
 """
 
 from flask import (Flask, render_template, redirect, flash, jsonify, request, session)
 import jinja2
 from model import connect_to_db, db
 import crud
+from datetime import datetime
 
 import sys
 import os
@@ -36,6 +36,11 @@ app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = True
 @app.route('/')
 def index():
     """Return homepage."""
+    if session:
+        
+        events = crud.get_events_by_user_id(session['current_user_id'])
+
+        return render_template('events.html', events=events)
 
     return render_template('homepage.html')
 
@@ -71,11 +76,9 @@ def process_login():
     else:
         # Log in user by storing the user's email in session
         session['current_user_email'] = user.email
+        session['current_user_id'] = user.user_id
         flash(f'Welcome back, {user.email}!')
-
-        events = crud.get_events_by_user_id(user.user_id)
-
-    return render_template('events.html', events=events)
+    return redirect("/")
 
 
 @app.route('/logout')
@@ -98,24 +101,42 @@ def show_invitation():
    
     if event:
         flash('Redirecting you to your event page.')
-        return render_template('event_details.html', event = event)
+        return render_template('event_details.html', display_event=event)
     
     else:
         flash('Your email and invitation key does not match')
-        redirect ('/')
+        return redirect ('/')
 
 
 @app.route('/events/<event_id>')
 def show_event(event_id):
     """Show details on a participant event"""
+
+    event = crud.get_event_by_event_id(event_id)
     
-    return render_template("event_details.html", event_id=event_id)
+    return render_template("event_details.html", display_event=event)
 
 
-@app.route('/create-event')
-def create_event():
+@app.route('/events/new-event')
+def new_event():
 
     return render_template("create_event.html")
+
+@app.route('/events/create-event', methods=['POST'])
+def create_event():
+
+    title = request.form.get('title')
+    date = request.form.get('date')
+    time = request.form.get('time')
+    # movie = 
+
+    print(date)
+    print(time)
+    datetime_object = datetime.strptime(f'{date} {time}', '%Y-%m-%d %H:%M')
+    
+    crud.create_event_with_emails(event_at=datetime_object, title=title)
+
+    return redirect ("/")
 
 
 

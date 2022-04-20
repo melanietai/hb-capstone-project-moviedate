@@ -2,8 +2,27 @@
 {% block title %}Create Event{% endblock %}
 
 {% block body %}
+  <p>Please enter event details below and search for up to 5 movies to include in your event.</p>
+  <p>Once your invitation is sent, you and your friends can vote for the favorite movie to watch together.</p>
+  <div>
+    <!-- <section id="-img">
+      <img src="/static/images/.png" />
+    </section> -->
 
+    <section class="event-details">
+    <form action="/events/create-event" method="POST">
+      <label for="event-title">Event Title</label>
+      <input type="text" name="title" id="event-title" required>
+      <label for="event-date">Select a date:</label>
+      <input type="date" name="date" id="event-date" required>
+      <label for="event-time">Select a time:</label>
+      <input type="time" name="time" id="event-time" required>
+      <button type="submit">Submit</button>
+    </form>
+    </section>
+    <section class="search-movies"></section>
+    <section class="invitation-emails"></section>
+    <section id="invitation-sent"></section>
 
-
-
+  </div>
 {% endblock %}

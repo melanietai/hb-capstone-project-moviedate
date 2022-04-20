@@ -4,12 +4,23 @@ from model import db, User, Event, Participant, connect_to_db
 from flask import session
 from datetime import datetime
 import secrets
+from sqlalchemy import update
 
 
 def create_user(email, password):
     """Create and return a new user."""
 
-    return User(email=email, password=password)
+    user = User(email=email, password=password)
+    db.session.add(user)
+    db.session.flush()
+
+    # update user_id in Participant table to allow association of events
+    stmt = update(Participant).where(Participant.email==email).values(user_id=user.user_id)
+    db.session.execute(stmt)
+
+    db.session.commit()
+
+    return user
 
 
 def get_users():
@@ -30,12 +41,10 @@ def get_user_by_email(email):
     return User.query.filter(User.email == email).first()
 
 
-def create_event(movie, event_at=datetime.now(), title=""):
+def create_event(event_at, title, movie=''):
     """Create and return a new event"""
 
     key = secrets.token_urlsafe(8)
-
-    # get user_id from session
 
     return Event(title=title, event_at=event_at, movie=movie, key=key)
 
@@ -45,8 +54,10 @@ def create_participant(email, is_host, RSVP, event_id, user_id):
     return Participant(email=email, is_host=is_host, RSVP=RSVP, event_id=event_id, user_id=user_id)
 
 
-def create_event_with_emails(movie, event_at=datetime.now(), title="", emails=[]):
-    event = create_event(movie,event_at=event_at, title=title)
+def create_event_with_emails(event_at, title, movie='', emails=[]):
+    event = create_event(event_at=event_at, title=title, movie=movie)
+    db.session.add(event)
+    db.session.flush()
     user_email = session['current_user_email']
     user = get_user_by_email(user_email)
     host = create_participant(email=user_email, is_host=True, RSVP=True, event_id=event.event_id, user_id=user.user_id)
@@ -73,10 +84,12 @@ def get_events_by_user_id(user_id):
         .filter(Participant.user_id == user_id)
         .all()
     )
-    print(events)
 
     return events
 
+def get_event_by_event_id(event_id):
+
+    return Event.query.filter(Event.event_id == event_id).first()
 
 def get_event_by_email_and_key(email, key):
     event = (

@@ -2,8 +2,19 @@
 {% block title %}Event Details{% endblock %}
 
 {% block body %}
+<div class="event-details">
+  <h2>Event Details</h2>
 
+  <ul>
+    <li>Event Title: {{ display_event.title}} </li>
+    <li>Event Date and Time: {{display_event.event_at}} </li>
+    <li>Movie Showing: {{display_event.movie}} </li>
+  </ul>
+</div>
 
+<div class="movie-details">
+  <h2>Movie Details</h2>
 
+</div>
 
 {% endblock %}

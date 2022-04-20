@@ -11,8 +11,8 @@ import jinja2
 from model import connect_to_db, db
 import crud
 from datetime import datetime
-
-import sys
+import requests
+import json
 import os
 
 
@@ -138,9 +138,22 @@ def create_event():
 
     return redirect ("/")
 
+@app.route("/api/search-movies", methods=["POST"])
+def get_search_result():
+    """Get search results."""
+    print('test search')
+    movie_keyword = request.json.get("keyword")
+    
+    payload = {'query': {movie_keyword},
+               'api_key': os.environ['API_KEY']}
 
+    res = requests.get('https://api.themoviedb.org/3/search/movie', params=payload)
 
+    movies = res.json()
+    print(res.json())
 
+    # return a list of movie json objects
+    return jsonify(movies["results"])
 
 
 

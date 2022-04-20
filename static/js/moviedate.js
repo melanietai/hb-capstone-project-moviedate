@@ -16,21 +16,24 @@ document.querySelector('#movie-keyword').addEventListener('submit', evt => {
     .then(movies => {
       for (const movie of movies) {
         const movieInfoContent = `
-        <ul class="movie-info">
-          <li>Movie adult: ${movie.adult}</li>
-          <li>Movie genre_ids: ${movie.genre_ids}</li>
-          <li>Movie id: ${movie.genre_id}</li>
-          <li>Movie language: ${movie.original_language}</li>
-          <li>Movie title: ${movie.original_title}</li>
-          <li>Movie overview: ${movie.overview}</li>
-          <li>Movie popularity: ${movie.popularity}</li>
-          <li>Movie release date: ${movie.release_date}</li>
-          <li>Movie vote average: ${movie.vote_average}</li>
-          <li><img src="https://image.tmdb.org/t/p/original${movie.poster_path}" /></li>
-        </ul>
+        <img src="https://image.tmdb.org/t/p/original${movie.poster_path}" alt="poster" width="100"/><br>
+        Movie Title: ${movie.original_title}
+        <details>
+          <summary>More details:</summary>
+          <p>Popularity: ${movie.popularity}</p>
+          <p>Release date: ${movie.release_date}</p>
+          <p>Overview: ${movie.overview}</p>
+        </details>
+        <button
+        <br><br>
         `;
         console.log(movieInfoContent)
       document.querySelector('#movie-results').insertAdjacentHTML('afterbegin', movieInfoContent);
       }
     });
 });
+
+        // <ul class="movie-info">
+        //   <img src="https://image.tmdb.org/t/p/original${movie.poster_path}" alt="poster" width="100"/>
+        //   <a href="#" id="${movie.id}" data-json="${movie.id}">${movie.original_title} </a>
+        // </ul>

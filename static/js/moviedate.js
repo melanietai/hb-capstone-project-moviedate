@@ -1,6 +1,15 @@
+const checkMoviesCount = () => {
+  const len = document.querySelectorAll(".movie-list-item").length;
+  const buttons = document.querySelectorAll(".add-movie-btn");
+  console.log(`count: ${len}`)
+  for (const button of buttons) {
+    button.disabled = (len >= 5);
+  }
+}
+
 document.querySelector('#movie-keyword').addEventListener('submit', evt => {
   evt.preventDefault();
-  
+
   const formInput = {
     keyword: document.querySelector('#keyword').value
   };
@@ -24,37 +33,36 @@ document.querySelector('#movie-keyword').addEventListener('submit', evt => {
           <p>Release date: ${movie.release_date}</p>
           <p>Overview: ${movie.overview}</p>
         </details>
-        <form class="add-movie">
+        <form id="add-movie-${movie.id}">
           <input type="hidden" class="movie-name" value="${movie.original_title}">
-          <button type="submit">Add movie to RSVP</button>
+          <button type="submit" class="add-movie-btn">Add movie to RSVP</button>
         </form>
         <br><br>
         `;
-        console.log(movieInfoContent)
         // we should be able to do this without another query
-      document.querySelector('#movie-results').insertAdjacentHTML('afterbegin', movieInfoContent);
-      }
-      const moviesToAdd = document.querySelectorAll('.add-movie');
-        for (const movie of moviesToAdd) {
-          movie.addEventListener('submit', evt => {
+        document.querySelector('#movie-results').insertAdjacentHTML('afterbegin', movieInfoContent);
+        const addMovieForm = document.querySelector(`#add-movie-${movie.id}`);
+        addMovieForm.addEventListener('submit', evt => {
           evt.preventDefault();
-          
+
           movieName = evt.target.querySelector('input').value;
-          console.log(evt.target);
-          document.querySelector('#movies-added').insertAdjacentHTML('beforeend', 
-          `<li id=${movieName}>${movieName}</li>
-          <button id="remove-buttons">Remove movie</button>
-          </form>
+          document.querySelector('#movies-added').insertAdjacentHTML('beforeend',
+            `<li class="movie-list-item" id="movie-${movie.id}">
+            ${movieName}
+            <button id="remove-movie-${movie.id}" class="remove-movie-btn" type="button">Remove movie</button>
+            </li>
           `);
+          checkMoviesCount();
+          const removeButton = document.querySelector(`#remove-movie-${movie.id}`);
+          removeButton.addEventListener('click', evt => {
+            evt.preventDefault();
+            movieListItem = document.querySelector(`#movie-${movie.id}`);
+            movieListItem.remove();
+            checkMoviesCount();
+          });
+
         })
       }
-      const removeButtons = document.querySelectorAll('#remove-buttons');
-        for (const button of removeButtons) {
-          button.addEvent.Listener('click', evt => {
-            evt.preventDefault();
-            evt.target.remove();
-          });
-        }
     });
 });
 

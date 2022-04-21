@@ -20,7 +20,7 @@
         <label for="event-time">Select a time:</label>
         <input type="time" name="time" id="event-time" required>
         <br>
-        <p>Input email(s) that you would like to send invitation to:</p>
+        <p>Input email(s) that you would like to RSVP:</p>
         <label for="email-1">Friend 1:</label>
         <input type="email" name="friend-1" id="email-1" placeholder="Type email..."><br>
         <label for="email-2">Friend 2:</label>
@@ -33,8 +33,7 @@
         <input type="email" name="friend-5" id="email-5" placeholder="Type email..."><br>
         <br>
         <section class="movies-in-invitation">
-        <oi>Movies added:</oi>
-          <li></li>
+        <oi id="movies-added">Movies added:</oi>
         </section>
         <br>
         <button type="submit">Create Event</button>
@@ -50,4 +49,6 @@
     <section id="movie-results"></section>
   </div>
   <script src="/static/js/moviedate.js"></script>
+
+  <!-- document.createElement -->
 {% endblock %}

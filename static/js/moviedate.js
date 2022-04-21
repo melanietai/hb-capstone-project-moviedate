@@ -49,6 +49,7 @@ document.querySelector('#movie-keyword').addEventListener('submit', evt => {
           document.querySelector('#movies-added').insertAdjacentHTML('beforeend',
             `<li class="movie-list-item" id="movie-${movie.id}">
             ${movieName}
+            <input type="hidden" name="movies-added" value="${movie.id}">
             <button id="remove-movie-${movie.id}" class="remove-movie-btn" type="button">Remove movie</button>
             </li>
           `);
@@ -62,7 +63,7 @@ document.querySelector('#movie-keyword').addEventListener('submit', evt => {
           removeButton.addEventListener('click', evt => {
             movieListItem = document.querySelector(`#movie-${movie.id}`);
             movieListItem.remove();
-            // restall "Add movie to RSVP" button after movie is removed from movie list
+            // restore "Add movie to RSVP" button after movie is removed from movie list
             buttonForm.insertAdjacentHTML('beforeend', `<input type="hidden" class="movie-name" value="${movie.original_title}">
             <button type="submit" class="add-movie-btn">Add movie to RSVP</button>`)
             checkMoviesCount();

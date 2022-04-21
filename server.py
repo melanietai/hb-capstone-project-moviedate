@@ -129,8 +129,8 @@ def create_event():
     event_title = request.form.get('title')
     date = request.form.get('date')
     time = request.form.get('time')
-    # emails = []
-    # movie_api_ids = []
+    movie_api_ids = request.form.getlist('movies-added')
+    emails = request.form.getlist('friends')
 
     datetime_object = datetime.strptime(f'{date} {time}', '%Y-%m-%d %H:%M')
     
@@ -147,7 +147,7 @@ def create_event():
 @app.route("/api/search-movies", methods=["POST"])
 def get_search_result():
     """Get search results."""
-    print('test search')
+    
     movie_keyword = request.json.get("keyword")
     
     payload = {'query': {movie_keyword},
@@ -156,7 +156,7 @@ def get_search_result():
     res = requests.get('https://api.themoviedb.org/3/search/movie', params=payload)
 
     movies = res.json()
-    print(res.json())
+    
 
     # return a list of movie json objects
     return jsonify(movies["results"])

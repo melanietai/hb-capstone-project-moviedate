@@ -36,9 +36,10 @@ app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = True
 @app.route('/')
 def index():
     """Return homepage."""
-    if session:
+    current_user_id= session.get('current_user_id')
+    if current_user_id:
         
-        events = crud.get_events_by_user_id(session['current_user_id'])
+        events = crud.get_events_by_user_id(current_user_id)
 
         return render_template('events.html', events=events)
 
@@ -141,7 +142,7 @@ def create_event():
         crud.create_movie(api_id=api_id, event_id=event_id)
 
     return redirect ("/")
-    
+
 
 @app.route("/api/search-movies", methods=["POST"])
 def get_search_result():

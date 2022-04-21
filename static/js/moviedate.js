@@ -52,12 +52,19 @@ document.querySelector('#movie-keyword').addEventListener('submit', evt => {
             <button id="remove-movie-${movie.id}" class="remove-movie-btn" type="button">Remove movie</button>
             </li>
           `);
+          // remove "Add movie to RSVP" button once movie is added to movie list
+          const buttonForm = document.querySelector(`#add-movie-${movie.id}`);
+          while (buttonForm.firstChild) {
+            buttonForm.firstChild.remove();
+          }
           checkMoviesCount();
           const removeButton = document.querySelector(`#remove-movie-${movie.id}`);
           removeButton.addEventListener('click', evt => {
-            evt.preventDefault();
             movieListItem = document.querySelector(`#movie-${movie.id}`);
             movieListItem.remove();
+            // restall "Add movie to RSVP" button after movie is removed from movie list
+            buttonForm.insertAdjacentHTML('beforeend', `<input type="hidden" class="movie-name" value="${movie.original_title}">
+            <button type="submit" class="add-movie-btn">Add movie to RSVP</button>`)
             checkMoviesCount();
           });
 

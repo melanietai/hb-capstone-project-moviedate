@@ -37,7 +37,6 @@ class Event(db.Model):
     event_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     title = db.Column(db.String)
     event_at = db.Column(db.DateTime, nullable=False)
-    # movie = db.Column(db.String, nullable=False)
     key = db.Column(db.String, nullable=False)
     
     # participants = a list of Participant objects

@@ -53,7 +53,6 @@ class Movie(db.Model):
     __tablename__ = "movies"
 
     movie_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    title = db.Column(db.String)
     api_id = db.Column(db.Integer)
     vote_count = db.Column(db.Integer)
     event_id = db.Column(db.Integer, db.ForeignKey("events.event_id"))

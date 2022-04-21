@@ -125,18 +125,23 @@ def new_event():
 @app.route('/events/create-event', methods=['POST'])
 def create_event():
 
-    title = request.form.get('title')
+    event_title = request.form.get('title')
     date = request.form.get('date')
     time = request.form.get('time')
-    # movie = 
+    # emails = []
+    # movie_api_ids = []
 
-    print(date)
-    print(time)
     datetime_object = datetime.strptime(f'{date} {time}', '%Y-%m-%d %H:%M')
     
-    crud.create_event_with_emails(event_at=datetime_object, title=title)
+    event = crud.create_event_with_emails(event_at=datetime_object, title=event_title, emails=emails)
+
+    event_id = event.event_id
+
+    for api_id in movie_api_ids:
+        crud.create_movie(api_id=api_id, event_id=event_id)
 
     return redirect ("/")
+    
 
 @app.route("/api/search-movies", methods=["POST"])
 def get_search_result():

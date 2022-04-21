@@ -37,13 +37,32 @@ class Event(db.Model):
     event_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     title = db.Column(db.String)
     event_at = db.Column(db.DateTime, nullable=False)
-    movie = db.Column(db.String, nullable=False)
+    # movie = db.Column(db.String, nullable=False)
     key = db.Column(db.String, nullable=False)
     
     # participants = a list of Participant objects
+    # movies = a list of Movie objects
 
     def __repr__(self):
         return f"<Event event_id={self.event_id} movie={self.movie} event_at={self.event_at}>"
+    
+
+class Movie(db.Model):
+    """A movie."""
+
+    __tablename__ = "movies"
+
+    movie_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    title = db.Column(db.String)
+    api_id = db.Column(db.Integer)
+    vote_count = db.Column(db.Integer)
+    event_id = db.Column(db.Integer, db.ForeignKey("events.event_id"))
+
+    event = db.relationship("Event", backref="movies")
+
+
+    def __repr__(self):
+        return f"<Movie movie_id={self.movie_id} title={self.title} vote_count={self.vote_count}>"
 
     
 

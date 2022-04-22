@@ -111,6 +111,7 @@ def show_invitation():
     event = crud.get_event_by_email_and_key(email=email, key=key)
    
     if event:
+        session['invitee_user_email'] = email
         flash('Redirecting you to your event page.')
         return render_template('event_details.html', display_event=event)
     

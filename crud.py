@@ -71,7 +71,7 @@ def create_event_with_emails(event_at, title, emails):
         else:
             user_id = None
 
-        invitee = create_participant(email, is_host=False, RSVP=False, event_id=event.event_id, user_id=user_id)
+        invitee = create_participant(email, is_host=False, RSVP=None, event_id=event.event_id, user_id=user_id)
         db.session.add(invitee)
     db.session.commit()
 

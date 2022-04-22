@@ -17,12 +17,15 @@
         {% endif %}
         <br>RSVP status: 
         {% if participant.RSVP is true %}
-          Attend
+          Attending
+        {% elif participant.RSVP is false %}
+          Not attending  
         {% else %}
           Not yet replied
+          {% if session['invitee_user_email'] is participant.email %}
+          Please RSVP<button>YES</button><button>NO</button>
+          {% endif %}
         {% endif %}
-        {% if session['invitee_user_email'] is participant.email %}
-
     </li>
     {% endfor %}
   </ol>

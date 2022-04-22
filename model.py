@@ -74,7 +74,7 @@ class Participant(db.Model):
     participant_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     email = db.Column(db.String, nullable=False)
     is_host = db.Column(db.Boolean, default=False)
-    RSVP = db.Column(db.Boolean, default=False)
+    RSVP = db.Column(db.Boolean) #default is null = not yet replied?
     event_id = db.Column(db.Integer, db.ForeignKey("events.event_id"))
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
 

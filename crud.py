@@ -7,14 +7,15 @@ import secrets
 from sqlalchemy import update
 
 
-def create_user(email, password):
+def create_user(fname, lname, email, password):
     """Create and return a new user."""
 
-    user = User(email=email, password=password)
+    user = User(fname=fname, lname=lname, email=email, password=password)
     db.session.add(user)
     db.session.flush()
 
-    # update user_id in Participant table to allow association of events
+    # check if new user has other events that user had been invited to in the past
+    # if yes, update user_id in Participant table to allow association of events
     stmt = update(Participant).where(Participant.email==email).values(user_id=user.user_id)
     db.session.execute(stmt)
 

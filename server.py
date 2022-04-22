@@ -51,6 +51,8 @@ def index():
 def register_user():
     """Create a new user."""
 
+    fname = request.form.get('fname')
+    lname = request.form.get('lname')
     email = request.form.get('email')
     password = request.form.get('password')
 
@@ -59,7 +61,7 @@ def register_user():
     if user:
         flash("Cannot create an account with that email. Try again.")
     else:
-        user = crud.create_user(email, password)
+        user = crud.create_user(fname, lname, email, password)
         
         flash('Account created! Please log in.')
 
@@ -80,7 +82,9 @@ def process_login():
         # Log in user by storing the user's email in session
         session['current_user_email'] = user.email
         session['current_user_id'] = user.user_id
-        flash(f'Welcome back, {user.email}!')
+        session['current_user_fname'] = user.fname
+        session['current_user_lname'] = user.lname
+        flash(f'Welcome back, {user.fname} {user.lname}!')
     return redirect("/")
 
 
@@ -161,7 +165,7 @@ def create_event():
     time = request.form.get('time')
     movie_api_ids = request.form.getlist('movies-added')
     emails = request.form.getlist('friends')
-    emails = [_ for _ in emails if _]
+    emails = [_ for _ in emails if _] #filter out blank emails in the list
 
     datetime_object = datetime.strptime(f'{date} {time}', '%Y-%m-%d %H:%M')
     

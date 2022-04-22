@@ -92,8 +92,12 @@ def process_login():
 def process_logout():
     """Log user out."""
 
-    del session['user_email']
-    flash('Logged out.')
+    flash(f"Successfuly logged out. Bye {session['current_user_fname']} {session['current_user_lname']}!")
+    del session['current_user_email']
+    del session['current_user_id']
+    del session['current_user_fname']
+    del session['current_user_lname']
+    
     return redirect('/')
 
 
@@ -120,8 +124,6 @@ def show_event(event_id):
     """Show details on a participant event"""
 
     event = crud.get_event_by_event_id(event_id)
-    event_date = event.event_at.date()
-    event_time = event.event_at.time()
 
     movies_data = []
 
@@ -149,7 +151,7 @@ def show_event(event_id):
             "vote": vote_count
         })
     
-    return render_template("event_details.html", display_event=event, movies_data=movies_data, event_date=event_date, event_time=event_time)
+    return render_template("event_details.html", display_event=event, movies_data=movies_data)
 
 
 @app.route('/events/new-event')

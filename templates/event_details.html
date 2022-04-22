@@ -4,13 +4,28 @@
 {% block body %}
 <div class="event-details">
   <h2>Event Details</h2>
-
   <ul>
     <li>Event name: {{ display_event.title}} </li>
-    <li>Event date: {{ event_date }} </li>
-    <li>Event time: {{ event_time }} </li>
-    
+    <li>Event date: {{ display_event.event_at.date() }} </li>
+    <li>Event time: {{ display_event.event_at.time() }} </li>
   </ul>
+  <strong>Participants and RSVP status</strong>
+  <ol>{% for participant in display_event.participants %}
+    <li>Participant email: {{ participant.email }}
+        {% if participant.is_host is true %}
+          (host)
+        {% endif %}
+        <br>RSVP status: 
+        {% if participant.RSVP is true %}
+          Attend
+        {% else %}
+          Not yet replied
+        {% endif %}
+        {% if session['invitee_user_email'] is participant.email %}
+
+    </li>
+    {% endfor %}
+  </ol>
 </div>
 
 <div class="movie-details">

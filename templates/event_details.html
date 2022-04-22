@@ -6,9 +6,9 @@
   <h2>Event Details</h2>
 
   <ul>
-    <li>Event Title: {{ display_event.title}} </li>
-    <li>Event Date: {{ event_date }} </li>
-    <li>Event Time: {{ event_time }} </li>
+    <li>Event name: {{ display_event.title}} </li>
+    <li>Event date: {{ event_date }} </li>
+    <li>Event time: {{ event_time }} </li>
     
   </ul>
 </div>
@@ -22,7 +22,7 @@
       <button type="button" class="vote-me" id="vote-{{ movie['id'] }}">Vote Me!</button>
     </form>
     <p>CURRENT NUMBER OF VOTES: {{ movie['vote'] }}</p>
-    <p>Movie Title: {{ movie['title'] }}</p>
+    <p>Movie title: {{ movie['title'] }}</p>
     <details id=${movie.id}>
       <summary>More details:</summary>
       <p>Genres: {{ movie['genres'] }}</p>

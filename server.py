@@ -14,6 +14,8 @@ from datetime import datetime
 import requests
 import json
 import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 
 app = Flask(__name__)
@@ -159,6 +161,7 @@ def create_event():
     time = request.form.get('time')
     movie_api_ids = request.form.getlist('movies-added')
     emails = request.form.getlist('friends')
+    emails = [_ for _ in emails if _]
 
     datetime_object = datetime.strptime(f'{date} {time}', '%Y-%m-%d %H:%M')
     
@@ -168,6 +171,31 @@ def create_event():
 
     for api_id in movie_api_ids:
         crud.create_movie(api_id=api_id, event_id=event_id)
+
+    for email in emails:
+        print(f'***************EMAIL: {email}')
+        
+        host_email = session['current_user_email']
+
+        message = Mail(
+        from_email='moviedatecapstone@gmail.com',
+        to_emails=email,
+        subject=f'Please RSVP: Movie Date on {event.event_at.date()} at {event.event_at.time()}',
+        html_content="""\
+          <html>
+            <head></head>
+            <body>
+              <p>{host_email} has invited you to join a movie date on {event_date} at {event_time}. 
+              Please click on the link {url} to RSVP and view event details with your email and Access Key {key}
+              </p>
+            </body>
+          </html>
+          """.format(event_date=event.event_at.date(), event_time=event.event_at.time(), host_email=host_email, url=request.url_root, key=event.key)
+        )
+
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+        print(response.status_code, response.body, response.headers)
 
     flash("RSVPs sent! Please click on individual link for each event to check event status.")
 

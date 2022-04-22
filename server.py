@@ -114,8 +114,36 @@ def show_event(event_id):
     """Show details on a participant event"""
 
     event = crud.get_event_by_event_id(event_id)
+    event_date = event.event_at.date()
+    event_time = event.event_at.time()
+
+    movies_data = []
+
+    api_ids = [movie.api_id for movie in event.movies]
+    vote_counts = [movie.vote_count for movie in event.movies]
+
+    for i, api_id in enumerate(api_ids):
+
+        payload = {'api_key': os.environ['API_KEY']}
+        vote_count = vote_counts[i]
+
+        res = requests.get(f'https://api.themoviedb.org/3/movie/{api_id}', params=payload)
+        movie = res.json()
+        print(movie)
+
+        movies_data.append({
+            "id": movie["id"],
+            "title": movie['original_title'],
+            "overview": movie['overview'],
+            "genres": [genre['name'] for genre in movie['genres']],
+            "poster": movie['poster_path'],
+            "release_date": movie['release_date'],
+            "runtime": movie['runtime'],
+            "popularity": movie['popularity'],
+            "vote": vote_count
+        })
     
-    return render_template("event_details.html", display_event=event)
+    return render_template("event_details.html", display_event=event, movies_data=movies_data, event_date=event_date, event_time=event_time)
 
 
 @app.route('/events/new-event')
@@ -141,6 +169,8 @@ def create_event():
     for api_id in movie_api_ids:
         crud.create_movie(api_id=api_id, event_id=event_id)
 
+    flash("RSVPs sent! Please click on individual link for each event to check event status.")
+
     return redirect ("/")
 
 
@@ -160,7 +190,6 @@ def get_search_result():
 
     # return a list of movie json objects
     return jsonify(movies["results"])
-
 
 
 

@@ -23,11 +23,11 @@
           Awaiting response
           {% endif %}
           {% if participant.email == session.get('invitee_user_email') %}
-          <br>Please RSVP: <button type="button" class="btn-rsvp-yes" value="{{participant.participant_id}}">YES</button>
-                           <button type="button" class="btn-rsvp-no" value="{{participant.participant_id}}">NO</button>
+          <br>Please RSVP: <button type="button" class="btn-rsvp-yes" value="{{ display_event.event_id }}">YES</button>
+                           <button type="button" class="btn-rsvp-no" value="{{ display_event.event_id }}">NO</button>
           {% elif participant.email == session.get('current_user_email') %}
-          <br>Please RSVP: <button type="button" class="btn-rsvp-yes" value={{participant.participant_id}}>YES</button>
-                           <button type="button" class="btn-rsvp-no" value="{{participant.participant_id">NO</button>
+          <br>Please RSVP: <button type="button" class="btn-rsvp-yes" value={{ display_event.event_id }}>YES</button>
+                           <button type="button" class="btn-rsvp-no" value="{{ display_event.event_id }}">NO</button>
           {% endif %}
         {% endif %}
     </li><br>

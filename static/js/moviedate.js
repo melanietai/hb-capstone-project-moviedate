@@ -81,7 +81,7 @@ document.querySelector('#btn-rsvp-yes').addEventListener('click', evt => {
     participantID: evt.target.value
   };
 
-  fetch('/api/update-rsvp', {
+  fetch('/api/update-rsvp-yes', {
     method: 'POST',
     body: JSON.stringify(btnValue),
     headers: {

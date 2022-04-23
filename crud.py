@@ -54,9 +54,9 @@ def create_participant(email, is_host, RSVP, event_id, user_id):
 
     return Participant(email=email, is_host=is_host, RSVP=RSVP, event_id=event_id, user_id=user_id)
 
-def get_participant_by_participant_id(participant_id):
+def get_participant_by_email_and_event_id(email, event_id):
 
-    return Participant.query.filter(Participant.participant_id == participant_id).first()
+    return Participant.query.filter(Participant.email == email, Participant.event_id == event_id).first()
 
 
 def create_event_with_emails(event_at, title, emails):

@@ -18,10 +18,13 @@
         {% else %}
           <br>RSVP status:
           {% if participant.RSVP == False %}
-          Not attending
+          <div class="rsvp-status" style.display="">Not attending</div>
+          {% elif participant.RSVP == True %}
+          <div class="rsvp-status" style.display="">Attending</div>
           {% elif participant.RSVP == None %}
-          Awaiting response
+          <div class="rsvp-status" style.display="">Awaiting response</div>
           {% endif %}
+          <div class="btn-rsvp" style.display="none"></div>
           {% if participant.email == session.get('invitee_user_email') %}
           <br>Please RSVP: <button type="button" class="btn-rsvp-yes" value="{{ display_event.event_id }}">YES</button>
                            <button type="button" class="btn-rsvp-no" value="{{ display_event.event_id }}">NO</button>

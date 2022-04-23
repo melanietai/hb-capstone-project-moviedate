@@ -75,25 +75,28 @@ document.querySelector('#movie-keyword').addEventListener('submit', evt => {
 });
 
 document.querySelector('#btn-rsvp-yes').addEventListener('click', evt => {
-  formValue = 
+  const eventId = evt.target.value; 
+  console.log(eventId)
   
-  const btnValue = {
-    participantID: evt.target.value
+  const body = {
+    rsvp: True 
   };
 
-  fetch('/api/update-rsvp-yes', {
+  fetch(`/api/events/${eventId}/rsvp`, {
     method: 'POST',
-    body: JSON.stringify(btnValue),
+    body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',
     },
   })
-    .then(response => response.json())
-    .then(rsvpResponse => {
-      for (const movie of movies) {
-    
-  }
-})
+    .then(response => response.text())
+    .then(rsvpUpdate => {
+      if (rsvpUpdate == 'success') {
+      document.querySelector('div.rsvp-status').style.display = 'none';
+      document.querySelector('div.btn-rsvp').innerHTML = 'Attending'
+      }
+  });
+});
 
 
 

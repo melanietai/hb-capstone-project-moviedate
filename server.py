@@ -16,6 +16,7 @@ import json
 import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+from sqlalchemy import update
 
 
 app = Flask(__name__)
@@ -211,11 +212,11 @@ def create_event():
     return redirect ("/")
 
 
-@app.route("/api/search-movies", methods=["POST"])
+@app.route('/api/search-movies', methods=['POST'])
 def get_search_result():
     """Get search results."""
     
-    movie_keyword = request.json.get("keyword")
+    movie_keyword = request.json.get('keyword')
     
     payload = {'query': {movie_keyword},
                'api_key': os.environ['API_KEY']}
@@ -227,6 +228,28 @@ def get_search_result():
 
     # return a list of movie json objects
     return jsonify(movies["results"])
+
+@app.route('/api/events/<event_id>/rsvp', methods=['POST'])
+def update_rsvp(event_id):
+    """Update rsvp response"""
+
+    res = request.json.get('rsvp')
+
+    if session.get('current_user_email'):
+        email = session.get('current_user_email')
+    else:
+        email = session.get('invitee_user_email')
+    
+    participant = crud.get_participant_by_email_and_event_id(email, event_id)
+
+    stmt = update(crud.Participant).where(crud.Participant.participant_id==participant.participant_id).values(RSVP=res)
+
+    db.session.execute(stmt)
+    db.session.commit()
+
+    return "success"
+
+
 
 
 

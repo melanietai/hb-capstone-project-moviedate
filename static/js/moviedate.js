@@ -74,7 +74,26 @@ document.querySelector('#movie-keyword').addEventListener('submit', evt => {
     });
 });
 
+document.querySelector('#btn-rsvp-yes').addEventListener('click', evt => {
+  formValue = 
+  
+  const btnValue = {
+    participantID: evt.target.value
+  };
 
+  fetch('/api/update-rsvp', {
+    method: 'POST',
+    body: JSON.stringify(btnValue),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(response => response.json())
+    .then(rsvpResponse => {
+      for (const movie of movies) {
+    
+  }
+})
 
 
 

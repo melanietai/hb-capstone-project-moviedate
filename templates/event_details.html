@@ -12,21 +12,23 @@
   <strong>Participants and RSVP status</strong>
   <ol>{% for participant in display_event.participants %}
     <li>Participant email: {{ participant.email }}
-        {% if participant.is_host is true %}
+        {% if participant.is_host == True %}
           (host)
-        {% endif %}
-        <br>RSVP status: 
-        {% if participant.RSVP is true %}
-          Attending
-        {% elif participant.RSVP is false %}
-          Not attending  
+          <br>RSVP status: Attending
         {% else %}
-          Not yet replied
-          {% if session['invitee_user_email'] is participant.email %}
-          Please RSVP<button>YES</button><button>NO</button>
+          <br>RSVP status:
+          {% if participant.RSVP == False %}
+          Not attending
+          {% elif participant.RSVP == None %}
+          Awaiting response
+          {% endif %}
+          {% if participant.email == session.get('invitee_user_email') %}
+          <br>Please RSVP: <button type="button" class="btn-RSVP">YES</button><button type="button" class="btn-RSVP">NO</button>
+          {% elif participant.email == session.get('current_user_email') %}
+          <br>Please RSVP: <button type="button" class="btn-RSVP">YES</button><button type="button" class="btn-RSVP">NO</button>
           {% endif %}
         {% endif %}
-    </li>
+    </li><br>
     {% endfor %}
   </ol>
 </div>
@@ -36,7 +38,7 @@
     {% for movie in movies_data %}
     <img src="https://image.tmdb.org/t/p/original{{ movie['poster'] }}" alt="poster" width="100"/><br>
     <form class="movie-votes">
-      <input type="hidden" name="vote-id" value="{{ movie.id }}">
+      <input type="hidden" name="vote-id" value="{{ movie['id'] }}">
       <button type="button" class="vote-me" id="vote-{{ movie['id'] }}">Vote Me!</button>
     </form>
     <p>CURRENT NUMBER OF VOTES: {{ movie['vote'] }}</p>
@@ -52,5 +54,4 @@
     <br><br>
     {% endfor %}
 </div>
-
 {% endblock %}

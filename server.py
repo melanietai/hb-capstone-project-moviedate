@@ -101,19 +101,21 @@ def process_logout():
     return redirect('/')
 
 
-@app.route('/invitation')
+@app.route('/invitation', methods=['POST'])
 def show_invitation():
     """Show details on an event by an invitation."""
 
-    email = request.args.get('email')
-    key = request.args.get('key')
+    email = request.form.get('email')
+    key = request.form.get('key')
 
     event = crud.get_event_by_email_and_key(email=email, key=key)
    
     if event:
         session['invitee_user_email'] = email
+        print(f"*****************{session['invitee_user_email']}*************")
         flash('Redirecting you to your event page.')
-        return render_template('event_details.html', display_event=event)
+        return redirect(f'/events/{event.event_id}')
+        # render_template('event_details.html', display_event=event)
     
     else:
         flash('Your email and invitation key does not match')

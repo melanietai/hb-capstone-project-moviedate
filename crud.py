@@ -123,6 +123,10 @@ def get_movies_by_event_id(event_id):
 
     return Movie.query.filter(Movie.event_id == event_id).all()
 
+def get_movie_by_movie_id(movie_id):
+
+    return Movie.query.filter(Movie.movie_id == movie_id).first()
+
 
 
 if __name__ == "__main__":

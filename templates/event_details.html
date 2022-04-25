@@ -9,13 +9,16 @@
     <li>Event date: {{ display_event.event_at.date() }} </li>
     <li>Event time: {{ display_event.event_at.time() }} </li>
   </ul>
-  <strong>Participants and RSVP status</strong>
+</div>
+
+<div class="rsvp-status">
+  <h2>RSVP status</h2>
   <ol>{% for participant in display_event.participants %}
     <li>Participant email: {{ participant.email }}
         {% if participant.is_host == True %}
           (host)
           <br>RSVP status: Attending
-        {% else %}
+        {% elif participant.email == session.get('current_user_email') or participant.email == session.get('invitee_user_email') %}
           <br>RSVP status:
           {% if participant.RSVP == False %}
           <div class="rsvp-status" style.display="">Not attending</div>
@@ -24,13 +27,17 @@
           {% elif participant.RSVP == None %}
           <div class="rsvp-status" style.display="">Awaiting response</div>
           {% endif %}
-          <div class="btn-rsvp" style.display="none"></div>
-          {% if participant.email == session.get('invitee_user_email') %}
-          <br>Please RSVP: <button type="button" class="btn-rsvp-yes" value="{{ display_event.event_id }}">YES</button>
-                           <button type="button" class="btn-rsvp-no" value="{{ display_event.event_id }}">NO</button>
-          {% elif participant.email == session.get('current_user_email') %}
+          <div id="rsvp-instant-update"></div>
           <br>Please RSVP: <button type="button" class="btn-rsvp-yes" value={{ display_event.event_id }}>YES</button>
                            <button type="button" class="btn-rsvp-no" value="{{ display_event.event_id }}">NO</button>
+        {% else %}
+          <br>RSVP status:
+          {% if participant.RSVP == False %}
+          <div>Not attending</div>
+          {% elif participant.RSVP == True %}
+          <div>Attending</div>
+          {% elif participant.RSVP == None %}
+          <div>Awaiting response</div>
           {% endif %}
         {% endif %}
     </li><br>
@@ -38,15 +45,25 @@
   </ol>
 </div>
 
+<div class="voting-status">
+  <h2>Voting Status</h2>
+  <p>Check out movie details below.</p>
+  <p>Vote for your favourite movie to watch together!</p>
+  {% for movie in movies_data %}
+  <ul>
+    <li>Movie title: {{ movie['title'] }}<br>Total number of votes: <span id="vote-{{ movie['id'] }}">{{ movie['vote'] }}</span></li>
+    <form class="movie-votes">
+      <input type="hidden" value="{{ movie['id'] }}">
+      <button type="button">Vote Me!</button>
+    </form>
+  </ul>
+  {% endfor %}
+</div>
+
 <div class="movie-details">
   <h2>Movie Details</h2>
     {% for movie in movies_data %}
     <img src="https://image.tmdb.org/t/p/original{{ movie['poster'] }}" alt="poster" width="100"/><br>
-    <form class="movie-votes">
-      <input type="hidden" name="vote-id" value="{{ movie['id'] }}">
-      <button type="button" class="vote-me" id="vote-{{ movie['id'] }}">Vote Me!</button>
-    </form>
-    <p>CURRENT NUMBER OF VOTES: {{ movie['vote'] }}</p>
     <p>Movie title: {{ movie['title'] }}</p>
     <details id=${movie.id}>
       <summary>More details:</summary>

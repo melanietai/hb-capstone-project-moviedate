@@ -78,32 +78,86 @@ if (movieKeyword) {
 }
 
 
-console.log('ha');
-console.log(document.querySelector('.btn-rsvp-yes'));
-document.querySelector('.btn-rsvp-yes').addEventListener('click', evt => {
-  const eventId = evt.target.value; 
-  console.log(eventId);
+
+const rsvpButtonYes = document.querySelector('.btn-rsvp-yes');
+
+if (rsvpButtonYes) {
+  rsvpButtonYes.addEventListener('click', evt => {
+    const eventId = evt.target.value; 
+    console.log(eventId);
+    
+    const body = {
+      rsvp: true 
+    };
   
-  const body = {
-    rsvp: true 
-  };
-
-  fetch(`/api/events/${eventId}/rsvp`, {
-    method: 'POST',
-    body: JSON.stringify(body),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then(response => response.text())
-    .then(rsvpUpdate => {
-      if (rsvpUpdate == 'success') {
-      document.querySelector('div.rsvp-status').style.display = 'none';
-      document.querySelector('div.btn-rsvp').innerHTML = 'Attending'
-      }
+    fetch(`/api/events/${eventId}/rsvp`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.text())
+      .then(rsvpUpdate => {
+        if (rsvpUpdate == 'success') {
+        document.querySelector('div.rsvp-status').style.display = 'none';
+        document.querySelector('#rsvp-instant-update').innerHTML = 'Attending';
+        }
+    });
   });
-});
+}
 
+const rsvpButtonNo = document.querySelector('.btn-rsvp-no');
 
+if (rsvpButtonNo) {
+  rsvpButtonNo.addEventListener('click', evt => {
+    const eventId = evt.target.value; 
+    console.log(eventId);
+    
+    const body = {
+      rsvp: false
+    };
+
+    fetch(`/api/events/${eventId}/rsvp`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.text())
+      .then(rsvpUpdate => {
+        if (rsvpUpdate == 'success') {
+        document.querySelector('div.rsvp-status').style.display = 'none';
+        document.querySelector('#rsvp-instant-update').innerHTML = 'Not Attending';
+        }
+    });
+  });
+}
+
+const voteBtn = document.querySelector('.movie-votes');
+
+if (voteBtn) {
+  voteBtn.addEventListener('submit', evt => {
+    const movieId = evt.target.querySelector('input').value;
+
+    const body = {
+      movieId: movieId
+    };
+
+    fetch('api/vote-update', {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => response.json())
+      .then(movie => {
+        documnet.querySelector(`#vote-${movieId}`).innerHTML = movie.vote_count
+      })
+
+  });
+}
 
 

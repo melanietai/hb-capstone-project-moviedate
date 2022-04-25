@@ -122,6 +122,7 @@ def create_movie(api_id, event_id, vote_count=0):
 def get_movies_by_event_id(event_id):
 
     return Movie.query.filter(Movie.event_id == event_id).all()
+    
 
 def get_movie_by_movie_id(movie_id):
 

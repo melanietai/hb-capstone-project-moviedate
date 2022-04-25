@@ -162,6 +162,7 @@ if (voteBtns) {
         .then(responseData => {
           console.log(document.querySelector(`#vote-${apiId}`))
           document.querySelector(`#vote-${apiId}`).innerHTML = responseData;
+          document.querySelector(`#btn-${apiId}`).disabled = true;
         });
     });
   }

@@ -55,7 +55,7 @@
     <form class="movie-votes">
       <input id="vote-api-id" type="hidden" value="{{ movie['api_id'] }}">
       <input id="vote-event-id" type="hidden" value="{{ event.event_id }}">
-      <button type="submit">Vote Me!</button>
+      <button id="btn-{{ movie['api_id'] }}" type="submit">Vote Me!</button>
     </form>
   </ul>
   {% endfor %}

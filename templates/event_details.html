@@ -5,15 +5,15 @@
 <div class="event-details">
   <h2>Event Details</h2>
   <ul>
-    <li>Event name: {{ display_event.title}} </li>
-    <li>Event date: {{ display_event.event_at.date() }} </li>
-    <li>Event time: {{ display_event.event_at.time() }} </li>
+    <li>Event name: {{ event.title}} </li>
+    <li>Event date: {{ event.event_at.date() }} </li>
+    <li>Event time: {{ event.event_at.time() }} </li>
   </ul>
 </div>
 
 <div class="rsvp-status">
-  <h2>RSVP status</h2>
-  <ol>{% for participant in display_event.participants %}
+  <h2>RSVP Status</h2>
+  <ol>{% for participant in event.participants %}
     <li>Participant email: {{ participant.email }}
         {% if participant.is_host == True %}
           (host)
@@ -21,15 +21,15 @@
         {% elif participant.email == session.get('current_user_email') or participant.email == session.get('invitee_user_email') %}
           <br>RSVP status:
           {% if participant.RSVP == False %}
-          <div class="rsvp-status" style.display="">Not attending</div>
+          <div class="ind-rsvp-status" style.display="">Not attending</div>
           {% elif participant.RSVP == True %}
-          <div class="rsvp-status" style.display="">Attending</div>
+          <div class="ind-rsvp-status" style.display="">Attending</div>
           {% elif participant.RSVP == None %}
-          <div class="rsvp-status" style.display="">Awaiting response</div>
+          <div class="ind-rsvp-status" style.display="">Awaiting response</div>
           {% endif %}
           <div id="rsvp-instant-update"></div>
-          <br>Please RSVP: <button type="button" class="btn-rsvp-yes" value={{ display_event.event_id }}>YES</button>
-                           <button type="button" class="btn-rsvp-no" value="{{ display_event.event_id }}">NO</button>
+          <br>Please RSVP: <button type="button" class="btn-rsvp-yes" value={{ event.event_id }}>YES</button>
+                           <button type="button" class="btn-rsvp-no" value="{{ event.event_id }}">NO</button>
         {% else %}
           <br>RSVP status:
           {% if participant.RSVP == False %}
@@ -51,10 +51,11 @@
   <p>Vote for your favourite movie to watch together!</p>
   {% for movie in movies_data %}
   <ul>
-    <li>Movie title: {{ movie['title'] }}<br>Total number of votes: <span id="vote-{{ movie['id'] }}">{{ movie['vote'] }}</span></li>
+    <li>Movie title: {{ movie['title'] }}<br>Total number of votes: <span id="vote-{{ movie['api_id'] }}">{{ movie['vote'] }}</span></li>
     <form class="movie-votes">
-      <input type="hidden" value="{{ movie['id'] }}">
-      <button type="button">Vote Me!</button>
+      <input id="vote-api-id" type="hidden" value="{{ movie['api_id'] }}">
+      <input id="vote-event-id" type="hidden" value="{{ event.event_id }}">
+      <button type="submit">Vote Me!</button>
     </form>
   </ul>
   {% endfor %}
@@ -65,7 +66,7 @@
     {% for movie in movies_data %}
     <img src="https://image.tmdb.org/t/p/original{{ movie['poster'] }}" alt="poster" width="100"/><br>
     <p>Movie title: {{ movie['title'] }}</p>
-    <details id=${movie.id}>
+    <details>
       <summary>More details:</summary>
       <p>Genres: {{ movie['genres'] }}</p>
       <p>Runtime: {{ movie['runtime'] }}</p>

@@ -122,11 +122,15 @@ def create_movie(api_id, event_id, vote_count=0):
 def get_movies_by_event_id(event_id):
 
     return Movie.query.filter(Movie.event_id == event_id).all()
-    
 
-def get_movie_by_movie_id(movie_id):
 
-    return Movie.query.filter(Movie.movie_id == movie_id).first()
+def get_movie_by_event_id_and_api_id(event_id, api_id):
+
+    return Movie.query.filter(Movie.event_id == event_id, Movie.api_id == api_id).first()
+
+def update_vote_for_movie(movie):
+
+    movie.vote_count += 1
 
 
 

@@ -13,7 +13,7 @@ if (movieKeyword) {
     evt.preventDefault();
   
     const formInput = {
-      keyword: document.querySelector('#keyword').value
+      keyword: document.querySelector('#keyword').value,
     };
   
     fetch('/api/search-movies', {
@@ -87,7 +87,7 @@ if (rsvpButtonYes) {
     console.log(eventId);
     
     const body = {
-      rsvp: true 
+      rsvp: true, 
     };
   
     fetch(`/api/events/${eventId}/rsvp`, {
@@ -100,7 +100,7 @@ if (rsvpButtonYes) {
       .then(response => response.text())
       .then(rsvpUpdate => {
         if (rsvpUpdate == 'success') {
-        document.querySelector('div.rsvp-status').style.display = 'none';
+        document.querySelector('div.ind-rsvp-status').style.display = 'none';
         document.querySelector('#rsvp-instant-update').innerHTML = 'Attending';
         }
     });
@@ -111,11 +111,10 @@ const rsvpButtonNo = document.querySelector('.btn-rsvp-no');
 
 if (rsvpButtonNo) {
   rsvpButtonNo.addEventListener('click', evt => {
-    const eventId = evt.target.value; 
-    console.log(eventId);
+    const eventId = evt.target.value;
     
     const body = {
-      rsvp: false
+      rsvp: false,
     };
 
     fetch(`/api/events/${eventId}/rsvp`, {
@@ -128,36 +127,44 @@ if (rsvpButtonNo) {
       .then(response => response.text())
       .then(rsvpUpdate => {
         if (rsvpUpdate == 'success') {
-        document.querySelector('div.rsvp-status').style.display = 'none';
+        document.querySelector('div.ind-rsvp-status').style.display = 'none';
         document.querySelector('#rsvp-instant-update').innerHTML = 'Not Attending';
         }
     });
   });
 }
 
-const voteBtn = document.querySelector('.movie-votes');
+const voteBtns = document.querySelectorAll('.movie-votes');
+console.log(`***************${voteBtns}`);
+if (voteBtns) {
+  for (const voteBtn of voteBtns) {
+    console.log(`***${voteBtn}`);
+    voteBtn.addEventListener('submit', evt => {
+      evt.preventDefault();
+      const apiId = evt.target.querySelector('input#vote-api-id').value;
+      const eventId = event.target.querySelector('input#vote-event-id').value;
+      console.log(`**${apiId}`);
+      console.log(`**${eventId}`)
 
-if (voteBtn) {
-  voteBtn.addEventListener('submit', evt => {
-    const movieId = evt.target.querySelector('input').value;
+      const body = {
+        apiId: apiId,
+        eventId: eventId,
+      };
 
-    const body = {
-      movieId: movieId
-    };
-
-    fetch('api/vote-update', {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-      .then(response => response.json())
-      .then(movie => {
-        documnet.querySelector(`#vote-${movieId}`).innerHTML = movie.vote_count
+      fetch('/api/vote-update', {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
-
-  });
+        .then(response => response.json())
+        .then(responseData => {
+          console.log(document.querySelector(`#vote-${apiId}`))
+          document.querySelector(`#vote-${apiId}`).innerHTML = responseData;
+        });
+    });
+  }
 }
 
 

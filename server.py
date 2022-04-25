@@ -144,7 +144,7 @@ def show_event(event_id):
         print(movie)
 
         movies_data.append({
-            "id": movie["id"],
+            "api_id": movie["id"],
             "title": movie['original_title'],
             "overview": movie['overview'],
             "genres": [genre['name'] for genre in movie['genres']],
@@ -152,10 +152,10 @@ def show_event(event_id):
             "release_date": movie['release_date'],
             "runtime": movie['runtime'],
             "popularity": movie['popularity'],
-            "vote": vote_count
+            "vote": vote_count,
         })
     
-    return render_template("event_details.html", display_event=event, movies_data=movies_data)
+    return render_template("event_details.html", event=event, movies_data=movies_data)
 
 
 @app.route('/events/new-event')
@@ -250,6 +250,29 @@ def update_rsvp(event_id):
     return "success"
 
 
+@app.route('/api/vote-update', methods=['POST'])
+def update_vote():
+    """Update voting count for a movie"""
+
+    api_id = request.json.get('apiId')
+    print('****************')
+    print(api_id)
+    print('****************')
+
+    event_id = request.json.get('eventId')
+
+    movie = crud.get_movie_by_event_id_and_api_id(event_id, api_id)
+    print('****************')
+    print(movie)
+    print('****************')
+    crud.update_vote_for_movie(movie)
+    # stmt = update(crud.Movie).where(crud.Movie.event_id == event_id, crud.Movie.api_id == api_id).values(vote_count =+ 1)
+
+    # db.session.execute(stmt)
+
+    db.session.commit()
+
+    return jsonify(movie.vote_count)
 
 
 

@@ -62,7 +62,7 @@ class Movie(db.Model):
 
 
     def __repr__(self):
-        return f"<Movie movie_id={self.movie_id} title={self.title} vote_count={self.vote_count}>"
+        return f"<Movie movie_id={self.movie_id} api_id={self.api_id} vote_count={self.vote_count}>"
 
     
 

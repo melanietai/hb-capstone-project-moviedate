@@ -102,6 +102,8 @@ if (rsvpButtonYes) {
         if (rsvpUpdate == 'success') {
         document.querySelector('div.ind-rsvp-status').style.display = 'none';
         document.querySelector('#rsvp-instant-update').innerHTML = 'Attending';
+        rsvpButtonYes.disabled = true;
+        document.querySelector('.btn-rsvp-no').disabled = true;
         }
     });
   });
@@ -128,7 +130,9 @@ if (rsvpButtonNo) {
       .then(rsvpUpdate => {
         if (rsvpUpdate == 'success') {
         document.querySelector('div.ind-rsvp-status').style.display = 'none';
-        document.querySelector('#rsvp-instant-update').innerHTML = 'Not Attending';
+        document.querySelector('#rsvp-instant-update').innerHTML = 'Not attending';
+        rsvpButtonNo.disabled = true;
+        document.querySelector('.btn-rsvp-yes').disabled = true;
         }
     });
   });

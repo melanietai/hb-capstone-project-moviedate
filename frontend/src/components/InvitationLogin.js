@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ViewInvitation = () => {
+const InvitationLogin = () => {
   return (
-    <div className="view-invitation-wrapper">
+    <div className="invitation-login-wrapper">
       <hi>View event by invitation</hi>
       <form>
         <label>
@@ -21,7 +21,7 @@ const ViewInvitation = () => {
   )
 }
 
-export default ViewInvitation;
+export default InvitationLogin;
 
 
 

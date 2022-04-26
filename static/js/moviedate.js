@@ -1,3 +1,17 @@
+const addMovieBtn = document.querySelector('#add-friend');
+
+if (addMovieBtn) {
+  addMovieBtn.addEventListener('click', evt => {
+    const input = document.createElement("input");
+    input.type = "email";
+    input.name = "friends" 
+    input.placeholder = "Type email..."
+    document.querySelector('.emails').appendChild(input);
+    document.querySelector('.emails').insertAdjacentHTML('beforeend', '<br>')
+  });
+}
+
+
 const checkMoviesCount = () => {
   const len = document.querySelectorAll(".movie-list-item").length;
   const buttons = document.querySelectorAll(".add-movie-btn");

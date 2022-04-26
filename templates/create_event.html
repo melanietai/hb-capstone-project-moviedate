@@ -5,38 +5,30 @@
   <p>Please enter event details below and search for up to 5 movies to include in your event.</p>
   <p>Once your invitation is sent, you and your friends can vote for the favorite movie to watch together.</p>
   <div>
-    <!-- <section id="-img">
-      <img src="/static/images/.png" />
-    </section> -->
-
       <section class="event-details">
       <form action="/events/create-event" method="POST">
-        <label for="event-title">Event title</label>
-        <input type="text" name="title" id="event-title" required>
+        <div class="event-name-date-time">
+          <label for="event-title">Event name:</label>
+          <input type="text" name="title" id="event-title" required>
+          <br>
+          <label for="event-date">Select a date:</label>
+          <input type="date" name="date" id="event-date" required>
+          <br>
+          <label for="event-time">Select a time:</label>
+          <input type="time" name="time" id="event-time" required>
+          <br>
+        </div>
+        <div class="emails">
+          <p>Email friend(s) that you would like to RSVP:</p>
+          <input type="email" name="friends" id="friend" placeholder="Type email..."><br>
+        </div>
         <br>
-        <label for="event-date">Select a date:</label>
-        <input type="date" name="date" id="event-date" required>
+        <button type="button" id="add-friend">Add another friend</button>
         <br>
-        <label for="event-time">Select a time:</label>
-        <input type="time" name="time" id="event-time" required>
-        <br>
-        <p>Input email(s) that you would like to RSVP:</p>
-        <section class="emails">
-        <label for="email-1">Friend 1:</label>
-        <input type="email" name="friends" id="email-1" placeholder="Type email..."><br>
-        <label for="email-2">Friend 2:</label>
-        <input type="email" name="friends" id="email-2" placeholder="Type email..."><br>
-        <label for="email-3">Friend 3:</label>
-        <input type="email" name="friends" id="email-3" placeholder="Type email..."><br>
-        <label for="email-4">Friend 4:</label>
-        <input type="email" name="friends" id="email-4" placeholder="Type email..."><br>
-        <label for="email-5">Friend 5:</label>
-        <input type="email" name="friends" id="email-5" placeholder="Type email..."><br>
-        </section>
-        <br>
-        <section class="movies-in-invitation">
-        <ol id="movies-added">Movies added:</ol>
-        </section>
+        <div class="movie-list">
+          <p>Movies added:</p>
+          <ol id="movies-added"></ol>
+        </div>
         <br>
         <button type="submit">Create Event</button>
       </form>

@@ -4,7 +4,7 @@ const EventMovieList = () => {
   return (
     <div className="movie-list-container">
       <p>Movies added</p>
-      <ol key="movies-added"></ol>
+      <ol id="movies-added"></ol>
     </div>
   )
 }

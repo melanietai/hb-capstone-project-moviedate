@@ -4,7 +4,7 @@ const InvitationLogin = () => {
   return (
     <div className="invitation-login-wrapper">
       <hi>View event by invitation</hi>
-      <form>
+      <form onSubmit={onSubmit}>
         <label>
           <p>Email</p>
           <input type="email" name="email" required />

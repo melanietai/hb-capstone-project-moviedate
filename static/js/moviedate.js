@@ -4,8 +4,8 @@ if (addMovieBtn) {
   addMovieBtn.addEventListener('click', evt => {
     const input = document.createElement("input");
     input.type = "email";
-    input.name = "friends" 
-    input.placeholder = "Type email..."
+    input.name = "friends";
+    input.placeholder = "Type email...";
     document.querySelector('.emails').appendChild(input);
     document.querySelector('.emails').insertAdjacentHTML('beforeend', '<br>')
   });

@@ -17,7 +17,7 @@
     <li>Participant email: {{ participant.email }}
         {% if participant.is_host == True %}
           (host)
-          <br>RSVP status: Attending
+          <br>Event host: Attending
         {% elif participant.email == session.get('current_user_email') or participant.email == session.get('invitee_user_email') %}
           <br>RSVP status:
           {% if participant.RSVP == False %}

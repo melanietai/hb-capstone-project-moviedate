@@ -19,36 +19,43 @@ const CreateEvent = () => {
     movieList: movieList,
   }
 
-  useEffect(() => {
-    if (title, date, time, emails, movieList) {
-      fetch('/api/create-event', {
-        method: 'POST',
-        body: JSON.stringify(formInputs),
-        headers: {'Content-Type': 'application/json'
-        },
-      })
-    .then (res => res.json())
-    .then (data => {
-      if (data == 'success') {
-      
-      }
-    });
-    }
-  }, []);
-
   const onSubmit = (evt) => {
     evt.preventDefault();
-    setTitle(evt.target.title.value);
-    setDate(evt.target.name.value);
-    setTime(evt.target.time.value);
-    setEmails(evt.target.mails.value);
-    setMovieList(evt.target.movies-added.value);
+    fetch('/api/create-event', {
+      method: 'POST',
+      body: JSON.stringify(formInputs),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data == 'success') {
+
+        }
+      });
+    // setMovieList(evt.target.movies-added.value);
   }
-  
+
+  const onTitleChange = (evt) => {
+    evt.preventDefault();
+    setTitle(evt.target.value);
+  }
+
+  const onDateChange = (evt) => {
+    evt.preventDefault();
+    setDate(evt.target.value);
+  }
+
+  const onTimeChange = (evt) => {
+    evt.preventDefault();
+    setTime(evt.target.value);
+  }
+
   return (
     <div className="create-event-container">
       <form onSubmit={onSubmit}>
-        <EventAt />
+        <EventAt onTitleChange={onTitleChange} onTimeChange={onTimeChange} onDateChange={onDateChange} />
         <EventEmails />
         <EventMovieList />
       </form>

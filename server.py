@@ -275,6 +275,54 @@ def update_vote():
     return jsonify(movie.vote_count)
 
 
+@app.route('/api/create-event', methods=['POST'])
+def create_event():
+
+    title = request.json.get('title')
+    date = request.json.get('date')
+    time = request.json.get('time')
+    movie_api_ids = request.json.getlist('movies-added')
+    emails = request.json.getlist('emails')
+    emails = [_ for _ in emails if _] #filter out blank emails in the list
+
+    datetime_object = datetime.strptime(f'{date} {time}', '%Y-%m-%d %H:%M')
+    
+    event = crud.create_event_with_emails(event_at=datetime_object, title=title, emails=emails)
+
+    event_id = event.event_id
+
+    for api_id in movie_api_ids:
+        crud.create_movie(api_id=api_id, event_id=event_id)
+
+    for email in emails:
+        print(f'***************EMAIL: {email}')
+        
+        host_email = session['current_user_email']
+
+        message = Mail(
+        from_email='moviedatecapstone@gmail.com',
+        to_emails=email,
+        subject=f'Please RSVP: Movie Date on {event.event_at.date()} at {event.event_at.time()}',
+        html_content="""\
+          <html>
+            <head></head>
+            <body>
+              <p>{host_email} has invited you to join a movie date on {event_date} at {event_time}. 
+              Please click on the link {url} to RSVP and view event details with your email and Access Key {key}
+              </p>
+            </body>
+          </html>
+          """.format(event_date=event.event_at.date(), event_time=event.event_at.time(), host_email=host_email, url=request.url_root, key=event.key)
+        )
+
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+        print(response.status_code, response.body, response.headers)
+
+    flash("RSVPs sent! Please click on individual link for each event to check event status.")
+
+    return "success"
+
 
 if __name__ == "__main__":
     # DebugToolbarExtension(app)

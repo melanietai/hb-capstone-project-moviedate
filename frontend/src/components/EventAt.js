@@ -1,19 +1,21 @@
 import React from 'react';
 
-const EventAt = () => {
+const EventAt = (props) => {
+  // const { onTitleChange, onDateChange, onTimeChange } = props; 
+
   return (
     <div className="event-at-container">
         <label>
           <p>Event name</p>
-          <input type="text" name="title" required />
+          <input onChange={props.onTitleChange} type="text" name="title" required />
         </label>
         <label>
           <p>Select a date</p>
-          <input type="date" name="date" required />
+          <input onChange={props.onDateChange} type="date" name="date" required />
         </label>
         <label>
           <p>Select a time</p>
-          <input type="time" name="time" required />
+          <input onChange={props.onTimeChange} type="time" name="time" required />
         </label>
     </div>
   )

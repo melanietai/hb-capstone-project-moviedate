@@ -1,21 +1,26 @@
 import React from 'react';
 
 const EventEmails = () => {
+  const [emails, setEmails] = useState(['']);
 
-  const onClick = () => {
-    const input = document.createElement("input");
-    input.type = "email"
-    input.name = "emails"
-    input.placeholder = "Type email...";
-    document.querySelector('.emails-container').appendChild(input);
-    document.querySelector('.emails-container').insertAdjacentHTML('beforeend', '<br>');
+  const onEmailChange = (evt, index) => {
+    evt.preventDefault();
+    setEmails((prevEmails) => prevEmails[index] = evt.target.value);
   }
 
+  const onClick = () => {
+    setEmails((prevEmails) => [...prevEmails, '']);
+  }
+
+  const emailsComponents = [];
+  for (let i = 0; i < emails.length; i++) {
+    emailsComponents.push(<input onChange={(evt) => onEmailChange(evt, i)} type="email" name="emails" placeholder="Type email..." value={emails[i]} />)
+  }
   return (
     <div className="emails-container">
         <label>
           <p>Email friend(s) that you would like to RSVP</p>
-          <input type="email" name="emails" placeholder="Type email..." />
+          {emailsComponents}
         </label>
         <button type="button" id="add-friend" onClick={onClick}>Add another friend</button>  
     </div>

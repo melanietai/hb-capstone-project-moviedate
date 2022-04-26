@@ -1,10 +1,18 @@
 import React from 'react';
 
-const Login = () => {
+const CreateAccount = () => {
   return (
-    <div className="login-wrapper">
-      <hi>Please log in</hi>
+    <div className="create-account-wrapper">
+      <hi>Create an account</hi>
       <form>
+        <label>
+          <p>First name</p>
+          <input type="text" name="fname" required />
+        </label>
+        <label>
+          <p>Last name</p>
+          <input type="text" name="lname" required />
+        </label>
         <label>
           <p>Email</p>
           <input type="email" name="email" required />
@@ -21,4 +29,4 @@ const Login = () => {
   )
 }
 
-export default Login;
+export default CreateAccount;

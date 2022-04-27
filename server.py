@@ -224,10 +224,9 @@ def get_search_result():
     res = requests.get('https://api.themoviedb.org/3/search/movie', params=payload)
 
     movies = res.json()
-    
 
-    # return a list of movie json objects
-    return jsonify(movies["results"])
+    # return a list of movie json objects that has poster
+    return jsonify([movie for movie in movies["results"] if movie["poster_path"] != None])
 
 @app.route('/api/events/<event_id>/rsvp', methods=['POST'])
 def update_rsvp(event_id):

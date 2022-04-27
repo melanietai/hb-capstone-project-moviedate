@@ -34,10 +34,14 @@ const SearchMovies = (props) => {
       </form>
       <ul>
         {movies.map(movie => {
-          const disableAddMovieButton = false; // replace false with condition below
+          const disableAddMovieButton = false;
+          // replace false with condition below
           // if movie id in event movie list or event movie list count >= 5
           // pass disableAddMovieButton prop to SearchMoviesListItem
-
+          const movieIds = [eventMovieList.map(elem => elem.id)]
+          if ((movieIds.includes(movie.id)) || (eventMovieList.length > 5)) {
+            disableAddMovieButton = true;
+          }
           return <SearchMoviesListItem key={movie.id} disableAddMovieButton={disableAddMovieButton} movie={movie} addMovieButtonClick={addMovieButtonClick} />
         })}
       </ul>

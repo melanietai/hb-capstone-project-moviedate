@@ -11,16 +11,20 @@ const CreateEvent = () => {
   const [emails, setEmails] = useState(['']);
   const [eventMovieList, setEventMovieList] = useState([]);
 
-  const formInputs = {
-    title: title,
-    date: date,
-    time: time,
-    emails: emails,
-    movieList: eventMovieList,
-  }
-
+  
+  
   const onSubmit = (evt) => {
     evt.preventDefault();
+    
+    const formInputs = {
+        title: title,
+        date: date,
+        time: time,
+        emails: emails.filter((email) => email.length > 0),
+        movieList: eventMovieList,
+      }
+    console.log(formInputs);
+    
     fetch('/api/create-event', {
       method: 'POST',
       body: JSON.stringify(formInputs),
@@ -84,8 +88,9 @@ const CreateEvent = () => {
         <EventAt key="eventAt" onTitleChange={onTitleChange} onTimeChange={onTimeChange} onDateChange={onDateChange} />
         <EventEmails key="eventEmails" emails={emails} onEmailChange={onEmailChange} onAddEmailButtonClick={onAddEmailButtonClick}/>
         <EventMovieList key="eventMovieList" eventMovieList={eventMovieList} removeMovieButtonClick={removeMovieButtonClick} />
+        <button type="submit">Create Event</button>
       </form>
-      <button type="submit">Create Event</button>
+
       <SearchMovies key="searchMovies" addMovieButtonClick={addMovieButtonClick} eventMovieList={eventMovieList} />
     </div>
 

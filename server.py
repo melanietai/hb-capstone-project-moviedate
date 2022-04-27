@@ -280,9 +280,8 @@ def api_create_event():
     title = request.json.get('title')
     date = request.json.get('date')
     time = request.json.get('time')
-    movie_api_ids = request.json.getlist('movies-added')
-    emails = request.json.getlist('emails')
-    emails = [_ for _ in emails if _] #filter out blank emails in the list
+    movie_api_ids = request.json.get('movieList')
+    emails = request.json.get('emails')
 
     datetime_object = datetime.strptime(f'{date} {time}', '%Y-%m-%d %H:%M')
     

@@ -9,14 +9,14 @@ const CreateEvent = () => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   // const [emails, setEmails] = useState([]);
-  // const [movieList, setMovieList] = useState([]);
+  const [eventMovieList, setEventMovieList] = useState([]);
 
   const formInputs = {
     title: title,
     date: date,
     time: time,
-    emails: emails,
-    movieList: movieList,
+    // emails: emails,
+    movieList: eventMovieList,
   }
 
   const onSubmit = (evt) => {
@@ -52,15 +52,23 @@ const CreateEvent = () => {
     setTime(evt.target.value);
   }
 
+  const addMovieButtonClick = (movie) => {
+    setEventMovieList((prevEventMovieList) => [...prevEventMovieList, movie])
+  }
+
+  const removeMovieButtonClick = (movie) => {
+    //setEventMovieList();
+  }
+
   return (
     <div className="create-event-container">
       <form onSubmit={onSubmit}>
         <EventAt onTitleChange={onTitleChange} onTimeChange={onTimeChange} onDateChange={onDateChange} />
         <EventEmails />
-        <EventMovieList />
+        <EventMovieList eventMovieList={eventMovieList} removeMovieButtonClick={removeMovieButtonClick} />
       </form>
       <button type="submit">Create Event</button>
-      <SearchMovies />
+      <SearchMovies addMovieButtonClick={addMovieButtonClick} />
     </div>
 
   )

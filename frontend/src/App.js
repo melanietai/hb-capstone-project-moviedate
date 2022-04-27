@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import React from 'react';
 import './App.css';
-import SearchMovies from './components/SearchMovies';
+import CreateEvent from './components/CreateEvent';
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         >
           Learn React
         </a>
-        <SearchMovies />
+        <CreateEvent />
       </header>
     </div>
   );

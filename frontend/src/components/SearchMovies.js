@@ -14,7 +14,7 @@ const SearchMovies = () => {
           'Content-Type': 'application/json',
         },
       }).then(res => res.json()).then(data => {
-        setMovies(data
+        setMovies(data)
       });
     }
   }, [keyword]);

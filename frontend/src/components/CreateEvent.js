@@ -8,8 +8,8 @@ const CreateEvent = () => {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  const [emails, setEmails] = useState([]);
-  const [movieList, setMovieList] = useState([]);
+  // const [emails, setEmails] = useState([]);
+  // const [movieList, setMovieList] = useState([]);
 
   const formInputs = {
     title: title,

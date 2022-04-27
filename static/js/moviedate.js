@@ -1,7 +1,7 @@
-const addMovieBtn = document.querySelector('#add-friend');
+const addFriendBtn = document.querySelector('#add-friend');
 
-if (addMovieBtn) {
-  addMovieBtn.addEventListener('click', evt => {
+if (addFriendBtn) {
+  addFriendBtn.addEventListener('click', evt => {
     const input = document.createElement("input");
     input.type = "email";
     input.name = "friends";

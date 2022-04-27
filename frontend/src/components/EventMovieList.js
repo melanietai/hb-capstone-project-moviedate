@@ -1,6 +1,9 @@
 import React from 'react';
 
 const EventMovieList = (props) => {
+  
+  
+  
   const movieIdList = [].push(props.movieId);
   const movieTitle = props.movieTitle;
 

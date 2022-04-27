@@ -3,7 +3,7 @@ import React from 'react';
 const Login = () => {
   return (
     <div className="login-wrapper">
-      <hi>Please log in</hi>
+      <hi>Log in</hi>
       <form>
         <label>
           <p>Email</p>

@@ -42,7 +42,7 @@ const SearchMovies = (props) => {
         })}
       </ul>
     </div>
-  );
+  )
 }
 
 export default SearchMovies;

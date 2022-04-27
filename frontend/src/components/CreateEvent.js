@@ -8,14 +8,14 @@ const CreateEvent = () => {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  // const [emails, setEmails] = useState([]);
+  const [emails, setEmails] = useState(['']);
   const [eventMovieList, setEventMovieList] = useState([]);
 
   const formInputs = {
     title: title,
     date: date,
     time: time,
-    // emails: emails,
+    emails: emails,
     movieList: eventMovieList,
   }
 
@@ -34,7 +34,6 @@ const CreateEvent = () => {
 
         }
       });
-    // setMovieList(evt.target.movies-added.value);
   }
 
   const onTitleChange = (evt) => {
@@ -57,18 +56,37 @@ const CreateEvent = () => {
   }
 
   const removeMovieButtonClick = (movie) => {
-    //setEventMovieList();
+    for (let i = 0; i < eventMovieList.length; i++) {
+      const movieObject = eventMovieList[i];
+      if (movieObject.id == movie.id) {
+          setEventMovieList((prevEventMovieList) => {
+            return [...prevEventMovieList.slice(0, i), ...prevEventMovieList.slice(i + 1)]
+          });
+      }
+    }
   }
 
+  const onEmailChange = (evt, index) => {
+    evt.preventDefault();
+    setEmails((prevEmails) => {
+      return [...prevEmails.slice(0, index), evt.target.value, ... prevEmails.slice(index + 1)];
+    });
+  }
+
+  const onAddEmailButtonClick = () => {
+    setEmails((prevEmails) => [...prevEmails, '']);
+  }
+
+  console.log(emails);
   return (
     <div className="create-event-container">
       <form onSubmit={onSubmit}>
-        <EventAt onTitleChange={onTitleChange} onTimeChange={onTimeChange} onDateChange={onDateChange} />
-        <EventEmails />
-        <EventMovieList eventMovieList={eventMovieList} removeMovieButtonClick={removeMovieButtonClick} />
+        <EventAt key="eventAt" onTitleChange={onTitleChange} onTimeChange={onTimeChange} onDateChange={onDateChange} />
+        <EventEmails key="eventEmails" emails={emails} onEmailChange={onEmailChange} onAddEmailButtonClick={onAddEmailButtonClick}/>
+        <EventMovieList key="eventMovieList" eventMovieList={eventMovieList} removeMovieButtonClick={removeMovieButtonClick} />
       </form>
       <button type="submit">Create Event</button>
-      <SearchMovies addMovieButtonClick={addMovieButtonClick} eventMovieList={eventMovieList} />
+      <SearchMovies key="searchMovies" addMovieButtonClick={addMovieButtonClick} eventMovieList={eventMovieList} />
     </div>
 
   )

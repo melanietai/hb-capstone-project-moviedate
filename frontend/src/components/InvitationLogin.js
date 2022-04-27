@@ -55,19 +55,3 @@ export default InvitationLogin;
 
 
 
-
-
-  <h2>View Event by Invitation</h2>
-  <form action='/invitation' method='POST'>
-    <p>
-      Email <input type='email' name='email' required>
-    </p>
-
-    <p>
-      key <input type='text' name='key' required>
-    </p>
-
-    <p>
-      <input type='submit'>
-    </p>
-  </form>

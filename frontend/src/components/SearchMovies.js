@@ -5,6 +5,7 @@ const SearchMovies = (props) => {
   const [keyword, setKeyword] = useState("");
   const [movies, setMovies] = useState([]);
   const addMovieButtonClick = props.addMovieButtonClick;
+  const eventMovieList = props.eventMovieList;
 
   useEffect(() => {
     if (keyword) {

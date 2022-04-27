@@ -68,7 +68,7 @@ const CreateEvent = () => {
         <EventMovieList eventMovieList={eventMovieList} removeMovieButtonClick={removeMovieButtonClick} />
       </form>
       <button type="submit">Create Event</button>
-      <SearchMovies addMovieButtonClick={addMovieButtonClick} />
+      <SearchMovies addMovieButtonClick={addMovieButtonClick} eventMovieList={eventMovieList} />
     </div>
 
   )

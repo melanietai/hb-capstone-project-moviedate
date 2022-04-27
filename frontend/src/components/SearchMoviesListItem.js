@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const SearchMoviesListItem = (props) => {
-  const [disabledBtn, setDisabledBtn] = useState(false);
-  const [movieIdList, setMovieIdList] = useState(['']);
-  const [movieTitleComponents, setMovieTitleComponents] = useState(['']);
+  // const [disabledBtn, setDisabledBtn] = useState(false);
+  // const [movieIdList, setMovieIdList] = useState(['']);
+  // const [movieTitleComponents, setMovieTitleComponents] = useState(['']);
 
   const movie = props.movie;
   const addMovieButtonClick = props.addMovieButtonClick;
@@ -13,7 +13,7 @@ const SearchMoviesListItem = (props) => {
   const onSubmit = (evt) => {
     evt.preventDefault();
     //disable add movie button after click
-    setDisabledBtn(true);
+    // setDisabledBtn(true);
     addMovieButtonClick(movie);
     // const movieTitle = evt.target.movietitle.value;
     // const movieId = evt.target.movieid.value;
@@ -30,13 +30,13 @@ const SearchMoviesListItem = (props) => {
   }
 
   //check length of movieList; if length >=5 button.disabled=true otherwise false
-  const disabledStatus = () => {
-    if (movieIdList.length >= 5) {
-      setDisabledBtn(true);
-    } else {
-      setDisabledBtn(false);
-    }
-  }
+  // const disabledStatus = () => {
+  //   if (movieIdList.length >= 5) {
+  //     setDisabledBtn(true);
+  //   } else {
+  //     setDisabledBtn(false);
+  //   }
+  // }
 
 
   return (

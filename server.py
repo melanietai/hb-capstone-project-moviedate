@@ -18,6 +18,8 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from sqlalchemy import update
 
+from flask_jwt_extended import (create_access_token, get_jwt_identity, jwt_required, JWTManager, unset_jwt_cookies)
+
 
 app = Flask(__name__)
 
@@ -34,6 +36,9 @@ app.jinja_env.undefined = jinja2.StrictUndefined
 # This configuration option makes the Flask interactive debugger
 # more useful (you should remove this line in production though)
 app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = True
+
+#Setup the Flask-JWT-Extended extension
+jwt = JWTManager(app)
 
 
 @app.route('/')
@@ -213,6 +218,7 @@ def create_event():
 
 
 @app.route('/api/search-movies', methods=['POST'])
+@jwt_required()
 def get_search_result():
     """Get search results."""
     
@@ -229,6 +235,7 @@ def get_search_result():
     return jsonify([movie for movie in movies["results"] if movie["poster_path"] != None])
 
 @app.route('/api/events/<event_id>/rsvp', methods=['POST'])
+@jwt_required()
 def update_rsvp(event_id):
     """Update rsvp response"""
 
@@ -250,6 +257,7 @@ def update_rsvp(event_id):
 
 
 @app.route('/api/vote-update', methods=['POST'])
+@jwt_required()
 def update_vote():
     """Update voting count for a movie"""
 
@@ -275,6 +283,7 @@ def update_vote():
 
 
 @app.route('/api/create-event', methods=['POST'])
+@jwt_required()
 def api_create_event():
 
     title = request.json.get('title')
@@ -320,6 +329,30 @@ def api_create_event():
     flash("RSVPs sent! Please click on individual link for each event to check event status.")
 
     return "success"
+
+
+@app.route('/api/token', methods=['POST'])
+def create_token():
+    """Create token for user login."""
+
+    email = request.json.get('email')
+    password = request.json.get('password')
+
+    user = crud.get_user_by_email(email)
+    if not user or user.password != password:
+        return ({"msg": "Invalid email or password"}), 401
+    
+    access_token = create_access_token(identity=user)
+    return jsonify(access_token=access_token)
+
+
+@app.route('/api/logout', methods=['POST'])
+def api_logout():
+    """Log user out."""
+
+    response = jsonify({"msg": "logout successful"})
+    unset_jwt_cookies(response)
+    return response
 
 
 if __name__ == "__main__":

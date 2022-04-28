@@ -10,7 +10,7 @@ from flask import (Flask, render_template, redirect, flash, jsonify, request, se
 import jinja2
 from model import connect_to_db, db
 import crud
-from datetime import datetime
+from datetime import datetime, timedelta
 import requests
 import json
 import os
@@ -40,6 +40,7 @@ app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = True
 #Setup the Flask-JWT-Extended extension
 jwt = JWTManager(app)
 
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=36000000)
 
 @app.route('/')
 def index():
@@ -285,26 +286,26 @@ def update_vote():
 @app.route('/api/create-event', methods=['POST'])
 @jwt_required()
 def api_create_event():
-
+    identity = get_jwt_identity()
     title = request.json.get('title')
     date = request.json.get('date')
     time = request.json.get('time')
-    movie_api_ids = request.json.get('movieList')
+    movies = request.json.get('movieList')
     emails = request.json.get('emails')
 
     datetime_object = datetime.strptime(f'{date} {time}', '%Y-%m-%d %H:%M')
     
-    event = crud.create_event_with_emails(event_at=datetime_object, title=title, emails=emails)
+    event = crud.create_event_with_emails(user_email=identity['email'], event_at=datetime_object, title=title, emails=emails)
 
     event_id = event.event_id
 
-    for api_id in movie_api_ids:
-        crud.create_movie(api_id=api_id, event_id=event_id)
+    for movie in movies:
+        crud.create_movie(api_id=movie['id'], event_id=event_id)
 
     for email in emails:
         print(f'***************EMAIL: {email}')
         
-        host_email = session['current_user_email']
+        host_email = identity['email']
 
         message = Mail(
         from_email='moviedatecapstone@gmail.com',
@@ -326,13 +327,11 @@ def api_create_event():
         response = sg.send(message)
         print(response.status_code, response.body, response.headers)
 
-    flash("RSVPs sent! Please click on individual link for each event to check event status.")
-
-    return "success"
+    return jsonify(event)
 
 
-@app.route('/api/token', methods=['POST'])
-def create_token():
+@app.route('/api/create-token', methods=['POST'])
+def api_create_token():
     """Create token for user login."""
 
     email = request.json.get('email')
@@ -342,7 +341,7 @@ def create_token():
     if not user or user.password != password:
         return ({"msg": "Invalid email or password"}), 401
     
-    access_token = create_access_token(identity=user)
+    access_token = create_access_token(identity={'id': user.user_id, 'email': user.email})
     return jsonify(access_token=access_token)
 
 
@@ -350,7 +349,7 @@ def create_token():
 def api_logout():
     """Log user out."""
 
-    response = jsonify({"msg": "logout successful"})
+    response = jsonify({"msg": "Logout successful"})
     unset_jwt_cookies(response)
     return response
 

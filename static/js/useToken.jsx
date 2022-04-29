@@ -1,11 +1,14 @@
 const useToken = () => {
+  const { useState } = React;
+
+  // if (typeof window !== 'undefined') {
 
   const getToken = () => {
-    const userToken = localStorange.getItem('token');
+    const userToken = localStorage.getItem('token');
     return userToken && userToken
   };
   
-  const [token, setToken] = React.useState(getToken());
+  const [token, setToken] = useState(getToken());
 
   const saveToken = (userToken) => {
     localStorage.setItem('token', userToken);
@@ -13,7 +16,7 @@ const useToken = () => {
   };
 
   const removeToken = () => {
-    localStorange.removeItem('token');
+    localStorage.removeItem('token');
     setToken(null);
   };
 
@@ -22,5 +25,5 @@ const useToken = () => {
     token: token,
     removeToken: removeToken
   }
-
+  // }
 };

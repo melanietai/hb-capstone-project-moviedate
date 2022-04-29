@@ -1,9 +1,10 @@
 const CreateEvent = () => {
-  const [title, setTitle] = React.useState("");
-  const [date, setDate] = React.useState("");
-  const [time, setTime] = React.useState("");
-  const [emails, setEmails] = React.useState(['']);
-  const [eventMovieList, setEventMovieList] = React.useState([]);
+  const { useState } = React;
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [emails, setEmails] = useState(['']);
+  const [eventMovieList, setEventMovieList] = useState([]);
   const { token } = useToken();
   
   

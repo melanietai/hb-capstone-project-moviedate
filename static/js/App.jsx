@@ -9,7 +9,7 @@ const App = () => {
     <BrowserRouter>
       <div className="App">
         <h1>Welcome to the Movie Date!</h1>
-        {/* <Nav token={removeToken}/> */}
+        {/* <Navbar token={removeToken}/> */}
         {!token && token!=="" &&token!== undefined?  
         <Login setToken={setToken} />
         :(

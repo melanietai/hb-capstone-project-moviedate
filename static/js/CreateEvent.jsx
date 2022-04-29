@@ -4,6 +4,7 @@ const CreateEvent = () => {
   const [time, setTime] = React.useState("");
   const [emails, setEmails] = React.useState(['']);
   const [eventMovieList, setEventMovieList] = React.useState([]);
+  const { token } = useToken();
   
   
   const onSubmit = (evt) => {
@@ -22,6 +23,7 @@ const CreateEvent = () => {
       method: 'POST',
       body: JSON.stringify(formInputs),
       headers: {
+        Authorization: 'Bearer ' + token,
         'Content-Type': 'application/json'
       },
     })

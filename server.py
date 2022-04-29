@@ -168,7 +168,7 @@ def show_event(event_id):
 @app.route('/events/new-event')
 def new_event():
 
-    return render_template("create_event_react.html")
+    return render_template("index.html")
 
 
 @app.route('/events/create-event', methods=['POST'])

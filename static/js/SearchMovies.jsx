@@ -1,4 +1,5 @@
 const SearchMovies = (props) => {
+  const { token } = useToken();
   const [keyword, setKeyword] = React.useState("");
   const [movies, setMovies] = React.useState([]);
   const addMovieButtonClick = props.addMovieButtonClick;
@@ -10,6 +11,7 @@ const SearchMovies = (props) => {
         method: 'POST',
         body: JSON.stringify({ keyword: keyword }),
         headers: {
+          Authorization: 'Bearer ' + token,
           'Content-Type': 'application/json',
         },
       }).then(res => res.json()).then(data => {

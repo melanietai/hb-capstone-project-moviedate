@@ -8,14 +8,20 @@ An event participant wil be associated with one event and one user (
 
 """
 
+from dataclasses import dataclass
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-
+@dataclass
 class User(db.Model):
     """A user."""
+    user_id: int
+    fname: str
+    lname: str
+    email: str
+    password: str
 
     __tablename__ = "users"
 
@@ -30,10 +36,14 @@ class User(db.Model):
     def __repr__(self):
         return f"<User user_id={self.user_id} name={self.fname} {self.lname} email={self.email}>"
 
-
+@dataclass
 class Event(db.Model):
     """An event."""
-
+    event_id: int
+    title: str
+    event_at: datetime
+    key: str
+    
     __tablename__ = "events"
 
     event_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
@@ -47,9 +57,14 @@ class Event(db.Model):
     def __repr__(self):
         return f"<Event event_id={self.event_id} movie={self.movie} event_at={self.event_at}>"
     
-
+@dataclass
 class Movie(db.Model):
     """A movie."""
+    movie_id: int
+    api_id: int
+    vote_count: int
+    event_id: int
+
 
     __tablename__ = "movies"
 
@@ -65,9 +80,14 @@ class Movie(db.Model):
         return f"<Movie movie_id={self.movie_id} api_id={self.api_id} vote_count={self.vote_count}>"
 
     
-
+@dataclass
 class Participant(db.Model):
     """Each event participant."""
+    participant_id: int
+    email: str  
+    is_host: bool   
+    RSVP: bool  
+    event_id: int
 
     __tablename__ = "participants"
 

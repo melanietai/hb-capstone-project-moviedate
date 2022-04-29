@@ -12,13 +12,10 @@ from model import connect_to_db, db
 import crud
 from datetime import datetime, timedelta
 import requests
-import json
 import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from sqlalchemy import update
-
-from flask_jwt_extended import (create_access_token, get_jwt_identity, jwt_required, JWTManager, unset_jwt_cookies)
 
 
 app = Flask(__name__)
@@ -37,10 +34,6 @@ app.jinja_env.undefined = jinja2.StrictUndefined
 # more useful (you should remove this line in production though)
 app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = True
 
-#Setup the Flask-JWT-Extended extension
-jwt = JWTManager(app)
-
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=36000000)
 
 @app.route('/')
 def index():
@@ -53,6 +46,7 @@ def index():
         return render_template('events.html', events=events)
 
     return render_template('homepage.html')
+
 
 @app.route('/users', methods=['POST'])
 def register_user():
@@ -122,7 +116,6 @@ def show_invitation():
         print(f"*****************{session['invitee_user_email']}*************")
         flash('Redirecting you to your event page.')
         return redirect(f'/events/{event.event_id}')
-        # render_template('event_details.html', display_event=event)
     
     else:
         flash('Your email and invitation key does not match')
@@ -167,7 +160,8 @@ def show_event(event_id):
 @app.route('/events/new-event')
 def new_event():
 
-    return render_template("create_event.html")
+    return render_template("create_event_react.html")
+
 
 @app.route('/events/create-event', methods=['POST'])
 def create_event():
@@ -219,24 +213,26 @@ def create_event():
 
 
 @app.route('/api/search-movies', methods=['POST'])
-@jwt_required()
 def get_search_result():
     """Get search results."""
     
-    movie_keyword = request.json.get('keyword')
-    
-    payload = {'query': {movie_keyword},
-               'api_key': os.environ['API_KEY']}
+    current_user_id= session.get('current_user_id')
+    if current_user_id:
+        movie_keyword = request.json.get('keyword')
+        
+        payload = {'query': {movie_keyword},
+                'api_key': os.environ['API_KEY']}
 
-    res = requests.get('https://api.themoviedb.org/3/search/movie', params=payload)
+        res = requests.get('https://api.themoviedb.org/3/search/movie', params=payload)
 
-    movies = res.json()
+        movies = res.json()
 
-    # return a list of movie json objects that has poster
-    return jsonify([movie for movie in movies["results"] if movie["poster_path"] != None])
+        # return a list of movie json objects that has poster
+        return jsonify([movie for movie in movies["results"] if movie["poster_path"] != None])
+    return("You must log in to search movies")
+
 
 @app.route('/api/events/<event_id>/rsvp', methods=['POST'])
-@jwt_required()
 def update_rsvp(event_id):
     """Update rsvp response"""
 
@@ -258,25 +254,16 @@ def update_rsvp(event_id):
 
 
 @app.route('/api/vote-update', methods=['POST'])
-@jwt_required()
 def update_vote():
     """Update voting count for a movie"""
 
     api_id = request.json.get('apiId')
-    print('****************')
-    print(api_id)
-    print('****************')
 
     event_id = request.json.get('eventId')
 
     movie = crud.get_movie_by_event_id_and_api_id(event_id, api_id)
-    print('****************')
-    print(movie)
-    print('****************')
-    crud.update_vote_for_movie(movie)
-    # stmt = update(crud.Movie).where(crud.Movie.event_id == event_id, crud.Movie.api_id == api_id).values(vote_count =+ 1)
 
-    # db.session.execute(stmt)
+    crud.update_vote_for_movie(movie)
 
     db.session.commit()
 
@@ -284,9 +271,8 @@ def update_vote():
 
 
 @app.route('/api/create-event', methods=['POST'])
-@jwt_required()
 def api_create_event():
-    identity = get_jwt_identity()
+    user_email = session['current_user_email']
     title = request.json.get('title')
     date = request.json.get('date')
     time = request.json.get('time')
@@ -295,7 +281,7 @@ def api_create_event():
 
     datetime_object = datetime.strptime(f'{date} {time}', '%Y-%m-%d %H:%M')
     
-    event = crud.create_event_with_emails(user_email=identity['email'], event_at=datetime_object, title=title, emails=emails)
+    event = crud.create_event_with_emails(user_email=user_email, event_at=datetime_object, title=title, emails=emails)
 
     event_id = event.event_id
 
@@ -303,9 +289,7 @@ def api_create_event():
         crud.create_movie(api_id=movie['id'], event_id=event_id)
 
     for email in emails:
-        print(f'***************EMAIL: {email}')
-        
-        host_email = identity['email']
+        host_email = session['current_user_email']
 
         message = Mail(
         from_email='moviedatecapstone@gmail.com',
@@ -330,28 +314,7 @@ def api_create_event():
     return jsonify(event)
 
 
-@app.route('/api/create-token', methods=['POST'])
-def api_create_token():
-    """Create token for user login."""
 
-    email = request.json.get('email')
-    password = request.json.get('password')
-
-    user = crud.get_user_by_email(email)
-    if not user or user.password != password:
-        return ({"msg": "Invalid email or password"}), 401
-    
-    access_token = create_access_token(identity={'id': user.user_id, 'email': user.email})
-    return jsonify(access_token=access_token)
-
-
-@app.route('/api/logout', methods=['POST'])
-def api_logout():
-    """Log user out."""
-
-    response = jsonify({"msg": "Logout successful"})
-    unset_jwt_cookies(response)
-    return response
 
 
 if __name__ == "__main__":

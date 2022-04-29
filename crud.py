@@ -1,8 +1,6 @@
 """CRUD operations."""
 
 from model import db, User, Event, Participant, Movie, connect_to_db
-from flask import session
-from datetime import datetime
 import secrets
 from sqlalchemy import update
 
@@ -59,11 +57,10 @@ def get_participant_by_email_and_event_id(email, event_id):
     return Participant.query.filter(Participant.email == email, Participant.event_id == event_id).first()
 
 
-def create_event_with_emails(event_at, title, emails):
+def create_event_with_emails(user_email, event_at, title, emails):
     event = create_event(event_at=event_at, title=title)
     db.session.add(event)
     db.session.flush()
-    user_email = session['current_user_email']
     user = get_user_by_email(user_email)
     host = create_participant(email=user_email, is_host=True, RSVP=True, event_id=event.event_id, user_id=user.user_id)
     db.session.add(host)

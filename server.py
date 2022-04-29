@@ -16,6 +16,8 @@ import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from sqlalchemy import update
+from flask_jwt_extended import (create_access_token, get_jwt_identity, jwt_required, JWTManager, unset_jwt_cookies)
+
 
 
 app = Flask(__name__)
@@ -33,6 +35,12 @@ app.jinja_env.undefined = jinja2.StrictUndefined
 # This configuration option makes the Flask interactive debugger
 # more useful (you should remove this line in production though)
 app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = True
+
+
+#Setup the Flask-JWT-Extended extension
+jwt = JWTManager(app)
+
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=36000000)
 
 
 @app.route('/')
@@ -183,7 +191,6 @@ def create_event():
         crud.create_movie(api_id=api_id, event_id=event_id)
 
     for email in emails:
-        print(f'***************EMAIL: {email}')
         
         host_email = session['current_user_email']
 
@@ -213,26 +220,26 @@ def create_event():
 
 
 @app.route('/api/search-movies', methods=['POST'])
+@jwt_required()
 def get_search_result():
     """Get search results."""
     
-    current_user_id= session.get('current_user_id')
-    if current_user_id:
-        movie_keyword = request.json.get('keyword')
-        
-        payload = {'query': {movie_keyword},
-                'api_key': os.environ['API_KEY']}
+    movie_keyword = request.json.get('keyword')
+    
+    payload = {'query': {movie_keyword},
+            'api_key': os.environ['API_KEY']}
 
-        res = requests.get('https://api.themoviedb.org/3/search/movie', params=payload)
+    res = requests.get('https://api.themoviedb.org/3/search/movie', params=payload)
 
-        movies = res.json()
+    movies = res.json()
 
-        # return a list of movie json objects that has poster
-        return jsonify([movie for movie in movies["results"] if movie["poster_path"] != None])
-    return("You must log in to search movies")
+    # return a list of movie json objects that has poster
+    return jsonify([movie for movie in movies["results"] if movie["poster_path"] != None])
+
 
 
 @app.route('/api/events/<event_id>/rsvp', methods=['POST'])
+@jwt_required()
 def update_rsvp(event_id):
     """Update rsvp response"""
 
@@ -254,6 +261,7 @@ def update_rsvp(event_id):
 
 
 @app.route('/api/vote-update', methods=['POST'])
+@jwt_required()
 def update_vote():
     """Update voting count for a movie"""
 
@@ -271,8 +279,10 @@ def update_vote():
 
 
 @app.route('/api/create-event', methods=['POST'])
+@jwt_required()
 def api_create_event():
-    user_email = session['current_user_email']
+    identity = get_jwt_identity()
+    # user_email = session['current_user_email']
     title = request.json.get('title')
     date = request.json.get('date')
     time = request.json.get('time')
@@ -281,7 +291,7 @@ def api_create_event():
 
     datetime_object = datetime.strptime(f'{date} {time}', '%Y-%m-%d %H:%M')
     
-    event = crud.create_event_with_emails(user_email=user_email, event_at=datetime_object, title=title, emails=emails)
+    event = crud.create_event_with_emails(user_email=identity['email'], event_at=datetime_object, title=title, emails=emails)
 
     event_id = event.event_id
 
@@ -289,7 +299,8 @@ def api_create_event():
         crud.create_movie(api_id=movie['id'], event_id=event_id)
 
     for email in emails:
-        host_email = session['current_user_email']
+        # host_email = session['current_user_email']
+        host_email = identity['email']
 
         message = Mail(
         from_email='moviedatecapstone@gmail.com',
@@ -313,7 +324,28 @@ def api_create_event():
 
     return jsonify(event)
 
+@app.route('/api/token', methods=['POST'])
+def create_token():
+    """Create token for user login."""
 
+    email = request.json.get('email')
+    password = request.json.get('password')
+
+    user = crud.get_user_by_email(email)
+    if not user or user.password != password:
+        return ({"msg": "Invalid email or password"}), 401
+    
+    access_token = create_access_token(identity={'id': user.user_id, 'email': user.email})
+    return jsonify(access_token=access_token)
+
+
+@app.route('/api/logout', methods=['POST'])
+def api_logout():
+    """Log user out."""
+
+    response = jsonify({"msg": "logout successful"})
+    unset_jwt_cookies(response)
+    return response
 
 
 

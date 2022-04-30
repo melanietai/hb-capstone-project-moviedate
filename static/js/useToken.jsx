@@ -1,5 +1,5 @@
 const useToken = () => {
-  const { useState } = React;
+
 
   // if (typeof window !== 'undefined') {
 
@@ -8,9 +8,10 @@ const useToken = () => {
     return userToken && userToken
   };
   
-  const [token, setToken] = useState(getToken());
+  const [token, setToken] = React.useState(getToken());
 
   const saveToken = (userToken) => {
+    console.log(userToken);
     localStorage.setItem('token', userToken);
     setToken(userToken);
   };

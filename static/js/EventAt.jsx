@@ -17,6 +17,6 @@ const EventAt = (props) => {
         </label>
     </div>
   )
-}
+};
 
 

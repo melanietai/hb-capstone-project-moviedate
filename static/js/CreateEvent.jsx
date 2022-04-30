@@ -88,7 +88,4 @@ const CreateEvent = () => {
     </div>
 
   )
-}
-
-
-ReactDOM.render(<CreateEvent />, document.querySelector('#root'));
+};

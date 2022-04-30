@@ -10,4 +10,4 @@ const EventMovieListItem = (props) => {
   return (
     <li>{movie.title}<button onClick={onClick}>Remove Me</button></li>
   )
-}
+};

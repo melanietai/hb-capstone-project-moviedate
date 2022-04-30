@@ -28,5 +28,5 @@ const EventEmails = (props) => {
       <button type="button" onClick={props.onAddEmailButtonClick}>Add another email</button>
     </div>
   )
-}
+};
 

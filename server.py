@@ -6,7 +6,8 @@ to events page, and voting for movies.
 
 """
 
-from flask import (Flask, render_template, redirect, flash, jsonify, request, session)
+from http.client import HTTPException
+from flask import (Flask, render_template, redirect, flash, jsonify, request, session, abort)
 import jinja2
 from model import connect_to_db, db
 import crud
@@ -42,6 +43,169 @@ jwt = JWTManager(app)
 
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=36000000)
 
+
+@app.route('/') 
+def home():
+
+    return render_template('index.html')
+
+
+@app.route('/api/token', methods=['POST'])
+def api_create_token():
+    """Create token for user login."""
+
+    email = request.json.get('email')
+    password = request.json.get('password')
+
+    user = crud.get_user_by_email(email)
+    if not user or user.password != password:
+        return ({"msg": "Invalid email or password"}), 401
+    
+    access_token = create_access_token(identity={'id': user.user_id, 'email': user.email})
+    print(f'********{access_token}**********')
+    return jsonify(access_token=access_token)
+
+
+@app.route('/api/register-user', methods=['POST'])
+def api_register_user():
+    """Register a new user."""
+
+    fname = request.json.get('fname')
+    lname = request.json.get('lname')
+    email = request.json.get('email')
+    password = request.json.get('password')
+
+    if not fname or not lname or not email or not password:
+        abort(400)
+
+    user = crud.get_user_by_email(email)
+
+    if user:
+        flash("Cannot create an account with that email. Try again.")
+    else:
+        user = crud.create_user(fname, lname, email, password)
+        
+        flash('Account created! Please log in.')
+
+    return jsonify({"msg": "Account created"})
+
+
+@app.route('/api/logout', methods=['POST'])
+def api_logout():
+    """Log user out."""
+
+    response = jsonify({"msg": "Logout successful"})
+    unset_jwt_cookies(response)
+    return response
+
+
+@app.route('/api/search-movies', methods=['POST'])
+@jwt_required()
+def get_search_result():
+    """Get search results."""
+    
+    movie_keyword = request.json.get('keyword')
+    
+    payload = {'query': {movie_keyword},
+            'api_key': os.environ['API_KEY']}
+
+    res = requests.get('https://api.themoviedb.org/3/search/movie', params=payload)
+
+    movies = res.json()
+
+    # return a list of movie json objects that has poster
+    return jsonify([movie for movie in movies["results"] if movie["poster_path"] != None])
+
+
+@app.route('/api/create-event', methods=['POST'])
+@jwt_required()
+def api_create_event():
+    identity = get_jwt_identity()
+    title = request.json.get('title')
+    date = request.json.get('date')
+    time = request.json.get('time')
+    movies = request.json.get('movieList')
+    emails = request.json.get('emails')
+
+    datetime_object = datetime.strptime(f'{date} {time}', '%Y-%m-%d %H:%M')
+    
+    event = crud.create_event_with_emails(user_email=identity['email'], event_at=datetime_object, title=title, emails=emails)
+
+    event_id = event.event_id
+
+    for movie in movies:
+        crud.create_movie(api_id=movie['id'], event_id=event_id)
+
+    for email in emails:
+        # host_email = session['current_user_email']
+        host_email = identity['email']
+
+        message = Mail(
+        from_email='moviedatecapstone@gmail.com',
+        to_emails=email,
+        subject=f'Please RSVP: Movie Date on {event.event_at.date()} at {event.event_at.time()}',
+        html_content="""\
+          <html>
+            <head></head>
+            <body>
+              <p>{host_email} has invited you to join a movie date on {event_date} at {event_time}. 
+              Please click on the link {url} to RSVP and view event details with your email and Access Key {key}
+              </p>
+            </body>
+          </html>
+          """.format(event_date=event.event_at.date(), event_time=event.event_at.time(), host_email=host_email, url=request.url_root, key=event.key)
+        )
+
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+        print(response.status_code, response.body, response.headers)
+
+    return jsonify(event)
+
+
+@app.route('/api/events/<event_id>/rsvp', methods=['POST'])
+@jwt_required()
+def update_rsvp(event_id):
+    """Update rsvp response"""
+
+    res = request.json.get('rsvp')
+
+    identity = get_jwt_identity()
+
+    if session.get('current_user_email'):
+        email = session.get('current_user_email')
+    else:
+        email = session.get('invitee_user_email')
+    
+    participant = crud.get_participant_by_email_and_event_id(email, event_id)
+
+    stmt = update(crud.Participant).where(crud.Participant.participant_id==participant.participant_id).values(RSVP=res)
+
+    db.session.execute(stmt)
+    db.session.commit()
+
+    return "success"
+
+
+@app.route('/api/vote-update', methods=['POST'])
+@jwt_required()
+def update_vote():
+    """Update voting count for a movie"""
+
+    api_id = request.json.get('apiId')
+
+    event_id = request.json.get('eventId')
+
+    movie = crud.get_movie_by_event_id_and_api_id(event_id, api_id)
+
+    crud.update_vote_for_movie(movie)
+
+    db.session.commit()
+
+    return jsonify(movie.vote_count)
+
+
+# below are ROUTES for MVP-no react version
 
 # @app.route('/')
 # def index():
@@ -219,139 +383,6 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=36000000)
 #     return redirect ("/")
 
 
-@app.route('/api/search-movies', methods=['POST'])
-@jwt_required()
-def get_search_result():
-    """Get search results."""
-    
-    movie_keyword = request.json.get('keyword')
-    
-    payload = {'query': {movie_keyword},
-            'api_key': os.environ['API_KEY']}
-
-    res = requests.get('https://api.themoviedb.org/3/search/movie', params=payload)
-
-    movies = res.json()
-
-    # return a list of movie json objects that has poster
-    return jsonify([movie for movie in movies["results"] if movie["poster_path"] != None])
-
-
-
-@app.route('/api/events/<event_id>/rsvp', methods=['POST'])
-@jwt_required()
-def update_rsvp(event_id):
-    """Update rsvp response"""
-
-    res = request.json.get('rsvp')
-
-    if session.get('current_user_email'):
-        email = session.get('current_user_email')
-    else:
-        email = session.get('invitee_user_email')
-    
-    participant = crud.get_participant_by_email_and_event_id(email, event_id)
-
-    stmt = update(crud.Participant).where(crud.Participant.participant_id==participant.participant_id).values(RSVP=res)
-
-    db.session.execute(stmt)
-    db.session.commit()
-
-    return "success"
-
-
-@app.route('/api/vote-update', methods=['POST'])
-@jwt_required()
-def update_vote():
-    """Update voting count for a movie"""
-
-    api_id = request.json.get('apiId')
-
-    event_id = request.json.get('eventId')
-
-    movie = crud.get_movie_by_event_id_and_api_id(event_id, api_id)
-
-    crud.update_vote_for_movie(movie)
-
-    db.session.commit()
-
-    return jsonify(movie.vote_count)
-
-
-@app.route('/api/create-event', methods=['POST'])
-@jwt_required()
-def api_create_event():
-    identity = get_jwt_identity()
-    # user_email = session['current_user_email']
-    title = request.json.get('title')
-    date = request.json.get('date')
-    time = request.json.get('time')
-    movies = request.json.get('movieList')
-    emails = request.json.get('emails')
-
-    datetime_object = datetime.strptime(f'{date} {time}', '%Y-%m-%d %H:%M')
-    
-    event = crud.create_event_with_emails(user_email=identity['email'], event_at=datetime_object, title=title, emails=emails)
-
-    event_id = event.event_id
-
-    for movie in movies:
-        crud.create_movie(api_id=movie['id'], event_id=event_id)
-
-    for email in emails:
-        # host_email = session['current_user_email']
-        host_email = identity['email']
-
-        message = Mail(
-        from_email='moviedatecapstone@gmail.com',
-        to_emails=email,
-        subject=f'Please RSVP: Movie Date on {event.event_at.date()} at {event.event_at.time()}',
-        html_content="""\
-          <html>
-            <head></head>
-            <body>
-              <p>{host_email} has invited you to join a movie date on {event_date} at {event_time}. 
-              Please click on the link {url} to RSVP and view event details with your email and Access Key {key}
-              </p>
-            </body>
-          </html>
-          """.format(event_date=event.event_at.date(), event_time=event.event_at.time(), host_email=host_email, url=request.url_root, key=event.key)
-        )
-
-        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-        response = sg.send(message)
-        print(response.status_code, response.body, response.headers)
-
-    return jsonify(event)
-
-@app.route('/api/token', methods=['POST'])
-def create_token():
-    """Create token for user login."""
-
-    email = request.json.get('email')
-    password = request.json.get('password')
-
-    user = crud.get_user_by_email(email)
-    if not user or user.password != password:
-        return ({"msg": "Invalid email or password"}), 401
-    
-    access_token = create_access_token(identity={'id': user.user_id, 'email': user.email})
-    print(access_token)
-    return jsonify(access_token=access_token)
-
-
-@app.route('/api/logout', methods=['POST'])
-def api_logout():
-    """Log user out."""
-
-    response = jsonify({"msg": "logout successful"})
-    unset_jwt_cookies(response)
-    return response
-
-@app.route('/') 
-def home():
-
-    return render_template('index.html')
 
 
 if __name__ == "__main__":

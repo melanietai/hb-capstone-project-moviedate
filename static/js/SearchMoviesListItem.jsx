@@ -30,6 +30,6 @@ const SearchMoviesListItem = (props) => {
       </div>
     </div>
   )
-}
+};
 
 

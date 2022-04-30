@@ -4,6 +4,8 @@ const Login = (props) => {
     password: ''
   });
 
+  const switchToSignup = props.switchToSignup;
+
   const onLoginButtonClick = (evt) => {
     evt.preventDefault();
     fetch('/api/token', {
@@ -38,25 +40,28 @@ const Login = (props) => {
     }))
   };
 
-  return (
-    <div className="login-wrapper">
-      <h1>Login</h1>
-      <form className="login">
-        <input onChange={handleChange}
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={login.email}
-          required />
-        <input onChange={handleChange}
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={login.password}
-          required />
 
-        <button onClick={onLoginButtonClick}>Submit</button>
-      </form>
-    </div>
-  );
+
+  return (
+      <div className="login-wrapper">
+        <h2>Please login to continue.</h2>
+        <form className="login">
+          <input onChange={handleChange}
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={login.email}
+            />
+          <input onChange={handleChange}
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={login.password}
+            />
+          {/* <a href="#">Forget your password</a> */}
+          <button onClick={onLoginButtonClick}>Login</button>
+          Don't have an account?<a href="#" onClick={switchToSignup}>Signup</a>
+        </form>
+      </div>
+  )
 };

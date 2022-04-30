@@ -46,5 +46,5 @@ const SearchMovies = (props) => {
       </ul>
     </div>
   )
-}
+};
 

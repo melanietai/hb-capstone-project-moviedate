@@ -10,5 +10,5 @@ const EventMovieList = (props) => {
       </ol>
     </div>
   )
-}
+};
 

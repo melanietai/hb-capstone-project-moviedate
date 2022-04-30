@@ -9,22 +9,20 @@ const App = () => {
   let children;
   if (!token && token!=="" &&token!== undefined) {
     console.log('render login');
-    children = <Login setToken={setToken} />
+    children = (<Index setToken={setToken} />)
   } else {
     console.log('render routes');
     children = (
       <div className="App-menu">
-        {/* <ol>
-          <li><Link to="/">Login</Link></li>
-          <li><Link to="/page1">Create Event</Link></li>
-          {/* <li><Link to="/page2">Events</Link></li>
-          <li><Link to="/page3">Event Details</Link></li> */}
-        {/* </ol> */}
+        <ol>
+          <li><Link to="/">Create event</Link></li>
+          <li><Link to="/page1">Events</Link></li>
+          <li><Link to="/page2">Event Details</Link></li>
+        </ol>
         <Switch>
             <Route exact path="/" component={CreateEvent}></Route>
-            <Route path="/page1" component={CreateEvent}></Route>
-            {/* <Route path="/page2" element={<Event token={token} setToken={setToken}/>}></Route>
-            <Route path="/page3" element={<EventDetails token={token} setToken={setToken}/>}></Route> */}
+            <Route exact path="/page1" component={Events}></Route>
+            <Route exact path="/page2" component={EventDetails}></Route>
         </Switch>
       </div>
     );

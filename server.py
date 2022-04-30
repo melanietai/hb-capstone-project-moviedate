@@ -163,6 +163,32 @@ def api_create_event():
     return jsonify(event)
 
 
+@app.route('/api/events')
+@jwt_required()
+def show_events():
+    """Show all events"""
+
+    identity = get_jwt_identity()
+
+    user = crud.get_user_by_email(identity['email'])
+    events = crud.get_events_by_user_id(user.user_id)
+
+    return jsonify(events)
+
+
+@app.route('/api/movies/<api_id>')
+@jwt_required()
+def show_movie(api_id):
+    """Show movie associated with api_id"""
+
+    payload = {'api_key': os.environ['API_KEY']}
+
+    res = requests.get(f'https://api.themoviedb.org/3/movie/{api_id}', params=payload)
+    movie = res.json()
+    
+    return jsonify(movie)
+
+
 @app.route('/api/events/<event_id>/rsvp', methods=['POST'])
 @jwt_required()
 def update_rsvp(event_id):

@@ -15,14 +15,14 @@ const Events = () => {
         setEvents(data);
       });
     }
-  }, []);
+  }, [token]);
 
  
 
   return (
     <div>
       {
-        events.map(event => <EventsListItem key={event.id} event={event} />)
+        events.map(event => <EventsListItem key={event.event_id} event={event} />)
       }
     </div>
   );

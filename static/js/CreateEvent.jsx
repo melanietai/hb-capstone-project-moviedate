@@ -6,7 +6,7 @@ const CreateEvent = () => {
   const [emails, setEmails] = useState(['']);
   const [eventMovieList, setEventMovieList] = useState([]);
   const { token } = useToken();
-  
+  console.log('hello create event');
   
   const onSubmit = (evt) => {
     evt.preventDefault();
@@ -78,7 +78,7 @@ const CreateEvent = () => {
   return (
     <div className="create-event-container">
       <p>Search for movies to watch with your friends. Add up to 5 movies to your event.</p>
-      <SearchMovies key="searchMovies" addMovieButtonClick={addMovieButtonClick} eventMovieList={eventMovieList} />
+      <SearchMovies addMovieButtonClick={addMovieButtonClick} eventMovieList={eventMovieList} />
       <form onSubmit={onSubmit}>
         <EventAt onTitleChange={onTitleChange} onTimeChange={onTimeChange} onDateChange={onDateChange} />
         <EventEmails emails={emails} onEmailChange={onEmailChange} onAddEmailButtonClick={onAddEmailButtonClick}/>

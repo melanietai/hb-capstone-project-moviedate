@@ -14,15 +14,15 @@ const App = () => {
     console.log('render routes');
     children = (
       <div className="App-menu">
-        <ol>
+        {/* <ol>
           <li><Link to="/">Login</Link></li>
           <li><Link to="/page1">Create Event</Link></li>
           {/* <li><Link to="/page2">Events</Link></li>
           <li><Link to="/page3">Event Details</Link></li> */}
-        </ol>
+        {/* </ol> */}
         <Switch>
-            <Route exact path="/" element={<CreateEvent token={token} setToken={setToken}/>}></Route>
-            <Route path="/page1" element={<CreateEvent token={token} setToken={setToken}/>}></Route>
+            <Route exact path="/" component={CreateEvent}></Route>
+            <Route path="/page1" component={CreateEvent}></Route>
             {/* <Route path="/page2" element={<Event token={token} setToken={setToken}/>}></Route>
             <Route path="/page3" element={<EventDetails token={token} setToken={setToken}/>}></Route> */}
         </Switch>

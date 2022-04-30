@@ -1,4 +1,4 @@
-const EventDetails = (props) => {
+const EventsListItemDetails = (props) => {
 
   const event = props.event;
 

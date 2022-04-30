@@ -23,7 +23,7 @@ const EventsListItem = (props) => {
   return(
     <div>
       <MoviePoster apiId={apiId}/>
-      <EventsListItemDetails event={event}/>
+      <ShowEventDetails event={event}/>
     </div>
   );
 

@@ -23,7 +23,7 @@ const App = () => {
         <Switch>
             <Route exact path="/" component={CreateEvent}></Route>
             <Route exact path="/page1" component={Events}></Route>
-            {/* <Route exact path="/page2" component={EventDetails}></Route> */}
+            <Route exact path="/page2" component={ShowEvent}></Route>
             <Route exact path="/page3" component={Index}></Route>
         </Switch>
       </div>

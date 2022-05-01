@@ -58,7 +58,7 @@ def api_create_token():
     if not user or user.password != password:
         return ({"msg": "Invalid email or password"}), 401
     
-    access_token = create_access_token(identity={'id': user.user_id, 'email': user.email, 'fname': user.fname, 'lname': user.lname})
+    access_token = create_access_token(identity={'id': user.user_id, 'email': user.email})
     print(f'********{access_token}**********')
     return jsonify(access_token=access_token)
 
@@ -114,21 +114,22 @@ def api_create_event():
     time = request.json.get('time')
     movies = request.json.get('movieList')
     emails = request.json.get('emails')
+    current_user = crud.get_user_by_id(identity['id'])
 
     datetime_object = datetime.strptime(f'{date} {time}', '%Y-%m-%d %H:%M')
     
-    event = crud.create_event_with_emails(user_email=identity['email'], event_at=datetime_object, title=title, emails=emails)
+    event = crud.create_event_with_emails(user_email=current_user.email, event_at=datetime_object, title=title, emails=emails)
 
     event_id = event.event_id
 
     for movie in movies:
         crud.create_movie(api_id=movie['id'], event_id=event_id)
-
+    host_email = current_user.email
+    host_fname = current_user.fname
+    host_lname = current_user.lname
     for email in emails:
         # host_email = session['current_user_email']
-        host_email = identity['email']
-        host_fname = identity['fname']
-        host_lname = identity['lname']
+
         url = url_for('show_user_event', _external=True, event_key=event.key, email=email)
         message = Mail(
         from_email='moviedatecapstone@gmail.com',
@@ -136,14 +137,14 @@ def api_create_event():
         subject=f'Please RSVP: Movie Date on {event.event_at.date()} at {event.event_at.time()}',
         html_content="""\
           <html>
-            <head><{host_fname} {host_lname} has invited to a movie date!/head>
             <body>
+              <p>{host_fname} {host_lname} has invited to a movie date!</p>
               <p>{host_email} has invited you to join a movie date on {event_date} at {event_time}. 
               Please click on the link {url} to RSVP and view event details with your email and Access Key {key}
               </p>
             </body>
           </html>
-          """.format(event_date=event.event_at.date(), event_time=event.event_at.time(), host_email=host_email, url=url, key=event.key)
+          """.format(event_date=event.event_at.date(), host_fname=host_fname, host_lname=host_lname, event_time=event.event_at.time(), host_email=host_email, url=url, key=event.key)
         )
 
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))

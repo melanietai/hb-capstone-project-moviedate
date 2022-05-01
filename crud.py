@@ -48,9 +48,9 @@ def create_event(event_at, title):
     return Event(title=title, event_at=event_at, key=key)
 
 
-def create_participant(email, is_host, RSVP, event_id, user_id):
+def create_participant(email, is_host, RSVP, event_id, user_id, voted):
 
-    return Participant(email=email, is_host=is_host, RSVP=RSVP, event_id=event_id, user_id=user_id)
+    return Participant(email=email, is_host=is_host, RSVP=RSVP, event_id=event_id, user_id=user_id, voted=voted)
 
 def get_participant_by_email_and_event_id(email, event_id):
 
@@ -62,7 +62,7 @@ def create_event_with_emails(user_email, event_at, title, emails):
     db.session.add(event)
     db.session.flush()
     user = get_user_by_email(user_email)
-    host = create_participant(email=user_email, is_host=True, RSVP=True, event_id=event.event_id, user_id=user.user_id)
+    host = create_participant(email=user_email, is_host=True, RSVP=True, event_id=event.event_id, user_id=user.user_id, voted=False)
     db.session.add(host)
     for email in emails:
         # check if email is associated with existing user account
@@ -72,7 +72,7 @@ def create_event_with_emails(user_email, event_at, title, emails):
         else:
             user_id = None
 
-        invitee = create_participant(email, is_host=False, RSVP=None, event_id=event.event_id, user_id=user_id)
+        invitee = create_participant(email, is_host=False, RSVP=None, event_id=event.event_id, user_id=user_id, voted=False)
         db.session.add(invitee)
     db.session.commit()
 

@@ -86,7 +86,8 @@ class Participant(db.Model):
     participant_id: int
     email: str  
     is_host: bool   
-    RSVP: bool  
+    RSVP: bool
+    voted: bool  
     event_id: int
 
     __tablename__ = "participants"
@@ -95,6 +96,7 @@ class Participant(db.Model):
     email = db.Column(db.String, nullable=False)
     is_host = db.Column(db.Boolean, default=False)
     RSVP = db.Column(db.Boolean) #default is null = not yet replied?
+    voted = db.Column(db.Boolean)
     event_id = db.Column(db.Integer, db.ForeignKey("events.event_id"))
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
 

@@ -6,12 +6,17 @@ const App = () => {
   const Switch = ReactRouterDOM.Route;
   const Router = ReactRouterDOM.BrowserRouter;
   
+  const onLogoutClick = (evt) => {
+    evt.preventDefault();
+    removeToken();
+  };
+
   let children;
   if (!token && token!=="" &&token!== undefined) {
     console.log('render login');
     children = (
         <Switch>
-            <Route exact path="/" element={<Index setToken={setToken} />}></Route>
+            <Route exact path="/" render={() => <Index setToken={setToken} />}></Route>
             <Route path="/events/:eventKey" component={ShowEvent}></Route>
         </Switch>
     );
@@ -22,7 +27,7 @@ const App = () => {
         <ol>
           <li><Link to="/">Create event</Link></li>
           <li><Link to="/events">Events</Link></li>
-          <li><Link to="/page3">Logout</Link></li>
+          <li><a href="#" onClick={onLogoutClick}>Logout</a></li>
         </ol>
         <Switch>
             <Route exact path="/" component={CreateEvent}></Route>
@@ -39,7 +44,6 @@ const App = () => {
     <Router>
       <div className="App">
         <h1>Welcome to the Movie Date!</h1>
-        <Logout token={removeToken}/>
         {children}
       </div>
     </Router>

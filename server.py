@@ -58,7 +58,7 @@ def api_create_token():
     if not user or user.password != password:
         return ({"msg": "Invalid email or password"}), 401
     
-    access_token = create_access_token(identity={'id': user.user_id, 'email': user.email})
+    access_token = create_access_token(identity={'id': user.user_id, 'email': user.email, 'fname': user.fname, 'lname': user.lname})
     print(f'********{access_token}**********')
     return jsonify(access_token=access_token)
 
@@ -85,15 +85,6 @@ def api_register_user():
         flash('Account created! Please log in.')
 
     return jsonify({"msg": "Account created"})
-
-
-@app.route('/api/logout', methods=['POST'])
-def api_logout():
-    """Log user out."""
-
-    response = jsonify({"msg": "Logout successful"})
-    unset_jwt_cookies(response)
-    return response
 
 
 @app.route('/api/search-movies', methods=['POST'])
@@ -136,6 +127,8 @@ def api_create_event():
     for email in emails:
         # host_email = session['current_user_email']
         host_email = identity['email']
+        host_fname = identity['fname']
+        host_lname = identity['lname']
         url = url_for('show_user_event', _external=True, event_key=event.key, email=email)
         message = Mail(
         from_email='moviedatecapstone@gmail.com',
@@ -143,7 +136,7 @@ def api_create_event():
         subject=f'Please RSVP: Movie Date on {event.event_at.date()} at {event.event_at.time()}',
         html_content="""\
           <html>
-            <head></head>
+            <head><{host_fname} {host_lname} has invited to a movie date!/head>
             <body>
               <p>{host_email} has invited you to join a movie date on {event_date} at {event_time}. 
               Please click on the link {url} to RSVP and view event details with your email and Access Key {key}

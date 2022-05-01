@@ -14,7 +14,9 @@ const EventsListItem = (props) => {
           'Content-Type': 'application/json',
         },
       }).then(res => res.json()).then(movies => {
-        setApiId(movies[0].api_id);
+        if (movies && movies.length > 0) {
+          setApiId(movies[0].api_id);
+        }
       });
     }
   }, [eventId]);

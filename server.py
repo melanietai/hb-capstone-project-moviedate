@@ -7,7 +7,7 @@ to events page, and voting for movies.
 """
 
 from http.client import HTTPException
-from flask import (Flask, render_template, redirect, flash, jsonify, request, session, abort)
+from flask import (Flask, render_template, redirect, flash, jsonify, request, session, abort, url_for)
 import jinja2
 from model import connect_to_db, db
 import crud
@@ -136,7 +136,7 @@ def api_create_event():
     for email in emails:
         # host_email = session['current_user_email']
         host_email = identity['email']
-
+        url = url_for('show_user_event', _external=True, event_key=event.key, email=email)
         message = Mail(
         from_email='moviedatecapstone@gmail.com',
         to_emails=email,
@@ -150,7 +150,7 @@ def api_create_event():
               </p>
             </body>
           </html>
-          """.format(event_date=event.event_at.date(), event_time=event.event_at.time(), host_email=host_email, url=request.url_root, key=event.key)
+          """.format(event_date=event.event_at.date(), event_time=event.event_at.time(), host_email=host_email, url=url, key=event.key)
         )
 
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
@@ -158,6 +158,14 @@ def api_create_event():
         print(response.status_code, response.body, response.headers)
 
     return jsonify(event)
+
+@app.route('/api/profile')
+@jwt_required()
+def show_profile():
+    """Show user profile"""
+    identity = get_jwt_identity()
+    user = crud.get_user_by_email(identity['email'])
+    return jsonify(user)
 
 
 @app.route('/api/events')
@@ -429,6 +437,10 @@ def update_vote():
 # @app.route('/') 
 # def home():
 #     return render_template('index.html')
+
+@app.route('/events/<event_key>')
+def show_user_event(event_key):
+    return render_template('index.html')
     
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')

@@ -9,7 +9,12 @@ const App = () => {
   let children;
   if (!token && token!=="" &&token!== undefined) {
     console.log('render login');
-    children = (<Index setToken={setToken} />)
+    children = (
+        <Switch>
+            <Route exact path="/" element={<Index setToken={setToken} />}></Route>
+            <Route path="/events/:eventKey" component={ShowEvent}></Route>
+        </Switch>
+    );
   } else {
     console.log('render routes');
     children = (

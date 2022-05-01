@@ -91,9 +91,11 @@ def get_events_by_user_id(user_id):
 
 
 def get_event_by_event_id(event_id):
-
     return Event.query.filter(Event.event_id == event_id).first()
 
+
+def get_event_by_event_key(event_key):
+    return Event.query.filter(Event.key == event_key).first()
 
 def get_event_by_email_and_key(email, key):
     event = (

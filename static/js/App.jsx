@@ -5,7 +5,7 @@ const App = () => {
   // const Routes = ReactRouterDOM.Routes;
   const Switch = ReactRouterDOM.Route;
   const Router = ReactRouterDOM.BrowserRouter;
-
+  
   let children;
   if (!token && token!=="" &&token!== undefined) {
     console.log('render login');
@@ -16,14 +16,13 @@ const App = () => {
       <div className="App-menu">
         <ol>
           <li><Link to="/">Create event</Link></li>
-          <li><Link to="/page1">Events</Link></li>
-          <li><Link to="/page2">Event Details</Link></li>
+          <li><Link to="/events">Events</Link></li>
           <li><Link to="/page3">Logout</Link></li>
         </ol>
         <Switch>
             <Route exact path="/" component={CreateEvent}></Route>
-            <Route exact path="/page1" component={Events}></Route>
-            <Route exact path="/page2" component={ShowEvent}></Route>
+            <Route exact path="/events" component={Events}></Route>
+            <Route exact path="/events/:eventKey" component={ShowEvent}></Route>
             <Route exact path="/page3" component={Index}></Route>
         </Switch>
       </div>

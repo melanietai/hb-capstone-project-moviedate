@@ -44,10 +44,7 @@ jwt = JWTManager(app)
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=36000000)
 
 
-@app.route('/') 
-def home():
 
-    return render_template('index.html')
 
 
 @app.route('/api/token', methods=['POST'])
@@ -429,7 +426,14 @@ def update_vote():
 #     return redirect ("/")
 
 
-
+# @app.route('/') 
+# def home():
+#     return render_template('index.html')
+    
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def home(path):
+    return render_template('index.html')
 
 if __name__ == "__main__":
     # DebugToolbarExtension(app)

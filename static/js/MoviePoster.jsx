@@ -1,5 +1,5 @@
 const MoviePoster = (props) => {
-  const { token } = useToken();
+  // const { token } = useToken();
   const [movie, setMovie] = React.useState([]);
 
   const apiId = props.apiId;
@@ -9,7 +9,7 @@ const MoviePoster = (props) => {
       fetch(`/api/movie/${apiId}`, {
         method: 'GET',
         headers: {
-          Authorization: 'Bearer ' + token,
+          // Authorization: 'Bearer ' + token,
           'Content-Type': 'application/json',
         },
       }).then(res => res.json()).then(data => {

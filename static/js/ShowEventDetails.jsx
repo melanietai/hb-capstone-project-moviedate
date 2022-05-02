@@ -1,5 +1,5 @@
 const ShowEventDetails = (props) => {
-  const Link = ReactRouterDOM.Link;
+  // const Link = ReactRouterDOM.Link;
   const event = props.event;
 
 

@@ -4,7 +4,6 @@ const useLocation = ReactRouterDOM.useLocation;
 
 const ShowEvent = (props) => {
   const { token } = useToken();
-  // get event from ShowEventDetails component
   const [event, setEvent] = useState();
   const [movies, setMovies] = useState([]);
   const [user, setUser] = useState();
@@ -54,7 +53,7 @@ const ShowEvent = (props) => {
       fetch(`/api/events/${eventKey}`, {
         method: 'GET',
         headers: {
-          Authorization: 'Bearer ' + token,
+          // Authorization: 'Bearer ' + token,
           'Content-Type': 'application/json',
         },
       }).then(res => res.json()).then(data => {
@@ -101,7 +100,7 @@ const ShowEvent = (props) => {
         {participant ? <ShowUpdateRsvpForm participant={participant} eventKey={eventKey} onRsvp={onRsvp} /> : null}
       </div>
       <div>
-        {/* <ShowVotingForm participants={participants} movies={movies}/> */}
+        <ShowVotingForm participant={participant} movies={movies} eventKey={eventKey}/>
       </div>
       <div>
         {/* {movies.map(movie => <ShowMovieDetails key={movie.movie_id} movies={movies}/>)} */}

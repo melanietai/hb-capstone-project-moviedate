@@ -1,6 +1,6 @@
 const ShowUpdateRsvpForm = (props) => {
   const { participant, eventKey, onRsvp } = props;
-  const [rsvp, setRsvp] = useState(participant.RSVP);
+  const [rsvp, setRsvp] = React.useState(participant.RSVP);
 
   const handleChange = (evt) => {
     setRsvp(evt.target.value == 'yes');

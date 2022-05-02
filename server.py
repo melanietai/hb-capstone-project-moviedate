@@ -46,7 +46,6 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=36000000)
 
 
 
-
 @app.route('/api/token', methods=['POST'])
 def api_create_token():
     """Create token for user login."""
@@ -185,7 +184,7 @@ def show_event(event_key):
     return jsonify({'event': event, 'participants': participants})
 
 @app.route('/api/movies/<event_id>')
-@jwt_required()
+# @jwt_required()
 def show_movies(event_id):
     """Show all movies from an event"""
 
@@ -197,7 +196,7 @@ def show_movies(event_id):
 
 
 @app.route('/api/movie/<api_id>')
-@jwt_required()
+# @jwt_required()
 def show_movie(api_id):
     """Show movie associated with api_id"""
 
@@ -227,22 +226,28 @@ def update_rsvp(event_key):
     return jsonify(participant)
 
 
-@app.route('/api/vote-update', methods=['POST'])
-@jwt_required()
-def update_vote():
+@app.route('/api/events/<event_key>/vote-update', methods=['POST'])
+# @jwt_required()
+def update_vote(event_key):
     """Update voting count for a movie"""
 
-    api_id = request.json.get('apiId')
+    api_ids = request.json.get('apiIdList')
 
-    event_id = request.json.get('eventId')
+    event = crud.get_event_by_event_key(event_key)
+    event_id = event.event_id
 
-    movie = crud.get_movie_by_event_id_and_api_id(event_id, api_id)
+    movie_list = []
 
-    crud.update_vote_for_movie(movie)
+    for api_id in api_ids:
+        movie = crud.get_movie_by_event_id_and_api_id(event_id, api_id)
 
-    db.session.commit()
+        crud.update_vote_for_movie(movie)
 
-    return jsonify(movie.vote_count)
+        db.session.commit()
+        db.session.refresh(movie)
+        movie_list.append(movie)
+
+    return jsonify(movie_list)
 
 
 # below are ROUTES for MVP-no react version
@@ -436,7 +441,21 @@ def show_user_event(event_key):
 def home(path):
     return render_template('index.html')
 
+@app.after_request
+def add_header(r):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
+
 if __name__ == "__main__":
     # DebugToolbarExtension(app)
     connect_to_db(app)
+
+
     app.run(debug=True, host="0.0.0.0")

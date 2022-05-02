@@ -88,6 +88,20 @@ const ShowEvent = (props) => {
       return [...prevParticipants.slice(0, index), participant, ... prevParticipants.slice(index + 1)];
     });
   };
+  
+  const onVotedList = (votedList) => {
+    for (const movie of votedList) {
+      const index = movies.findIndex(m => m.api_id == movie.api_id);
+      setMovies((prevMovies) => {
+        return [...prevMovies.slice(0, index), movie, ... prevMovies.slice(index + 1)];
+      })
+    }
+  }
+
+  for (const movie of movies) {
+    console.log(movie.vote_count);
+  }
+  
   return (
     <div>
       <div>
@@ -100,7 +114,7 @@ const ShowEvent = (props) => {
         {participant ? <ShowUpdateRsvpForm participant={participant} eventKey={eventKey} onRsvp={onRsvp} /> : null}
       </div>
       <div>
-        <ShowVotingForm participant={participant} movies={movies} eventKey={eventKey}/>
+        <ShowVotingForm participant={participant} movies={movies} eventKey={eventKey} onVotedList={onVotedList} />
       </div>
       <div>
         {/* {movies.map(movie => <ShowMovieDetails key={movie.movie_id} movies={movies}/>)} */}

@@ -1,19 +1,14 @@
 const ShowVotingForm = (props) => {
-  const { participant, movies, eventKey } = props;
+  const { participant, movies, eventKey, onVotedList } = props;
   const [apiIdList, setApiIdList] = React.useState([]);
-  const [addVote, setAddVote] = React.useState([]);
 
   const apiIds = [];
 
-  console.log('ha');
   for (const movie of movies) {
     apiIds.push(movie.api_id);
   }
   console.log(apiIdList);
   const handleChange = (evt) => {
-    console.log(evt);
-    console.log(evt.target.value);
-    console.log('test');
     const val = evt.target.value;
     setApiIdList((prevapiIdList) => [...prevapiIdList, val]);
   }
@@ -30,10 +25,11 @@ const ShowVotingForm = (props) => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
-        setAddVote(data);
+        console.log(`response: ${data}`);
+        onVotedList(data);
       });
   };
+
 
   return (
     <div>

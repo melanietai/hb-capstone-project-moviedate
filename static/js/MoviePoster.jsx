@@ -13,6 +13,7 @@ const MoviePoster = (props) => {
           'Content-Type': 'application/json',
         },
       }).then(res => res.json()).then(data => {
+        console.log(`response: ${data}`);
         setMovie(data);
       });
     }

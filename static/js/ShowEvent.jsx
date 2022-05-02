@@ -10,6 +10,7 @@ const ShowEvent = (props) => {
   const [user, setUser] = useState();
   const { eventKey } = useParams();
   const { search } = useLocation();
+  const [participants, setParticipants] = useState([]);
   let userEmail = null;
   if (user) {
     userEmail = user.email;
@@ -42,6 +43,7 @@ const ShowEvent = (props) => {
         },
       }).then(res => res.json()).then(event => {
         setEvent(event);
+        setParticipants(event.participants);
       });
     }
   }, [eventKey]);
@@ -63,27 +65,35 @@ const ShowEvent = (props) => {
   if (!event) {
     return <div>Loading</div>;
   }
-
+  
   return (
     <div>
       <div>
         <ShowEventDetails event={event} />
       </div>
       <div>
-        {/* <RsvpStatus eventParticipants={event.participants}/> */}
+        {participants.map(participant => <ShowParticipantStatus key={participant.participant_id} participant={participant} event={event} />)}
       </div>
       <div>
-        {movies.map(movie => {
-        return (
-          <div  key={movie.movie_id}>
-            <MoviePoster apiId={movie.api_id}/>
-            {/* <MovieDetails apiId={movie.api_id}/>
-            <VotingStatus voteCount={movie.vote_count}/> */}
-          </div>
-        )})
-        }
-        
+        <ShowUpdateRsvpForm participants={participants} userEmail = {userEmail}/>
+      </div>
+      <div>
+        <ShowVotingForm participants={participants} movies={movies}/>
+      </div>
+      <div>
+        {movies.map(movie => <ShowMovieDetails key={movie.movie_id} movies={movies}/>)}
       </div>
     </div>
   );
 };
+
+
+/* {movies.map(movie => {
+  return (
+    <div  key={movie.movie_id}>
+      <MoviePoster apiId={movie.api_id}/>
+      {/* <MovieDetails apiId={movie.api_id}/>
+      <VotingStatus voteCount={movie.vote_count}/> */
+    /* </div>
+  )})
+  } */

@@ -59,7 +59,6 @@ def api_create_token():
         return ({"msg": "Invalid email or password"}), 401
     
     access_token = create_access_token(identity={'id': user.user_id, 'email': user.email})
-    print(f'********{access_token}**********')
     return jsonify(access_token=access_token)
 
 

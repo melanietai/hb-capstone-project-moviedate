@@ -11,15 +11,22 @@ const ShowEvent = (props) => {
   const { eventKey } = useParams();
   const { search } = useLocation();
   const [participants, setParticipants] = useState([]);
+
   let userEmail = null;
   if (user) {
     userEmail = user.email;
+    console.log(user);
   } else if (search) {
     const query = Qs.parse(search.replace('?', ''));
+    console.log(query);
     userEmail = query.email;
+    console.log(query.email);
   }
+
   console.log(userEmail);
-  console.log(eventKey);
+  const participantIndex = participants.findIndex(p => p.email == userEmail);
+  const participant = participants.length > 0 ? participants[participantIndex] : null;
+
 
   React.useEffect(() => {
     fetch(`/api/profile`, {
@@ -28,8 +35,17 @@ const ShowEvent = (props) => {
         Authorization: 'Bearer ' + token,
         'Content-Type': 'application/json',
       },
-    }).then(res => res.json()).then(user => {
+    })
+    .then(res => {
+      if (res != 200) {
+        const error = new Error('no user');
+        throw error;
+      }
+      return res.json();
+    }).then(user => {
       setUser(user);
+    }).catch(error => {
+      console.log(error);
     });
   }, []);
 
@@ -66,16 +82,23 @@ const ShowEvent = (props) => {
     return <div>Loading</div>;
   }
   
+  const onRsvp = (participant) => {
+    const index = participants.findIndex(p => p.participant_id == participant.participant_id);
+
+    setParticipants((prevParticipants) => {
+      return [...prevParticipants.slice(0, index), participant, ... prevParticipants.slice(index + 1)];
+    });
+  };
   return (
     <div>
       <div>
         <ShowEventDetails event={event} />
       </div>
       <div>
-        {participants.map(participant => <ShowParticipantStatus key={participant.participant_id} participant={participant} event={event} />)}
+        {participants.map(participant => <ShowParticipantStatus  key={participant.participant_id} participant={participant} />)}
       </div>
       <div>
-        {/* <ShowUpdateRsvpForm participants={participants} userEmail = {userEmail}/> */}
+        {participant ? <ShowUpdateRsvpForm participant={participant} eventKey={eventKey} onRsvp={onRsvp} /> : null}
       </div>
       <div>
         {/* <ShowVotingForm participants={participants} movies={movies}/> */}

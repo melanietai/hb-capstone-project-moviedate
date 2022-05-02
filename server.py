@@ -176,7 +176,6 @@ def show_events():
     return jsonify(events)
 
 @app.route('/api/events/<event_key>')
-@jwt_required()
 def show_event(event_key):
     """Show all movies from an event"""
 
@@ -210,28 +209,22 @@ def show_movie(api_id):
     return jsonify(movie)
 
 
-@app.route('/api/events/<event_id>/rsvp', methods=['POST'])
-@jwt_required()
-def update_rsvp(event_id):
+@app.route('/api/events/<event_key>/rsvp', methods=['POST'])
+def update_rsvp(event_key):
     """Update rsvp response"""
 
     res = request.json.get('rsvp')
+    email = request.json.get('email')
 
-    identity = get_jwt_identity()
-
-    if session.get('current_user_email'):
-        email = session.get('current_user_email')
-    else:
-        email = session.get('invitee_user_email')
-    
-    participant = crud.get_participant_by_email_and_event_id(email, event_id)
+    event = crud.get_event_by_event_key(event_key)
+    participant = crud.get_participant_by_email_and_event_id(email, event.event_id)
 
     stmt = update(crud.Participant).where(crud.Participant.participant_id==participant.participant_id).values(RSVP=res)
 
     db.session.execute(stmt)
     db.session.commit()
-
-    return "success"
+    db.session.refresh(participant)
+    return jsonify(participant)
 
 
 @app.route('/api/vote-update', methods=['POST'])

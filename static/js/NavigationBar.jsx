@@ -3,7 +3,7 @@ const { Nav, Navbar, Container } = ReactBootstrap;
 const NavigationBar = (props) => {
 
   return (
-    <Navbar bg="info" variant="info" expand="lg">
+    <Navbar bg="info" expand="lg">
       <Container>
         <Navbar.Brand href="#home">Movie Date</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

@@ -1,3 +1,5 @@
+const { useHistory } = ReactRouterDOM;
+
 const CreateEvent = () => {
   const { useState } = React;
   const [title, setTitle] = useState("");
@@ -6,6 +8,8 @@ const CreateEvent = () => {
   const [emails, setEmails] = useState(['']);
   const [eventMovieList, setEventMovieList] = useState([]);
   const { token } = useToken();
+  const history = useHistory();
+
   console.log('hello create event');
   
   const onSubmit = (evt) => {
@@ -31,6 +35,7 @@ const CreateEvent = () => {
       .then(res => res.json())
       .then(data => {
         console.log(data);
+        history.push('/events');
       });
   }
 

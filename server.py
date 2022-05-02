@@ -179,8 +179,9 @@ def show_event(event_key):
     """Show all movies from an event"""
 
     event = crud.get_event_by_event_key(event_key)
+    participants = event.participants
 
-    return jsonify(event)
+    return jsonify({'event': event, 'participants': participants})
 
 @app.route('/api/movies/<event_id>')
 @jwt_required()

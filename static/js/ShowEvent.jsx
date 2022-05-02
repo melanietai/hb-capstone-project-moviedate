@@ -41,9 +41,9 @@ const ShowEvent = (props) => {
           Authorization: 'Bearer ' + token,
           'Content-Type': 'application/json',
         },
-      }).then(res => res.json()).then(event => {
-        setEvent(event);
-        setParticipants(event.participants);
+      }).then(res => res.json()).then(data => {
+        setEvent(data['event']);
+        setParticipants(data['participants']);
       });
     }
   }, [eventKey]);
@@ -75,13 +75,13 @@ const ShowEvent = (props) => {
         {participants.map(participant => <ShowParticipantStatus key={participant.participant_id} participant={participant} event={event} />)}
       </div>
       <div>
-        <ShowUpdateRsvpForm participants={participants} userEmail = {userEmail}/>
+        {/* <ShowUpdateRsvpForm participants={participants} userEmail = {userEmail}/> */}
       </div>
       <div>
-        <ShowVotingForm participants={participants} movies={movies}/>
+        {/* <ShowVotingForm participants={participants} movies={movies}/> */}
       </div>
       <div>
-        {movies.map(movie => <ShowMovieDetails key={movie.movie_id} movies={movies}/>)}
+        {/* {movies.map(movie => <ShowMovieDetails key={movie.movie_id} movies={movies}/>)} */}
       </div>
     </div>
   );

@@ -21,8 +21,16 @@ const Signup = (props) => {
       headers: {
         'Content-Type': 'application/json',
       },
-    }).then(res => res.json()).then(data => {
-      console.log('signup successful')
+    }).then(res => {
+      if (res.status != 200) {
+        const error = new Error();
+        error.response = res;
+        throw error;
+      }
+      return res.json();
+    }).then(data => {
+      console.log('signup successful');
+      props.setToken(data.access_token);
     }).catch((error) => {
       if (error.response) {
         console.log(error.response)

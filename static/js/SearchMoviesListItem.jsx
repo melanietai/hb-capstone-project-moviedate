@@ -25,7 +25,7 @@ const SearchMoviesListItem = (props) => {
         <form id={`add-movie-${movie.id}`} onSubmit={onSubmit}>
           <input type="hidden" id="movietitle" value={`${movie.original_title}`} />
           <input type="hidden" id="movieid" value={`${movie.id}`} />
-          <button type="submit" id="addmoviebtn" disabled={disableAddMovieButton}>Add movie to RSVP</button>
+          <button type="submit" id="addmoviebtn" disabled={disableAddMovieButton}>Add movie</button>
         </form>
       </div>
     </div>

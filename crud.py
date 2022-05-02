@@ -72,7 +72,7 @@ def create_event_with_emails(user_email, event_at, title, emails):
         else:
             user_id = None
 
-        invitee = create_participant(email, is_host=False, RSVP=None, event_id=event.event_id, user_id=user_id, voted=False)
+        invitee = create_participant(email, is_host=False, RSVP=None, event_id=event.event_id, user_id=user_id,)
         db.session.add(invitee)
     db.session.commit()
 
@@ -130,8 +130,12 @@ def get_movie_by_event_id_and_api_id(event_id, api_id):
 def update_vote_for_movie(movie):
 
     movie.vote_count += 1
+    db.session.commit()
 
+def update_voted_for_participant(participant):
 
+    participant.voted = True
+    db.session.commit()
 
 if __name__ == "__main__":
     from server import app

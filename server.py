@@ -232,18 +232,22 @@ def update_vote(event_key):
     """Update voting count for a movie"""
 
     api_ids = request.json.get('apiIdList')
+    participant = request.json.get('participant')
 
     event = crud.get_event_by_event_key(event_key)
     event_id = event.event_id
 
     movie_list = []
+    print('************votingstatus')
+    print(participant.voted)
+    print('************votingstatus')
+    crud.update_voted_for_participant(participant)
 
     for api_id in api_ids:
         movie = crud.get_movie_by_event_id_and_api_id(event_id, api_id)
 
         crud.update_vote_for_movie(movie)
 
-        db.session.commit()
         db.session.refresh(movie)
         movie_list.append(movie)
 

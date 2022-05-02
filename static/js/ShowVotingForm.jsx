@@ -18,7 +18,7 @@ const ShowVotingForm = (props) => {
 
     fetch(`/api/events/${eventKey}/vote-update`, {
       method: 'POST',
-      body: JSON.stringify({ "apiIdList": apiIdList }),
+      body: JSON.stringify({ "apiIdList": apiIdList, "participant": participant }),
       headers: {
         'Content-Type': 'application/json'
       },

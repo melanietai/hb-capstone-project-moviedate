@@ -13,7 +13,7 @@ const Index = (props) => {
   if (active == "login") {
     children = (<Login setToken={props.setToken} switchToSignup={switchToSignup}/>)
   } else {
-    children = (<Signup switchToLogin={switchToLogin}/>)
+    children = (<Signup setToken={props.setToken} switchToLogin={switchToLogin}/>)
   }
 
 

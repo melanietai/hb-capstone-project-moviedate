@@ -77,13 +77,15 @@ def api_register_user():
     user = crud.get_user_by_email(email)
 
     if user:
-        flash("Cannot create an account with that email. Try again.")
-    else:
-        user = crud.create_user(fname, lname, email, password)
-        
-        flash('Account created! Please log in.')
+        response = jsonify({'message': 'user already exists with the email'})
+        response.status_code = 400
+        return response
 
-    return jsonify({"msg": "Account created"})
+    user = crud.create_user(fname, lname, email, password)
+        
+    access_token = create_access_token(identity={'id': user.user_id, 'email': user.email})
+    return jsonify(access_token=access_token)
+
 
 
 @app.route('/api/search-movies', methods=['POST'])

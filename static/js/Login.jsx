@@ -18,13 +18,22 @@ const Login = (props) => {
       headers: {
         'Content-Type': 'application/json',
       },
-    }).then(res => res.json()).then(data => {
+    }).then(res => {
+      if (res.status != 200) {
+        const error = new Error();
+        error.response = res;
+        throw error;
+      }
+      return res.json();
+    }).then(data => {
+      console.log('login success');
+      console.log(data);
       props.setToken(data.access_token);
     }).catch((error) => {
       if (error.response) {
-        console.log(error.response)
-        console.log(error.response.status)
-        console.log(error.response.headers)
+        console.log(error.response);
+        console.log(error.response.status);
+        console.log(error.response.headers);
       }
     });
     setLogin({

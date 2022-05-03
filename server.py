@@ -208,6 +208,18 @@ def show_movie(api_id):
     return jsonify(movie)
 
 
+@app.route('/api/popularmovies')
+def popular_movies():
+    """Show popular movies"""
+
+    payload = {'api_key': os.environ['API_KEY']}
+
+    res = requests.get(f'https://api.themoviedb.org/3/movie/popular', params=payload)
+    movies = res.json()
+    
+    return jsonify([movie for movie in movies["results"] if movie["poster_path"] != None])
+
+
 @app.route('/api/events/<event_key>/rsvp', methods=['POST'])
 def update_rsvp(event_key):
     """Update rsvp response"""

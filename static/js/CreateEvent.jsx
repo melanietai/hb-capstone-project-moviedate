@@ -1,4 +1,4 @@
-const { useHistory } = ReactRouterDOM;
+const { useNavigate } = ReactRouterDOM;
 
 const CreateEvent = () => {
   const { useState } = React;
@@ -8,7 +8,7 @@ const CreateEvent = () => {
   const [emails, setEmails] = useState(['']);
   const [eventMovieList, setEventMovieList] = useState([]);
   const { token } = useToken();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   console.log('hello create event');
   
@@ -35,7 +35,7 @@ const CreateEvent = () => {
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        history.push('/events');
+        navigate('../events');
       });
   }
 

@@ -72,7 +72,7 @@ def create_event_with_emails(user_email, event_at, title, emails):
         else:
             user_id = None
 
-        invitee = create_participant(email, is_host=False, RSVP=None, event_id=event.event_id, user_id=user_id,)
+        invitee = create_participant(email, is_host=False, RSVP=None, event_id=event.event_id, user_id=user_id, voted=False)
         db.session.add(invitee)
     db.session.commit()
 
@@ -132,8 +132,8 @@ def update_vote_for_movie(movie):
     movie.vote_count += 1
     db.session.commit()
 
-def update_voted_for_participant(participant):
-
+def update_voted_for_participant_id(participant_id):
+    participant = Participant.query.filter(Participant.participant_id == participant_id).first()
     participant.voted = True
     db.session.commit()
 

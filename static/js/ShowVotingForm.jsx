@@ -1,7 +1,7 @@
 const ShowVotingForm = (props) => {
   const { participant, movies, eventKey, onVotedList } = props;
   const [apiIdList, setApiIdList] = React.useState([]);
-
+  console.log(`participant:${participant}`);
   const apiIds = [];
 
   for (const movie of movies) {
@@ -18,7 +18,7 @@ const ShowVotingForm = (props) => {
 
     fetch(`/api/events/${eventKey}/vote-update`, {
       method: 'POST',
-      body: JSON.stringify({ "apiIdList": apiIdList, "participant": participant }),
+      body: JSON.stringify({ "apiIdList": apiIdList, "participantId": participant.participant_id }),
       headers: {
         'Content-Type': 'application/json'
       },

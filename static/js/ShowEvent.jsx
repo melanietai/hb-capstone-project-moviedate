@@ -26,7 +26,7 @@ const ShowEvent = (props) => {
   console.log(userEmail);
   const participantIndex = participants.findIndex(p => p.email == userEmail);
   const participant = participants.length > 0 ? participants[participantIndex] : null;
-
+  console.log(`PARTICIPANT: ${participant}`);
 
   React.useEffect(() => {
     fetch(`/api/profile`, {
@@ -63,6 +63,8 @@ const ShowEvent = (props) => {
       });
     }
   }, [eventKey]);
+
+
 
   React.useEffect(() => {
     if (event) {
@@ -103,6 +105,15 @@ const ShowEvent = (props) => {
     console.log(movie.vote_count);
   }
 
+  const updateVotingStatus = (participant) => {
+    const index = participants.findIndex(p => p.participant_id == participant.participant_id);
+
+    setParticipants((prevParticipants) => {
+      const newParticipant = { ...participant, voted: true };
+      return [...prevParticipants.slice(0, index), newParticipant, ...prevParticipants.slice(index + 1)];
+    });
+  };
+
   return (
     <div>
       <div>
@@ -116,7 +127,7 @@ const ShowEvent = (props) => {
 
           <div>
             <ShowUpdateRsvpForm participant={participant} eventKey={eventKey} onRsvp={onRsvp} />
-            <ShowVotingForm participant={participant} movies={movies} eventKey={eventKey} onVotedList={onVotedList} />
+            <ShowVotingForm participant={participant} movies={movies} eventKey={eventKey} onVotedList={onVotedList} updateVotingStatus={updateVotingStatus} />
           </div> : null}
 
 

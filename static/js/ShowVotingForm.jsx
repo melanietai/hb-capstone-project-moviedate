@@ -1,5 +1,5 @@
 const ShowVotingForm = (props) => {
-  const { participant, movies, eventKey, onVotedList } = props;
+  const { participant, movies, eventKey, onVotedList, updateVotingStatus } = props;
   const [apiIdList, setApiIdList] = React.useState([]);
   console.log(`participant:${participant}`);
   const apiIds = [];
@@ -27,12 +27,15 @@ const ShowVotingForm = (props) => {
       .then(data => {
         console.log(`response: ${data}`);
         onVotedList(data);
+        updateVotingStatus(participant);
       });
   };
 
-
-  return (
-    <div>
+  let message;
+  if (participant.voted === true) {
+    message = (<div>You have successfuly voted! Thank you!</div>);
+  } else {
+    message = (
       <div>
         <form onSubmit={onSubmitButtonClick}>
           Which movie(s) do you vote for?
@@ -47,6 +50,13 @@ const ShowVotingForm = (props) => {
           <button type="submit">Submit Votes</button>
         </form>
       </div>
+    );
+  }
+
+
+  return (
+    <div>
+      {message}
     </div>
   );
 };

@@ -12,6 +12,7 @@ const ShowEvent = (props) => {
   const [participants, setParticipants] = useState([]);
 
   let userEmail = null;
+
   if (user) {
     userEmail = user.email;
     console.log(user);
@@ -35,17 +36,17 @@ const ShowEvent = (props) => {
         'Content-Type': 'application/json',
       },
     })
-    .then(res => {
-      if (res != 200) {
-        const error = new Error('no user');
-        throw error;
-      }
-      return res.json();
-    }).then(user => {
-      setUser(user);
-    }).catch(error => {
-      console.log(error);
-    });
+      .then(res => {
+        if (res.status != 200) {
+          const error = new Error('no user');
+          throw error;
+        }
+        return res.json();
+      }).then(user => {
+        setUser(user);
+      }).catch(error => {
+        console.log(error);
+      });
   }, []);
 
   React.useEffect(() => {
@@ -80,20 +81,20 @@ const ShowEvent = (props) => {
   if (!event) {
     return <div>Loading</div>;
   }
-  
+
   const onRsvp = (participant) => {
     const index = participants.findIndex(p => p.participant_id == participant.participant_id);
 
     setParticipants((prevParticipants) => {
-      return [...prevParticipants.slice(0, index), participant, ... prevParticipants.slice(index + 1)];
+      return [...prevParticipants.slice(0, index), participant, ...prevParticipants.slice(index + 1)];
     });
   };
-  
+
   const onVotedList = (votedList) => {
     for (const movie of votedList) {
       const index = movies.findIndex(m => m.api_id == movie.api_id);
       setMovies((prevMovies) => {
-        return [...prevMovies.slice(0, index), movie, ... prevMovies.slice(index + 1)];
+        return [...prevMovies.slice(0, index), movie, ...prevMovies.slice(index + 1)];
       })
     }
   }
@@ -101,20 +102,24 @@ const ShowEvent = (props) => {
   for (const movie of movies) {
     console.log(movie.vote_count);
   }
-  
+
   return (
     <div>
       <div>
         <ShowEventDetails event={event} />
       </div>
       <div>
-        {participants.map(participant => <ShowParticipantStatus  key={participant.participant_id} participant={participant} />)}
+        {participants.map(participant => <ShowParticipantStatus key={participant.participant_id} participant={participant} />)}
       </div>
       <div>
-        {participant ? <ShowUpdateRsvpForm participant={participant} eventKey={eventKey} onRsvp={onRsvp} /> : null}
-      </div>
-      <div>
-        <ShowVotingForm participant={participant} movies={movies} eventKey={eventKey} onVotedList={onVotedList} />
+        {participant ?
+
+          <div>
+            <ShowUpdateRsvpForm participant={participant} eventKey={eventKey} onRsvp={onRsvp} />
+            <ShowVotingForm participant={participant} movies={movies} eventKey={eventKey} onVotedList={onVotedList} />
+          </div> : null}
+
+
       </div>
       <div>
         {/* {movies.map(movie => <ShowMovieDetails key={movie.movie_id} movies={movies}/>)} */}
@@ -124,12 +129,3 @@ const ShowEvent = (props) => {
 };
 
 
-/* {movies.map(movie => {
-  return (
-    <div  key={movie.movie_id}>
-      <MoviePoster apiId={movie.api_id}/>
-      {/* <MovieDetails apiId={movie.api_id}/>
-      <VotingStatus voteCount={movie.vote_count}/> */
-    /* </div>
-  )})
-  } */

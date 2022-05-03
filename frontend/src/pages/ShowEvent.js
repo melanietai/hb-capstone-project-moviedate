@@ -5,6 +5,7 @@ import ShowEventDetails from '../components/ShowEventDetails';
 import ShowParticipantStatus from '../components/ShowParticipantStatus';
 import ShowUpdateRsvpForm from '../components/ShowUpdateRsvpForm';
 import ShowVotingForm from '../components/ShowVotingForm';
+import ShowMovieDetails from '../components/ShowMovieDetails';
 import qs from 'qs';
 
 const ShowEvent = () => {
@@ -138,7 +139,7 @@ const ShowEvent = () => {
 
       </div>
       <div>
-        {/* {movies.map(movie => <ShowMovieDetails key={movie.movie_id} movies={movies}/>)} */}
+        {movies.map(movie => <ShowMovieDetails key={movie.movie_id} movie={movie}/>)}
       </div>
     </div>
   );

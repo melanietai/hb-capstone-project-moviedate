@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react-state';
+import React, { useState, useEffect } from 'react';
 import useToken from '../components/useToken';
 import EventsListItem from '../components/EventsListItem';
 

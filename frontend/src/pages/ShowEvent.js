@@ -5,7 +5,7 @@ import ShowEventDetails from '../components/ShowEventDetails';
 import ShowParticipantStatus from '../components/ShowParticipantStatus';
 import ShowUpdateRsvpForm from '../components/ShowUpdateRsvpForm';
 import ShowVotingForm from '../components/ShowVotingForm';
-
+import qs from 'qs';
 
 const ShowEvent = () => {
   const { token } = useToken();
@@ -22,7 +22,7 @@ const ShowEvent = () => {
     userEmail = user.email;
     console.log(user);
   } else if (search) {
-    const query = Qs.parse(search.replace('?', ''));
+    const query = qs.parse(search.replace('?', ''));
     console.log(query);
     userEmail = query.email;
     console.log(query.email);

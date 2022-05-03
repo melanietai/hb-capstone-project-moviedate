@@ -1,4 +1,4 @@
-import useNavigate from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import SearchMovies from '../components/SearchMovies';
 import EventAt from '../components/EventAt';

@@ -1,6 +1,6 @@
 
 const { Fragment } = React;
-const { Redirect, Link, Route, Switch, BrowserRouter: Router } = ReactRouterDOM;
+const { Navigate, Link, Route, Routes, BrowserRouter } = ReactRouterDOM;
 
 const App = () => {
   const { token, removeToken, setToken } = useToken();
@@ -14,11 +14,14 @@ const App = () => {
   if (!token && token !== "" && token !== undefined) {
     console.log('render login');
     children = (
-      <Switch>
-        <Route exact path="/" render={() => <Index setToken={setToken} />}></Route>
-        <Route path="/events/:eventKey" component={ShowEvent}></Route>
-        <Redirect to="/" />
-      </Switch>
+      <Routes>
+        <Route exact path="/" element={<Index setToken={setToken} />} />
+        <Route path="/events/:eventKey" element={<ShowEvent />} />
+        <Route
+        path="*"
+        element={<Navigate to="/" replace />}
+    />
+      </Routes>
     );
   } else {
     console.log('render routes');
@@ -26,12 +29,11 @@ const App = () => {
       <Fragment>
         <NavigationBar onLogoutClick={onLogoutClick} />
         <div className="App-menu">
-          <Switch>
-            <Route exact path="/" component={CreateEvent}></Route>
-            <Route exact path="/events" component={Events}></Route>
-            <Route exact path="/events/:eventKey" component={ShowEvent}></Route>
-            <Route exact path="/page3" component={Index}></Route>
-          </Switch>
+          <Routes>
+            <Route exact path="/" element={<CreateEvent />} />
+            <Route exact path="/events" element={<Events />} />
+            <Route exact path="/events/:eventKey" element={<ShowEvent />} />
+          </Routes>
         </div>
       </Fragment>
     );
@@ -39,11 +41,12 @@ const App = () => {
 
 
   return (
-    <Router>
+    <BrowserRouter>
       <div className="App">
         {children}
       </div>
-    </Router>
+    </BrowserRouter>
+
   );
 };
 

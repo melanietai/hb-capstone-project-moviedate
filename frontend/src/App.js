@@ -1,5 +1,5 @@
 import { React, Fragment } from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import CreateEvent from './pages/CreateEvent';
 import Home from './pages/Home';
 import Events from './pages/Events';
@@ -11,10 +11,6 @@ import AppBar from './components/AppBar';
 const App = () => {
   const { token, removeToken, setToken } = useToken();
 
-  const onLogoutClick = (evt) => {
-    evt.preventDefault();
-    removeToken();
-  };
 
   let children;
   if (!token && token !== "" && token !== undefined) {
@@ -33,7 +29,7 @@ const App = () => {
     console.log('render routes');
     children = (
       <Fragment>
-        <AppBar onLogoutClick={onLogoutClick} />
+        <AppBar removeToken={removeToken} />
         <div className="App-menu">
           <Routes>
             <Route exact path="/" element={<CreateEvent />} />
@@ -56,4 +52,6 @@ const App = () => {
   );
 };
 
+
+// Add a Footer to attribute tmdb source
 export default App;

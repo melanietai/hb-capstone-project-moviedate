@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
 import { Box, Container, Image, Stack, Heading, Flex, Spacer } from '@chakra-ui/react';
-import '../index.css'
 
 
 const Home = (props) => {
@@ -41,7 +40,7 @@ const Home = (props) => {
       <Box d="flex" align-items="center">
         {movies.map(movie => {
         return (
-          <Stack>
+          <Stack key={movie.id}>
             <Image
               boxSize='150px'
               objectFit='cover'
@@ -54,7 +53,7 @@ const Home = (props) => {
       </Box>
       <Box>
         <Container maxWidth="container.xl">
-          <Flex midWidth='max-content' alignItems='center'>
+          <Flex maxWidth='max-content' alignItems='center'>
             <Box d="flex" align-items="center" py="20" flexDirection="row">
               <Box mx="6">
                 <Heading as="h1" size="lg" color="yellow">
@@ -64,13 +63,17 @@ const Home = (props) => {
                 </Heading>
                 <Heading as="h4" fontSize="lg" color="white">
                   <Box m="8" fontWeight="medium">
-                  Want to watch a movie with friends at the convenience in your home? You are
-                  at the right place! 
+                  Want to watch a movie with friends at the convenience inside your home?
+                  </Box>
+                  <Box m="8" fontWeight="medium">
+                  You are at the right place! 
+                  </Box>
+                  <Box m="8" fontWeight="medium">
+                  You'll be able to host or join virtual movie dates.
                   </Box>
                   <Box m="8" fontWeight="medium">
                   You can search for movies, create events, invite your 
-                  friends, view events, vote for movies to watch together on a virtual movie
-                  date, and many more!
+                  friends, view events, vote for movies, and many more!
                   </Box>
                 </Heading>
               </Box>
@@ -83,7 +86,7 @@ const Home = (props) => {
       <Box d="flex" align-items="center" position="fixed" bottom="0">
         {movies.map(movie => {
         return (
-          <Stack>
+          <Stack key={movie.id}>
             <Image
               boxSize='150px'
               objectFit='cover'

@@ -48,7 +48,7 @@ const Home = (props) => {
 
   return (
     <>
-      <Flex>
+      <Flex align="center" justify="center">
         <Box flexDirection="column">
           <Box>
             {children}
@@ -85,7 +85,7 @@ const Home = (props) => {
           </Box>
         </Box>
         <Box>
-          <Container placement="right">
+          <Container position="right">
             <Box p={3}>
               <Tabs>
                 <TabList>
@@ -93,11 +93,11 @@ const Home = (props) => {
                   <Tab>Top Rated Movies</Tab>
                 </TabList>
 
-                <TabPanels>
-                  <TabPanel overflowY="scroll" maxHeight="90vh">
+                <TabPanels overflowY="scroll" maxHeight="90vh">
+                  <TabPanel>
                     <MovieCards movies={movies}/>
                   </TabPanel>
-                  <TabPanel overflowY="scroll" maxHeight="90vh">
+                  <TabPanel>
                     <MovieCards movies={movies}/>
                   </TabPanel>
                 </TabPanels>

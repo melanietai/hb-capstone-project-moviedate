@@ -14,6 +14,7 @@ import {
 const MovieScrollBar = (props) => {
   const popularMovies = props.popularMovies;
   const topRatedMovies = props.topRatedMovies;
+  const keywordMovies = props.keywordMovies;
   const { token } = useToken();
   
   return(
@@ -25,7 +26,11 @@ const MovieScrollBar = (props) => {
               <TabList>
                 <Tab>Popular Movies</Tab>
                 <Tab>Top Rated Movies</Tab>
-                <Tab>Search by Keyword</Tab>
+                {token ? (
+                  <Tab>Search by Keyword</Tab>
+                ) : (
+                  <div></div>
+                )}
               </TabList>
 
               <TabPanels overflowY="scroll" maxHeight="90vh">
@@ -35,7 +40,13 @@ const MovieScrollBar = (props) => {
                 <TabPanel>
                   <MovieCards movies={topRatedMovies}/>
                 </TabPanel>
-
+                {token ? (
+                  <TabPanel>
+                    <MovieCards movies={keywordMovies}/>
+                  </TabPanel>
+                ) : (
+                  <div></div>
+                )}
                 <TabPanel>
                 </TabPanel>
               </TabPanels>

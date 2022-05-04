@@ -7,9 +7,29 @@ import MovieScrollBar from './MovieScrollBar';
 const SearchMovies = (props) => {
   const { token } = useToken();
   const [keyword, setKeyword] = useState("");
-  const [movies, setMovies] = useState([]);
+  const [keywordMovies, setKeywordMovies] = useState([]);
+  const [popularMovies, setPopularMovies] = useState([]);
+  const [topRatedMovies, setTopRatedMovies] = useState([]);
   const addMovieButtonClick = props.addMovieButtonClick;
   const eventMovieList = props.eventMovieList;
+
+  useEffect(() => {
+    console.log('fetch');
+    fetch(`/api/popular-movies`)
+    .then(res => res.json())
+    .then(data => {
+      setPopularMovies(data);
+    });
+  }, []);
+
+  useEffect(() => {
+    fetch(`/api/top-rated-movies`)
+    .then(res => res.json())
+    .then(data => {
+      setTopRatedMovies(data);
+    });
+  }, []);
+
 
   useEffect(() => {
     if (keyword) {
@@ -21,7 +41,7 @@ const SearchMovies = (props) => {
           'Content-Type': 'application/json',
         },
       }).then(res => res.json()).then(data => {
-        setMovies(data)
+        setKeywordMovies(data)
       });
     }
   }, [keyword]);
@@ -40,7 +60,7 @@ const SearchMovies = (props) => {
           <button type="submit">Search</button>
         </form>
         <ul>
-          {movies.map(movie => {
+          {keywordMovies.map(movie => {
             let disableAddMovieButton = false;
             // replace false with condition below
             // if movie id in event movie list or event movie list count >= 5
@@ -52,6 +72,7 @@ const SearchMovies = (props) => {
             return <SearchMoviesListItem key={movie.id} disableAddMovieButton={disableAddMovieButton} movie={movie} addMovieButtonClick={addMovieButtonClick} />
           })}
         </ul>
+        <MovieScrollBar popularMovies={popularMovies} topRatedMovies={topRatedMovies} keywordMovies={keywordMovies} />
       </div>
     </>
     

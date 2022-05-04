@@ -29,7 +29,7 @@ const MovieCards = (props) => {
           <PopoverArrow />
           <PopoverCloseButton />
           <PopoverBody>
-            Movied added to your event's movie list
+            Movie added to your event's movie list
           </PopoverBody>
         </PopoverContent>
       </Popover>

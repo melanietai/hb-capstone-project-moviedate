@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
-import MovieCards from '../components/MovieCards';
+import MovieScrollBar from '../components/MovieScrollBar';
 
 import { 
   Container,
   Box,
-  Tabs,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
   Heading,
   Flex
 } from "@chakra-ui/react";
 
 const Home = (props) => {
   const [active, setActive] = useState("login");
-  const [movies, setMovies] = useState([]);
+  const [popularMovies, setPopularMovies] = useState([]);
+  const [topRatedMovies, setTopRatedMovies] = useState([]);
   
   const switchToLogin = () => {
     setActive("login");
@@ -27,6 +23,23 @@ const Home = (props) => {
     setActive("signup");
   };
 
+  useEffect(() => {
+    console.log('fetch');
+    fetch(`/api/popular-movies`)
+    .then(res => res.json())
+    .then(data => {
+      setPopularMovies(data);
+    });
+  }, []);
+
+  useEffect(() => {
+    fetch(`/api/top-rated-movies`)
+    .then(res => res.json())
+    .then(data => {
+      setTopRatedMovies(data);
+    });
+  }, []);
+
   let children;
   if (active == "login") {
     children = (<Login setToken={props.setToken} switchToSignup={switchToSignup}/>)
@@ -34,14 +47,6 @@ const Home = (props) => {
     children = (<Signup setToken={props.setToken} switchToLogin={switchToLogin}/>)
   }
   
-
-  useEffect(() => {
-    fetch(`/api/popularmovies`)
-    .then(res => res.json())
-    .then(data => {
-      setMovies(data);
-    });
-  }, []);
 
 
 
@@ -84,27 +89,7 @@ const Home = (props) => {
             </Container>
           </Box>
         </Box>
-        <Box>
-          <Container position="right">
-            <Box p={3}>
-              <Tabs>
-                <TabList>
-                  <Tab>Popular Movies</Tab>
-                  <Tab>Top Rated Movies</Tab>
-                </TabList>
-
-                <TabPanels overflowY="scroll" maxHeight="90vh">
-                  <TabPanel>
-                    <MovieCards movies={movies}/>
-                  </TabPanel>
-                  <TabPanel>
-                    <MovieCards movies={movies}/>
-                  </TabPanel>
-                </TabPanels>
-              </Tabs>
-            </Box>
-          </Container>
-        </Box>
+        <MovieScrollBar popularMovies={popularMovies} topRatedMovies={topRatedMovies}/>
       </Flex>
       
     </>

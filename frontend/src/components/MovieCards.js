@@ -2,7 +2,6 @@ import useToken from './useToken';
 import { 
   Box,
   Image,
-  Badge,
   Popover,
   PopoverTrigger,
   Button,
@@ -16,7 +15,7 @@ import {
 const MovieCards = (props) => {
   const movies = props.movies;
   const { token } = useToken();
-  console.log(token);
+
 
   let popoverBtn;
   if (token) {
@@ -54,7 +53,7 @@ const MovieCards = (props) => {
     <> 
       {movies.map(movie => {
         return(
-          <Box mt={3} borderWidth="1px" rounded="lg" overflow="hidden">
+          <Box key={movie.id} mt={3} borderWidth="1px" rounded="lg" overflow="hidden">
             <Image
               src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
               alt='popular movie poster'

@@ -1,4 +1,12 @@
 import React, { useState } from 'react';
+import { 
+  HStack,
+  Box,
+  InputGroup,
+  Input,
+  InputRightAddon,
+  Button
+} from "@chakra-ui/react";
 
 const Login = (props) => {
 
@@ -53,26 +61,56 @@ const Login = (props) => {
   };
 
   return (
-      <div className="login-wrapper">
-        <h2>Please login to continue.</h2>
-        <form className="login">
-          <input onChange={handleChange}
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={login.email}
-            />
-          <input onChange={handleChange}
+    <>
+      <HStack spacing='24px'>
+        <Box>Log In: </Box>
+        <InputGroup size="sm">
+          <Input  onChange={handleChange}
+            type="email" 
+            name="email" 
+            value={login.email} 
+            placeholder="Enter Email"
+          />
+          <InputRightAddon children='.com' />
+        </InputGroup>
+        <InputGroup size="sm">
+          <Input onChange={handleChange}
             type="password"
             name="password"
-            placeholder="Password"
-            value={login.password}
-            />
-          {/* <a href="#">Forget your password</a> */}
-          <button onClick={onLoginButtonClick}>Login</button>
-          Don't have an account?<a href="#" onClick={switchToSignup}>Signup</a>
-        </form>
-      </div>
+            value={login.password} 
+            placeholder="Enter password"
+          />
+        </InputGroup>
+        <Button onClick={onLoginButtonClick} colorScheme="blue">Log in</Button>
+      </HStack>
+      <Box>Log
+        Don't have an account?<a href="#" onClick={switchToSignup}>Signup</a>
+      </Box>
+    </>
+
+
+
+
+      // <div className="login-wrapper">
+      //   <h2>Please login to continue.</h2>
+      //   <form className="login">
+      //     <input onChange={handleChange}
+      //       type="email"
+      //       name="email"
+      //       placeholder="Email"
+      //       value={login.email}
+      //       />
+      //     <input onChange={handleChange}
+      //       type="password"
+      //       name="password"
+      //       placeholder="Password"
+      //       value={login.password}
+      //       />
+      //     {/* <a href="#">Forget your password</a> */}
+      //     <button onClick={onLoginButtonClick}>Login</button>
+      //     Don't have an account?<a href="#" onClick={switchToSignup}>Signup</a>
+      //   </form>
+      // </div>
   )
 };
 

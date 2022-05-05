@@ -1,0 +1,7 @@
+/* Added this file to satisfy Hackbright's project requirement*/
+* {
+  padding: 0;
+  box-sizing: border-box;
+  font-family:"Roboto";
+  background-color: rgb(184, 217, 224);
+} 

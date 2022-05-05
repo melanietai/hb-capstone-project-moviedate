@@ -41,7 +41,7 @@ const MovieScrollBar = ({ eventMovieList, addMovieButtonClick }) => {
                 ) : null}
               </TabList>
 
-              <TabPanels overflowY="scroll" maxHeight="90vh">
+              <TabPanels position="right" overflowY="scroll" maxHeight="90vh">
                 <TabPanel>
                   <PopularMovieCards addedMovieIds={movieIds} addMovieButtonClick={addMovieButtonClick} />
                 </TabPanel>
@@ -55,8 +55,6 @@ const MovieScrollBar = ({ eventMovieList, addMovieButtonClick }) => {
                 ) : (
                   null
                 )}
-                <TabPanel>
-                </TabPanel>
               </TabPanels>
             </Tabs>
           </Box>

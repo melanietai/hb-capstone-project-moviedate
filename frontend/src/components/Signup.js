@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-
+import { 
+  HStack,
+  Box,
+  InputGroup,
+  Input,
+  Button,
+  Flex,
+  Text,
+  Spacer
+} from "@chakra-ui/react";
 
 const Signup = (props) => {
   const[signup, setSignup] = useState({
@@ -52,37 +61,55 @@ const Signup = (props) => {
   };
 
   return (
-    <div className="signup-wrapper">
-      <h2>Please signup to continue.</h2>
-      <form className="signup">
-        <input onChange={handleChange}
-          type="text"
-          name="fname"
-          placeholder="First Name"
-          value={signup.fname}
+    <>
+    <Box maxWidth="container.xl">
+      <Box px={10}>Sign up for an account: </Box>
+      <HStack px={10} spacing='6px'>
+        <InputGroup size="md">
+          <Input  onChange={handleChange}
+            type="text" 
+            name="fname" 
+            value={signup.fname} 
+            placeholder="First name"
           />
-        <input onChange={handleChange}
-          type="text"
-          name="lname"
-          placeholder="Last Name"
-          value={signup.lname}
+        </InputGroup>
+        <InputGroup size="md">
+          <Input onChange={handleChange}
+            type="text"
+            name="lname"
+            value={signup.lname} 
+            placeholder="Last name"
           />
-        <input onChange={handleChange}
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={signup.email}
+        </InputGroup>
+        <InputGroup size="md">
+          <Input  onChange={handleChange}
+            type="email" 
+            name="email" 
+            value={signup.email} 
+            placeholder="Email"
           />
-        <input onChange={handleChange}
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={signup.password}
+        </InputGroup>
+        <InputGroup size="md">
+          <Input onChange={handleChange}
+            type="password"
+            name="password"
+            value={signup.password} 
+            placeholder="Password"
           />
-        <button onClick={onSignupButtonClick}>Signup</button>
-        Already have an account?<a href="#" onClick={switchToLogin}>Login</a>
-      </form>
-    </div>
+        </InputGroup>
+        <Button onClick={onSignupButtonClick} align="center" px="4" fontSize="xs">Sign up</Button>
+      </HStack>
+      <Box px={10}>
+        <Flex>
+          <Spacer />
+          <Text as="i" align="center" color="gray.600" fontSize="xs">
+          Already have an account?  <a href="#" onClick={switchToLogin} align="center" px="4">Log in</a>
+          </Text>
+        </Flex>
+      </Box>
+    </Box>
+      
+    </>
   )
 };
 

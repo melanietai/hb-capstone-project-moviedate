@@ -53,14 +53,14 @@ const Home = (props) => {
 
   return (
     <>
-      <Flex align="center" justify="center">
+      <Flex w="100%" align="center" justify="center">
         <Box flexDirection="column">
           <Box>
             {children}
           </Box>
           <Box>
             <Container maxWidth="container.xl">
-              <Flex maxWidth='max-content' alignItems='center'>
+              <Flex maxWidth="max-content" alignItems='center'>
                 <Box d="flex" align-items="center" py="20" flexDirection="row">
                   <Box mx="6">
                     <Heading as="h1" size="lg" color="blue">

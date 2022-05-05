@@ -5,7 +5,10 @@ import {
   InputGroup,
   Input,
   InputRightAddon,
-  Button
+  Button,
+  Flex,
+  Text,
+  Spacer
 } from "@chakra-ui/react";
 
 const Login = (props) => {
@@ -62,18 +65,18 @@ const Login = (props) => {
 
   return (
     <>
-      <HStack spacing='24px'>
-        <Box>Log In: </Box>
-        <InputGroup size="sm">
+    <Box maxWidth="container.xl">
+      <Box px={10}>Log In: </Box>
+      <HStack px={10} spacing='12px'>
+        <InputGroup size="md">
           <Input  onChange={handleChange}
             type="email" 
             name="email" 
             value={login.email} 
             placeholder="Enter Email"
           />
-          <InputRightAddon children='.com' />
         </InputGroup>
-        <InputGroup size="sm">
+        <InputGroup size="md">
           <Input onChange={handleChange}
             type="password"
             name="password"
@@ -81,36 +84,19 @@ const Login = (props) => {
             placeholder="Enter password"
           />
         </InputGroup>
-        <Button onClick={onLoginButtonClick} colorScheme="blue">Log in</Button>
+        <Button onClick={onLoginButtonClick} align="center" px="4" fontSize="xs" >Log in</Button>
       </HStack>
-      <Box>Log
-        Don't have an account?<a href="#" onClick={switchToSignup}>Signup</a>
+      <Box px={10}>
+        <Flex>
+          <Spacer />
+          <Text as="i" align="center" color="gray.600" fontSize="xs">
+            Dont't have an Account?  <a href="#" onClick={switchToSignup} align="center" px="4">Signup</a>
+          </Text>
+        </Flex>
       </Box>
+    </Box>
+      
     </>
-
-
-
-
-      // <div className="login-wrapper">
-      //   <h2>Please login to continue.</h2>
-      //   <form className="login">
-      //     <input onChange={handleChange}
-      //       type="email"
-      //       name="email"
-      //       placeholder="Email"
-      //       value={login.email}
-      //       />
-      //     <input onChange={handleChange}
-      //       type="password"
-      //       name="password"
-      //       placeholder="Password"
-      //       value={login.password}
-      //       />
-      //     {/* <a href="#">Forget your password</a> */}
-      //     <button onClick={onLoginButtonClick}>Login</button>
-      //     Don't have an account?<a href="#" onClick={switchToSignup}>Signup</a>
-      //   </form>
-      // </div>
   )
 };
 

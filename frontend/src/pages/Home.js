@@ -7,7 +7,8 @@ import {
   Container,
   Box,
   Heading,
-  Flex
+  Flex,
+  Spacer
 } from "@chakra-ui/react";
 
 const Home = (props) => {
@@ -55,10 +56,10 @@ const Home = (props) => {
     <>
       <Flex w="100%" align="center" justify="center">
         <Box flexDirection="column">
-          <Box>
+          <Box pl={16}>
             {children}
           </Box>
-          <Box>
+          <Box pl={16}>
             <Container maxWidth="container.xl">
               <Flex maxWidth="max-content" alignItems='center'>
                 <Box d="flex" align-items="center" py="20" flexDirection="row">
@@ -89,6 +90,7 @@ const Home = (props) => {
             </Container>
           </Box>
         </Box>
+        <Spacer />
         <MovieScrollBar eventMovieList={[]} />
       </Flex>
 

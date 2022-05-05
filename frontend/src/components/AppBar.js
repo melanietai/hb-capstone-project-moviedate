@@ -1,4 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { 
+  Flex,
+  Text
+} from "@chakra-ui/react";
 
 const AppBar = (props) => {
   const navigate = useNavigate();
@@ -9,12 +13,23 @@ const AppBar = (props) => {
     navigate("/");
   };
   return (
-    <div>
-      Movie Date
-      <Link to="/">Create event</Link>
-      <Link to="/events">Events</Link>
+    <>
+      <Flex as="header" 
+        position="fixed"
+        px="6"
+        py="5"
+        backgroundColor="#414A5E"
+        w="100%"
+        justify="space-between"
+        color="#FAFAFA"
+      >
+      <Text pl={2} color="yellow" fontWeight="bold">THE MOVIE DATE</Text>
+      <Link to="/">Create Event</Link>
+      <Link to="/events">View Events</Link>
       <Link to="#" onClick={onLogoutClick}>Logout</Link>
-    </div>
+      </Flex>
+      
+    </>
   );
 };
 

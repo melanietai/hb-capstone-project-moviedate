@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import SearchMovies from '../components/SearchMovies';
 import EventAt from '../components/EventAt';
 import EventEmails from '../components/EventEmails';
 import EventMovieList from '../components/EventMovieList';
 import useToken from '../components/useToken';
-
+import MovieScrollBar from '../components/MovieScrollBar';
 
 const CreateEvent = () => {
   const [title, setTitle] = useState("");
@@ -16,7 +15,7 @@ const CreateEvent = () => {
   const { token } = useToken();
   const navigate = useNavigate();
 
-  console.log('hello create event');
+  console.log(`hello create event ${eventMovieList}`);
   
   const onSubmit = (evt) => {
     evt.preventDefault();
@@ -88,7 +87,7 @@ const CreateEvent = () => {
     <>
       <div className="create-event-container">
         <p>Search for movies to watch with your friends. Add up to 5 movies to your event.</p>
-        <SearchMovies addMovieButtonClick={addMovieButtonClick} eventMovieList={eventMovieList} />
+        <MovieScrollBar addMovieButtonClick={addMovieButtonClick} eventMovieList={eventMovieList} />
         <form onSubmit={onSubmit}>
           <EventAt onTitleChange={onTitleChange} onTimeChange={onTimeChange} onDateChange={onDateChange} />
           <EventEmails emails={emails} onEmailChange={onEmailChange} onAddEmailButtonClick={onAddEmailButtonClick}/>
@@ -97,8 +96,7 @@ const CreateEvent = () => {
         </form>
       </div>
     </>
-    
-
+  
   )
 };
 

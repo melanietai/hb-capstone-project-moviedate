@@ -1,3 +1,4 @@
+import React, { useState} from 'react';
 import MovieCards from "./MovieCards";
 import useToken from './useToken';
 import SearchMovies from "./SearchMovies";
@@ -16,18 +17,13 @@ import {
   Flex,
   Button
 } from "@chakra-ui/react";
+import TopRatedMovieCards from './TopRatedMovieCards';
+import PopularMovieCards from './PopularMovieCards';
+import SearchMovieCards from './SearchMovieCards';
 
-const MovieScrollBar = (props) => {
-  const popularMovies = props.popularMovies;
-  const topRatedMovies = props.topRatedMovies;
-  const keywordMovies = props.keywordMovies;
+const MovieScrollBar = ({ eventMovieList, addMovieButtonClick }) => {
   const { token } = useToken();
-  const onSubmit = props.onSubmit;
-  
-  const onSubmitButtonClick = (evt) => {
-    evt.preventDefault();
-    onSubmit(evt);
-  }
+  const movieIds = eventMovieList.map(elem => elem.id);
 
   return(
     <>
@@ -42,30 +38,22 @@ const MovieScrollBar = (props) => {
                   <Tab>
                     Search by Keyword
                   </Tab>
-                ) : (
-                  <div></div>
-                )}
+                ) : null}
               </TabList>
 
               <TabPanels overflowY="scroll" maxHeight="90vh">
                 <TabPanel>
-                  <MovieCards movies={popularMovies}/>
+                  <PopularMovieCards addedMovieIds={movieIds} addMovieButtonClick={addMovieButtonClick} />
                 </TabPanel>
                 <TabPanel>
-                  <MovieCards movies={topRatedMovies}/>
+                  <TopRatedMovieCards addedMovieIds={movieIds} addMovieButtonClick={addMovieButtonClick} />
                 </TabPanel>
                 {token ? (
                   <TabPanel>
-                    <FormControl htmlFor="keyword" onSubmit={onSubmitButtonClick}>Search</FormControl>
-                      <Flex>
-                        <Input id="keyword" type="text" placeholder="Keyword" size="sm" />
-                        <Button colorScheme='blue' size="sm"><Icon as={SearchIcon} /></Button>
-                      </Flex>
-                    <FormControl />
-                    <MovieCards movies={keywordMovies}/>
+                    <SearchMovieCards token={token} addedMovieIds={movieIds} addMovieButtonClick={addMovieButtonClick} />
                   </TabPanel>
                 ) : (
-                  <div></div>
+                  null
                 )}
                 <TabPanel>
                 </TabPanel>

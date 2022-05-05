@@ -46,16 +46,16 @@ const SearchMovies = (props) => {
     }
   }, [keyword]);
 
-  const onSubmit = (evt) => {
-    evt.preventDefault();
-    setKeyword(evt.target.keyword.value);
+  const onSubmit = (keyword) => {
+    console.log(keyword);
+    setKeyword(keyword);
   }
   const movieIds = eventMovieList.map(elem => elem.id);
 
   return (
     <>
       <div>
-        <form id="movie-keyword" onSubmit={onSubmit}>
+        {/* <form id="movie-keyword" onSubmit={onSubmit}>
           <input type="search" name="keyword" id="keyword" placeholder="Type keyword..." />
           <button type="submit">Search</button>
         </form>
@@ -71,8 +71,8 @@ const SearchMovies = (props) => {
             }
             return <SearchMoviesListItem key={movie.id} disableAddMovieButton={disableAddMovieButton} movie={movie} addMovieButtonClick={addMovieButtonClick} />
           })}
-        </ul>
-        <MovieScrollBar popularMovies={popularMovies} topRatedMovies={topRatedMovies} keywordMovies={keywordMovies} />
+        </ul> */}
+        <MovieScrollBar onSubmit={onSubmit} popularMovies={popularMovies} topRatedMovies={topRatedMovies} keywordMovies={keywordMovies} />
       </div>
     </>
     

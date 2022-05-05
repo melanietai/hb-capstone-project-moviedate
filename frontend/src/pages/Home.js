@@ -89,9 +89,9 @@ const Home = (props) => {
             </Container>
           </Box>
         </Box>
-        <MovieScrollBar popularMovies={popularMovies} topRatedMovies={topRatedMovies}/>
+        <MovieScrollBar eventMovieList={[]} />
       </Flex>
-      
+
     </>
   )
 };

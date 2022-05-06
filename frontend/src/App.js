@@ -47,11 +47,7 @@ const App = () => {
       <div className="App">
         {children}
       </div>
-      <div className="Footer">
-        <a href="http://localhost:5000/about">About this page</a>
-      </div>
     </BrowserRouter>
-
   );
 };
 

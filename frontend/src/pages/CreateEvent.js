@@ -5,6 +5,13 @@ import EventEmails from '../components/EventEmails';
 import EventMovieList from '../components/EventMovieList';
 import useToken from '../components/useToken';
 import MovieScrollBar from '../components/MovieScrollBar';
+import { 
+  Text,
+  Box,
+  Flex,
+  Spacer,
+  Heading
+} from "@chakra-ui/react";
 
 const CreateEvent = () => {
   const [title, setTitle] = useState("");
@@ -85,17 +92,33 @@ const CreateEvent = () => {
 
   return (
     <>
-      <div className="create-event-container">
-        <p>Search for movies to watch with your friends. Add up to 5 movies to your event.</p>
-        <MovieScrollBar addMovieButtonClick={addMovieButtonClick} eventMovieList={eventMovieList} />
+    <Flex w="100%" pt={16}>
+      <Box position="top" flexDirection="column" pl={16}>
+        <Box maxW='container.xl'>
+          <Heading mb={4}>Host a movie date and invite your friends!</Heading>
+          <Text pl={6} fontSize='sm' color="gray.600">
+            <ul>
+              <li>Step 1: Enter Event name. Select a date and time.</li>
+              <li>Step 2: Enter emails of friends you would like to invite.</li>
+              <li>Step 3: Search movies on the right and add up to 5 movies.</li>
+              <li>Step 4: Movies added will show under "Movies added" section.</li>
+              <li>Step 5: Click "Create Event" button to create event.</li>
+              <li>Step 6: Your friends will receive an RSVP email with a link to the event.</li>
+              <li>Step 7: You and your friends can view the event's details, change RSVP status, and vote for the movies.</li>
+            </ul>
+          </Text>
+        </Box>
         <form onSubmit={onSubmit}>
           <EventAt onTitleChange={onTitleChange} onTimeChange={onTimeChange} onDateChange={onDateChange} />
           <EventEmails emails={emails} onEmailChange={onEmailChange} onAddEmailButtonClick={onAddEmailButtonClick}/>
           <EventMovieList eventMovieList={eventMovieList} removeMovieButtonClick={removeMovieButtonClick} />
           <button type="submit">Create Event</button>
         </form>
-      </div>
-    </>
+      </Box>
+      <Spacer />
+      <MovieScrollBar addMovieButtonClick={addMovieButtonClick} eventMovieList={eventMovieList} />
+    </Flex>
+  </>
   
   )
 };

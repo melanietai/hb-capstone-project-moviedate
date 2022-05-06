@@ -4,7 +4,6 @@ import {
   Box,
   InputGroup,
   Input,
-  InputRightAddon,
   Button,
   Flex,
   Text,
@@ -66,7 +65,7 @@ const Login = (props) => {
   return (
     <>
     <Box maxWidth="container.xl">
-      <Box px={10}>Log In: </Box>
+      <Box color="#FAFAFA" px={10}>Log In: </Box>
       <HStack px={10} spacing='12px'>
         <InputGroup size="md">
           <Input  onChange={handleChange}
@@ -74,6 +73,7 @@ const Login = (props) => {
             name="email" 
             value={login.email} 
             placeholder="Enter Email"
+            color="#FAFAFA"
           />
         </InputGroup>
         <InputGroup size="md">
@@ -82,6 +82,7 @@ const Login = (props) => {
             name="password"
             value={login.password} 
             placeholder="Enter password"
+            color="#FAFAFA"
           />
         </InputGroup>
         <Button onClick={onLoginButtonClick} align="center" px="4" fontSize="xs" >Log in</Button>
@@ -89,7 +90,7 @@ const Login = (props) => {
       <Box px={10}>
         <Flex>
           <Spacer />
-          <Text as="i" align="center" color="gray.600" fontSize="xs">
+          <Text as="i" align="center" color="#FAFAFA" fontSize="xs">
             Dont't have an Account?  <a href="#" onClick={switchToSignup} align="center" px="4">Signup</a>
           </Text>
         </Flex>

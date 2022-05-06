@@ -54,7 +54,7 @@ const Home = (props) => {
 
   return (
     <>
-      <Flex w="100%" align="center" justify="center">
+      <Flex bg="#414A5E" w="100%" align="center" justify="center">
         <Box flexDirection="column">
           <Box pl={16}>
             {children}
@@ -64,12 +64,12 @@ const Home = (props) => {
               <Flex maxWidth="max-content" alignItems='center'>
                 <Box d="flex" align-items="center" py="20" flexDirection="row">
                   <Box mx="6">
-                    <Heading as="h1" size="lg" color="blue">
+                    <Heading as="h1" size="lg" color="#FDA300">
                       <Box fontWeight="black">
                         Welcome to The Movie Date!
                       </Box>
                     </Heading>
-                    <Heading as="h4" fontSize="lg" color="grey">
+                    <Heading as="h4" fontSize="lg" color="#9FA5B0">
                       <Box m="8" fontWeight="medium">
                       Want to watch a movie with friends at the convenience inside your home?
                       </Box>
@@ -93,9 +93,27 @@ const Home = (props) => {
         <Spacer />
         <MovieScrollBar eventMovieList={[]} />
       </Flex>
+      <Flex as="footer" 
+        position="fixed"
+        px="0"
+        py="4"
+        backgroundColor="#414A5E"
+        w="100%"
+        justify="space-between"
+        color="#90909A"
+      >
+        <Spacer />
+        <Box pr={6} fontSize='3pt'>
+          <a href="http://localhost:5000/about">About this page</a>
+        </Box>
+      </Flex>
 
     </>
   )
 };
 
 export default Home;
+
+<div className="Footer" backgroundColor="#414A5E">
+
+</div>

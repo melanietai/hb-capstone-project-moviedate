@@ -63,7 +63,7 @@ const Signup = (props) => {
   return (
     <>
     <Box maxWidth="container.xl">
-      <Box px={10}>Sign up for an account: </Box>
+      <Box color="#FAFAFA" px={10}>Sign up for an account: </Box>
       <HStack px={10} spacing='6px'>
         <InputGroup size="md">
           <Input  onChange={handleChange}
@@ -71,6 +71,7 @@ const Signup = (props) => {
             name="fname" 
             value={signup.fname} 
             placeholder="First name"
+            color="#FAFAFA"
           />
         </InputGroup>
         <InputGroup size="md">
@@ -79,6 +80,7 @@ const Signup = (props) => {
             name="lname"
             value={signup.lname} 
             placeholder="Last name"
+            color="#FAFAFA"
           />
         </InputGroup>
         <InputGroup size="md">
@@ -87,6 +89,7 @@ const Signup = (props) => {
             name="email" 
             value={signup.email} 
             placeholder="Email"
+            color="#FAFAFA"
           />
         </InputGroup>
         <InputGroup size="md">
@@ -95,6 +98,7 @@ const Signup = (props) => {
             name="password"
             value={signup.password} 
             placeholder="Password"
+            color="#FAFAFA"
           />
         </InputGroup>
         <Button onClick={onSignupButtonClick} align="center" px="4" fontSize="xs">Sign up</Button>
@@ -102,7 +106,7 @@ const Signup = (props) => {
       <Box px={10}>
         <Flex>
           <Spacer />
-          <Text as="i" align="center" color="gray.600" fontSize="xs">
+          <Text as="i" align="center" color="#FAFAFA" fontSize="xs">
           Already have an account?  <a href="#" onClick={switchToLogin} align="center" px="4">Log in</a>
           </Text>
         </Flex>

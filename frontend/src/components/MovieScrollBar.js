@@ -30,7 +30,7 @@ const MovieScrollBar = ({ eventMovieList, addMovieButtonClick }) => {
       <Box>
         <Container>
           <Box p={3}>
-            <Tabs>
+            <Tabs color="#FAFAFA">
               <TabList>
                 <Tab>Popular Movies</Tab>
                 <Tab>Top Rated Movies</Tab>

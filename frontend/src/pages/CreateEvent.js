@@ -98,7 +98,7 @@ const CreateEvent = () => {
       <Box flexDirection="column" pl={20} pt={3}>
         <Box maxW='container.xl'>
           <Heading color="#32527B" size="lg" mb={4} pt={3}>Host a movie date and invite your friends!</Heading>
-          <Text pl={6} fontSize='sm' color="gray.600">
+          <Text pl={6} fontSize='md' color="gray.600">
             <ul>
               <li>Step 1: Enter Event name. Select a date and time.</li><br></br>
               <li>Step 2: Enter emails of friends you would like to invite.</li><br></br>

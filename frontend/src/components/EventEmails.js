@@ -37,7 +37,7 @@ const EventEmails = (props) => {
           {emailsComponents}
         </Box>
         <Button type="button" color="#90909A" onClick={props.onAddEmailButtonClick}>Add another email</Button>
-        <Box pt={8}></Box>
+        <Box pt={24}></Box>
     </Stack>
     </>
   )

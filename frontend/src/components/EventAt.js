@@ -1,20 +1,29 @@
+import { 
+  Stack,
+  Box,
+  Text,
+  Input
+} from "@chakra-ui/react";
+
 const EventAt = (props) => {
 
   return (
-    <div className="event-at-container">
-        <label>
-          <p>Event name</p>
-          <input onChange={props.onTitleChange} type="text" name="title" required />
-        </label>
-        <label>
-          <p>Select a date</p>
-          <input onChange={props.onDateChange} type="date" name="date" required />
-        </label>
-        <label>
-          <p>Select a time</p>
-          <input onChange={props.onTimeChange} type="time" name="time" required />
-        </label>
-    </div>
+    <>
+      <Stack maxW="300px">
+        <Box>
+          <Text>Event name:</Text>
+          <Input onChange={props.onTitleChange} type="text" name="title" />
+        </Box>
+        <Box pt={3}>
+          <Text>Select a date:</Text>
+          <Input onChange={props.onDateChange} type="date" name="date" />
+        </Box>
+        <Box pt={3}>
+          <Text>Select a time:</Text>
+          <Input onChange={props.onTimeChange} type="time" name="time" />
+        </Box>
+      </Stack>
+    </>
   )
 };
 

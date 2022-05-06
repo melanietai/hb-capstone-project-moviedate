@@ -46,15 +46,15 @@ const MovieCard = ({ movie, disableAddMovieButton, addMovieButtonClick }) => {
           {movie.original_title}
         </Box>
 
-        <Box color="#9FA5B0" fontSize="sm">
+        <Box color="#FAFAFA" fontSize="sm">
           Release date: {movie.release_date}
         </Box>
 
-        <Box color="#9FA5B0" fontSize="sm">
+        <Box color="#FAFAFA" fontSize="sm">
           Popularity: {movie.popularity}
         </Box>
 
-        <Box color="#9FA5B0" fontSize="sm">
+        <Box color="#FAFAFA" fontSize="sm">
           Vote Average: {movie.vote_average}
         </Box>
 

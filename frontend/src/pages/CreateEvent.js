@@ -10,7 +10,9 @@ import {
   Box,
   Flex,
   Spacer,
-  Heading
+  Heading,
+  Button,
+  Container
 } from "@chakra-ui/react";
 
 const CreateEvent = () => {
@@ -92,27 +94,37 @@ const CreateEvent = () => {
 
   return (
     <>
-    <Flex w="100%" pt={16}>
-      <Box position="top" flexDirection="column" pl={16}>
+    <Flex bg="#9FA5B0" w="100%" pt={16}>
+      <Box flexDirection="column" pl={16} pt={3}>
         <Box maxW='container.xl'>
-          <Heading mb={4}>Host a movie date and invite your friends!</Heading>
+          <Heading color="#7492B9" size="lg" mb={4} pt={3}>Host a movie date and invite your friends!</Heading>
           <Text pl={6} fontSize='sm' color="gray.600">
             <ul>
-              <li>Step 1: Enter Event name. Select a date and time.</li>
-              <li>Step 2: Enter emails of friends you would like to invite.</li>
-              <li>Step 3: Search movies on the right and add up to 5 movies.</li>
-              <li>Step 4: Movies added will show under "Movies added" section.</li>
-              <li>Step 5: Click "Create Event" button to create event.</li>
-              <li>Step 6: Your friends will receive an RSVP email with a link to the event.</li>
+              <li>Step 1: Enter Event name. Select a date and time.</li><br></br>
+              <li>Step 2: Enter emails of friends you would like to invite.</li><br></br>
+              <li>Step 3: Search movies on the right and add up to 5 movies.</li><br></br>
+              <li>Step 4: Movies added will show under "Movies added" section.</li><br></br>
+              <li>Step 5: Click "Create Event" button to create event.</li><br></br>
+              <li>Step 6: Your friends will receive an RSVP email with a link to the event.</li><br></br>
               <li>Step 7: You and your friends can view the event's details, change RSVP status, and vote for the movies.</li>
             </ul>
           </Text>
         </Box>
         <form onSubmit={onSubmit}>
-          <EventAt onTitleChange={onTitleChange} onTimeChange={onTimeChange} onDateChange={onDateChange} />
-          <EventEmails emails={emails} onEmailChange={onEmailChange} onAddEmailButtonClick={onAddEmailButtonClick}/>
-          <EventMovieList eventMovieList={eventMovieList} removeMovieButtonClick={removeMovieButtonClick} />
-          <button type="submit">Create Event</button>
+          <Flex>
+            <Box pt={10}>
+              <EventAt onTitleChange={onTitleChange} onTimeChange={onTimeChange} onDateChange={onDateChange} />
+              <EventEmails emails={emails} onEmailChange={onEmailChange} onAddEmailButtonClick={onAddEmailButtonClick}/>
+            </Box>
+            <Container ml={6} w="400px" flexDirection="column">
+              <Text pt={10}>Movies added:</Text>
+              <Box bg="gray.200" mt={0} size="16x16" rounded="lg" >
+                <EventMovieList eventMovieList={eventMovieList} removeMovieButtonClick={removeMovieButtonClick} />
+                <Box py={20}></Box>
+              </Box>
+              <Box pl={10}><Button position="fixed" type="button" color="#90909A">Create Event</Button></Box>
+            </Container>
+          </Flex>
         </form>
       </Box>
       <Spacer />

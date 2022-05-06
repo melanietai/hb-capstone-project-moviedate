@@ -1,4 +1,9 @@
 import EventMovieListItem from './EventMovieListItem';
+import { 
+  OrderedList,
+  ListItem,
+  List
+} from "@chakra-ui/react";
 
 
 const EventMovieList = (props) => {
@@ -6,12 +11,11 @@ const EventMovieList = (props) => {
   const removeMovieButtonClick = props.removeMovieButtonClick;
 
   return (
-    <div className="movie-list-container">
-      <p>Movies added</p>
-      <ol>
-        {eventMovieList.map(movie => <EventMovieListItem key={movie.id} movie={movie} removeMovieButtonClick={removeMovieButtonClick} />)}
-      </ol>
-    </div>
+    <>
+      <List align="center">
+        <ListItem>{eventMovieList.map(movie => <EventMovieListItem key={movie.id} movie={movie} removeMovieButtonClick={removeMovieButtonClick} />)}</ListItem>
+      </List>
+    </>
   )
 };
 

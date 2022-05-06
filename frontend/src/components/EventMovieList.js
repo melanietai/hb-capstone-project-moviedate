@@ -1,8 +1,6 @@
 import EventMovieListItem from './EventMovieListItem';
 import { 
-  OrderedList,
-  ListItem,
-  List
+  OrderedList
 } from "@chakra-ui/react";
 
 
@@ -12,9 +10,9 @@ const EventMovieList = (props) => {
 
   return (
     <>
-      <List align="center">
-        <ListItem>{eventMovieList.map(movie => <EventMovieListItem key={movie.id} movie={movie} removeMovieButtonClick={removeMovieButtonClick} />)}</ListItem>
-      </List>
+      <OrderedList align="center">
+        {eventMovieList.map(movie => <EventMovieListItem key={movie.id} movie={movie} removeMovieButtonClick={removeMovieButtonClick} />)}
+      </OrderedList>
     </>
   )
 };

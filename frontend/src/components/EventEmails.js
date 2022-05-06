@@ -40,15 +40,6 @@ const EventEmails = (props) => {
         <Box pt={8}></Box>
     </Stack>
     </>
-
-    
-    // <div className="emails-container">
-    //   <label>
-    //     <p>Email friend(s) that you would like to RSVP</p>
-    //     {emailsComponents}
-    //   </label>
-    //   <button type="button" onClick={props.onAddEmailButtonClick}>Add another email</button>
-    // </div>
   )
 };
 

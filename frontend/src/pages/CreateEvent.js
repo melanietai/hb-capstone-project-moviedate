@@ -95,9 +95,9 @@ const CreateEvent = () => {
   return (
     <>
     <Flex bg="#9FA5B0" w="100%" pt={16}>
-      <Box flexDirection="column" pl={16} pt={3}>
+      <Box flexDirection="column" pl={20} pt={3}>
         <Box maxW='container.xl'>
-          <Heading color="#7492B9" size="lg" mb={4} pt={3}>Host a movie date and invite your friends!</Heading>
+          <Heading color="#32527B" size="lg" mb={4} pt={3}>Host a movie date and invite your friends!</Heading>
           <Text pl={6} fontSize='sm' color="gray.600">
             <ul>
               <li>Step 1: Enter Event name. Select a date and time.</li><br></br>
@@ -116,13 +116,16 @@ const CreateEvent = () => {
               <EventAt onTitleChange={onTitleChange} onTimeChange={onTimeChange} onDateChange={onDateChange} />
               <EventEmails emails={emails} onEmailChange={onEmailChange} onAddEmailButtonClick={onAddEmailButtonClick}/>
             </Box>
-            <Container ml={6} w="400px" flexDirection="column">
+            <Container ml={10} flexDirection="column" maxWidth="container.xl">
               <Text pt={10}>Movies added:</Text>
-              <Box bg="gray.200" mt={0} size="16x16" rounded="lg" >
+              <Box bg="gray.200" rounded="lg" >
                 <EventMovieList eventMovieList={eventMovieList} removeMovieButtonClick={removeMovieButtonClick} />
-                <Box py={20}></Box>
+                <Box py={5}></Box>
               </Box>
-              <Box pl={10}><Button position="fixed" type="button" color="#90909A">Create Event</Button></Box>
+              <Flex>
+                <Spacer />
+                <Box mt={2}><Button type="button" color="#90909A">Create Event</Button></Box>
+              </Flex>
             </Container>
           </Flex>
         </form>

@@ -94,45 +94,49 @@ const CreateEvent = () => {
 
   return (
     <>
-    <Flex bg="#C7DDCC" w="100%" pt={16}>
-      <Box flexDirection="column" pl={20} pt={3}>
-        <Box maxW='container.xl'>
-          <Heading color="#75C9B7" size="lg" mb={4} pt={3}>Host a movie date and invite your friends!</Heading>
-          <Text pl={6} fontSize='md' color="gray.600">
-            <ul>
-              <li>Step 1: Enter Event name. Select a date and time.</li><br></br>
-              <li>Step 2: Enter emails of friends you would like to invite.</li><br></br>
-              <li>Step 3: Search movies on the right and add up to 5 movies.</li><br></br>
-              <li>Step 4: Movies added will show under "Movies added" section.</li><br></br>
-              <li>Step 5: Click "Create Event" button to create event.</li><br></br>
-              <li>Step 6: Your friends will receive an RSVP email with a link to the event.</li><br></br>
-              <li>Step 7: You and your friends can view the event's details, change RSVP status, and vote for the movies.</li>
-            </ul>
-          </Text>
-        </Box>
-        <form onSubmit={onSubmit}>
-          <Flex>
-            <Box pt={10}>
-              <EventAt onTitleChange={onTitleChange} onTimeChange={onTimeChange} onDateChange={onDateChange} />
-              <EventEmails emails={emails} onEmailChange={onEmailChange} onAddEmailButtonClick={onAddEmailButtonClick}/>
-            </Box>
-            <Container ml={10} flexDirection="column" maxWidth="container.xl">
-              <Text pt={10}>Movies added:</Text>
-              <Box bg="gray.200" rounded="lg" >
-                <EventMovieList eventMovieList={eventMovieList} removeMovieButtonClick={removeMovieButtonClick} />
-                <Box py={5}></Box>
+      <Box bg="#C7DDCC">
+        <Container pt={20} maxWidth="container.xl">
+          <Flex w="100%" pt={16}>
+            <Box flexDirection="column" pl={20} pt={3}>
+              <Box maxW='container.xl'>
+                <Heading color="#75C9B7" size="lg" mb={4} pt={3}>Host a movie date and invite your friends!</Heading>
+                <Text pl={6} fontSize='md' color="gray.600">
+                  <ul>
+                    <li>Step 1: Enter Event name. Select a date and time.</li><br></br>
+                    <li>Step 2: Enter emails of friends you would like to invite.</li><br></br>
+                    <li>Step 3: Search movies on the right and add up to 5 movies.</li><br></br>
+                    <li>Step 4: Movies added will show under "Movies added" section.</li><br></br>
+                    <li>Step 5: Click "Create Event" button to create event.</li><br></br>
+                    <li>Step 6: Your friends will receive an RSVP email with a link to the event.</li><br></br>
+                    <li>Step 7: You and your friends can view the event's details, change RSVP status, and vote for the movies.</li>
+                  </ul>
+                </Text>
               </Box>
-              <Flex>
-                <Spacer />
-                <Box mt={2}><Button type="button" color="#90909A">Create Event</Button></Box>
-              </Flex>
-            </Container>
+              <form onSubmit={onSubmit}>
+                <Flex>
+                  <Box pt={10}>
+                    <EventAt onTitleChange={onTitleChange} onTimeChange={onTimeChange} onDateChange={onDateChange} />
+                    <EventEmails emails={emails} onEmailChange={onEmailChange} onAddEmailButtonClick={onAddEmailButtonClick}/>
+                  </Box>
+                  <Container ml={10} flexDirection="column" maxWidth="container.xl">
+                    <Text pt={10}>Movies added:</Text>
+                    <Box bg="gray.200" rounded="lg" >
+                      <EventMovieList eventMovieList={eventMovieList} removeMovieButtonClick={removeMovieButtonClick} />
+                      <Box py={5}></Box>
+                    </Box>
+                    <Flex>
+                      <Spacer />
+                      <Box mt={2}><Button type="button" color="#90909A">Create Event</Button></Box>
+                    </Flex>
+                  </Container>
+                </Flex>
+              </form>
+            </Box>
+            <Spacer />
+            <MovieScrollBar addMovieButtonClick={addMovieButtonClick} eventMovieList={eventMovieList} />
           </Flex>
-        </form>
+        </Container>
       </Box>
-      <Spacer />
-      <MovieScrollBar addMovieButtonClick={addMovieButtonClick} eventMovieList={eventMovieList} />
-    </Flex>
   </>
   
   )

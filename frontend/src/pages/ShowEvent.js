@@ -7,6 +7,12 @@ import ShowUpdateRsvpForm from '../components/ShowUpdateRsvpForm';
 import ShowVotingForm from '../components/ShowVotingForm';
 import ShowMovieDetails from '../components/ShowMovieDetails';
 import qs from 'qs';
+import { 
+  Container,
+  Box,
+  Flex
+} from "@chakra-ui/react";
+
 
 const ShowEvent = () => {
   const { token } = useToken();
@@ -121,27 +127,40 @@ const ShowEvent = () => {
   };
 
   return (
-    <div>
-      <div>
-        <ShowEventDetails event={event} />
-      </div>
-      <div>
-        {participants.map(participant => <ShowParticipantStatus key={participant.participant_id} participant={participant} />)}
-      </div>
-      <div>
-        {participant ?
-
-          <div>
-            <ShowUpdateRsvpForm participant={participant} eventKey={eventKey} onRsvp={onRsvp} />
-            <ShowVotingForm participant={participant} movies={movies} eventKey={eventKey} onVotedList={onVotedList} updateVotingStatus={updateVotingStatus} />
-          </div> : null}
-
-
-      </div>
-      <div>
-        {movies.map(movie => <ShowMovieDetails key={movie.movie_id} movie={movie}/>)}
-      </div>
-    </div>
+    <>
+      <Box bg="#ABD699">
+        <Container pt={20} maxWidth="container.xl">
+          <Flex>
+            <Box flexDirection="column">
+              <Box>
+                <ShowEventDetails event={event} />
+              </Box>
+              <Box mt={6}>
+                {participants.map(participant => <ShowParticipantStatus key={participant.participant_id} participant={participant} />)}
+              </Box>
+              <Box mt={6}>
+              {participant ?
+                <div>
+                  <ShowUpdateRsvpForm participant={participant} eventKey={eventKey} onRsvp={onRsvp} />
+                </div> : null}
+              </Box>
+            </Box>
+            <Box flexDirection="column" ml={10}>
+              <Box>
+                {participant ?
+                <div>
+                  <ShowVotingForm participant={participant} movies={movies} eventKey={eventKey} onVotedList={onVotedList} updateVotingStatus={updateVotingStatus} />
+                </div> : null}
+              </Box>
+              <Box mt={6}>
+                {movies.map(movie => <ShowMovieDetails key={movie.movie_id} movie={movie}/>)}
+              </Box>
+            </Box>
+          </Flex>
+        </Container>
+      </Box>
+      
+    </>
   );
 };
 

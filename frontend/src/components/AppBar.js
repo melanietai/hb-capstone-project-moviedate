@@ -18,12 +18,12 @@ const AppBar = (props) => {
         position="fixed"
         px="6"
         py="5"
-        backgroundColor="#414A5E"
+        backgroundColor="#16123F"
         w="100%"
         justify="space-between"
         color="#FAFAFA"
       >
-      <Text pl={2} color="yellow" fontWeight="bold">THE MOVIE DATE</Text>
+      <Text pl={2} color="#FFE26A" fontWeight="bold">THE MOVIE DATE</Text>
       <Link to="/">Create Event</Link>
       <Link to="/events">View Events</Link>
       <Link to="#" onClick={onLogoutClick}>Logout</Link>

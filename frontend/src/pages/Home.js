@@ -54,7 +54,7 @@ const Home = (props) => {
 
   return (
     <>
-      <Flex bg="#414A5E" w="100%" align="center" justify="center">
+      <Flex bg="#ABD699" w="100%" align="center" justify="center">
         <Box flexDirection="column">
           <Box pl={16}>
             {children}
@@ -64,12 +64,12 @@ const Home = (props) => {
               <Flex maxWidth="max-content" alignItems='center'>
                 <Box d="flex" align-items="center" py="20" flexDirection="row">
                   <Box mx="6">
-                    <Heading as="h1" size="lg" color="#FDA300">
+                    <Heading as="h1" size="lg" color="#FFE26A">
                       <Box fontWeight="black">
                         Welcome to The Movie Date!
                       </Box>
                     </Heading>
-                    <Heading as="h4" fontSize="lg" color="#9FA5B0">
+                    <Heading as="h4" fontSize="lg" color="#161231">
                       <Box m="8" fontWeight="medium">
                       Want to watch a movie with friends at the convenience inside your home?
                       </Box>

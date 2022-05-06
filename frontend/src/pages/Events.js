@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import useToken from '../components/useToken';
 import EventsListItem from '../components/EventsListItem';
-
+import { 
+  Grid,
+  GridItem,
+  Box
+} from "@chakra-ui/react";
 
 const Events = () => {
   const { token } = useToken();
@@ -25,11 +29,16 @@ const Events = () => {
  
 
   return (
-    <div>
-      {
-        events.map(event => <EventsListItem key={event.event_id} event={event} />)
-      }
-    </div>
+    <>
+      <Box bg="#FFE26A">
+        <Grid templateColumns="repeat(3, 1fr)" gap={6} p={20}>
+          {
+            events.map(event => <GridItem w="100%"><EventsListItem key={event.event_id} event={event} /></GridItem>)
+          }
+        </Grid>
+      </Box>
+      
+    </>
   );
 };
 

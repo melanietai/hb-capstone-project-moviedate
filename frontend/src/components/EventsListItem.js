@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import useToken from './useToken';
 import EventsListItemDetails from './EventsListItemDetails';
 import MoviePoster from './MoviePoster';
-
+import { 
+  Box,
+  Container,
+  Stack
+} from "@chakra-ui/react";
 
 const EventsListItem = (props) => {
   const { token } = useToken();
@@ -29,10 +33,20 @@ const EventsListItem = (props) => {
 
 
   return(
-    <div>
-      <MoviePoster apiId={apiId}/>
-      <EventsListItemDetails event={event}/>
-    </div>
+    <>
+      <Box
+        p={4}
+        maxWidth="20rem"
+        borderWidth={4}
+        borderColor="#ABD699"
+        margin={2}
+      >
+        <MoviePoster apiId={apiId}/>
+        <Stack>
+          <EventsListItemDetails event={event}/>
+        </Stack>
+      </Box>
+    </>
   );
 };
 

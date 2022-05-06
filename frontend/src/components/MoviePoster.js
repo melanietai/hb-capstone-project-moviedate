@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-
+import {
+  Image,
+  Box,
+  AspectRatio
+} from "@chakra-ui/react";
 
 const MoviePoster = (props) => {
   // const { token } = useToken();
@@ -24,9 +28,17 @@ const MoviePoster = (props) => {
 
 
   return(
-    <div>
-      <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt="poster" width="100" />
-    </div>
+    <>
+      <AspectRatio ratio={1/1}>
+        <Image
+          position="relative"
+          w="50%"
+          src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+          alt="poster"
+        />
+      </AspectRatio>
+     
+    </>
   );
 };
 

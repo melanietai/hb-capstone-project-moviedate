@@ -3,5 +3,10 @@
   padding: 0;
   box-sizing: border-box;
   font-family:"Roboto";
-  background-color: rgb(184, 217, 224);
+  background-color: #414A5E;
 } 
+
+div {
+  padding: 10px 0;
+  text-align: center;
+}

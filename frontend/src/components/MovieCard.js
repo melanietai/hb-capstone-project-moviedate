@@ -41,20 +41,20 @@ const MovieCard = ({ movie, disableAddMovieButton, addMovieButtonClick }) => {
         src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
         alt='popular movie poster'
       />
-      <Box color="#FFE26A" p={3}>
-        <Box fontWeight="semibold" fontSize="lg" as="h4" lineHeight="tight">
+      <Box color="#FFE26A" p={3} bg="#16123F">
+        <Box fontWeight="semibold" fontSize="lg" as="h4" lineHeight="tight" >
           {movie.original_title}
         </Box>
 
-        <Box color="#FAFAFA" fontSize="sm">
+        <Box color="#75C9B7" fontSize="sm">
           Release date: {movie.release_date}
         </Box>
 
-        <Box color="#FAFAFA" fontSize="sm">
+        <Box color="#75C9B7" fontSize="sm">
           Popularity: {movie.popularity}
         </Box>
 
-        <Box color="#FAFAFA" fontSize="sm">
+        <Box color="#75C9B7" fontSize="sm">
           Vote Average: {movie.vote_average}
         </Box>
 

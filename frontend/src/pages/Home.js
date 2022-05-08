@@ -8,7 +8,8 @@ import {
   Box,
   Heading,
   Flex,
-  Spacer
+  Spacer,
+  Text
 } from "@chakra-ui/react";
 
 const Home = (props) => {
@@ -54,24 +55,37 @@ const Home = (props) => {
 
   return (
     <>
-      <Box bg="#ABD699">
-        <Container maxWidth="container.xl">
+      <Flex as="header" 
+        position="fixed"
+        px="6"
+        py="1"
+        backgroundColor="#16123F"
+        w="100%"
+        justify="space-between"
+        color="#75C9B7"
+      >
+      <Text pl={2} pt={4} color="#FFE26A" fontWeight="bold">THE MOVIE DATE</Text>
+        <Box>
+          {children}
+        </Box>
+      </Flex>
+      <Box pt={6}>
+        <Container maxWidth="container.xl" mt={20}>
+          
           <Flex w="100%" align="center" justify="center">
             <Box flexDirection="column">
-              <Box pl={16}>
-                {children}
-              </Box>
+              
               <Box pl={16}>
                 <Container maxWidth="container.xl">
                   <Flex maxWidth="max-content" alignItems='center'>
-                    <Box d="flex" align-items="center" py="20" flexDirection="row">
-                      <Box mx="6">
-                        <Heading as="h1" size="lg" color="#FFE26A">
+                    <Box>
+                      <Box>
+                        <Heading as="h1" size="xl" color="#16123F">
                           <Box fontWeight="black">
                             Welcome to The Movie Date!
                           </Box>
                         </Heading>
-                        <Heading as="h4" fontSize="lg" color="#161231">
+                        <Heading as="h4" fontSize="lg" color="#161231" pt={6}>
                           <Box m="8" fontWeight="medium">
                           Want to watch a movie with friends at the convenience inside your home?
                           </Box>

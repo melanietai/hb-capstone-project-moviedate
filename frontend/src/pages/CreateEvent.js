@@ -94,12 +94,12 @@ const CreateEvent = () => {
 
   return (
     <>
-      <Box bg="#C7DDCC">
-        <Container pt={20} maxWidth="container.xl">
+      <Box bg="#FAFAFA">
+        <Container pt={10} maxWidth="container.xl">
           <Flex w="100%" pt={16}>
             <Box flexDirection="column" pl={20} pt={3}>
               <Box maxW='container.xl'>
-                <Heading color="#75C9B7" size="lg" mb={4} pt={3}>Host a movie date and invite your friends!</Heading>
+                <Heading color="#16123F" size="lg" mb={4} pt={3}>Host a movie date and invite your friends!</Heading>
                 <Text pl={6} fontSize='md' color="gray.600">
                   <ul>
                     <li>Step 1: Enter Event name. Select a date and time.</li><br></br>

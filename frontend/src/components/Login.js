@@ -65,8 +65,7 @@ const Login = (props) => {
   return (
     <>
     <Box maxWidth="container.xl">
-      <Box color="#FAFAFA" px={10}>Log In: </Box>
-      <HStack px={10} spacing='12px'>
+      <HStack spacing='12px'>
         <InputGroup size="md">
           <Input  onChange={handleChange}
             type="email" 
@@ -85,9 +84,9 @@ const Login = (props) => {
             color="#FAFAFA"
           />
         </InputGroup>
-        <Button onClick={onLoginButtonClick} align="center" px="4" fontSize="xs" >Log in</Button>
+        <Button onClick={onLoginButtonClick} fontSize="xs" color="#16123F">Log in</Button>
       </HStack>
-      <Box px={10}>
+      <Box>
         <Flex>
           <Spacer />
           <Text as="i" align="center" color="#FAFAFA" fontSize="xs">

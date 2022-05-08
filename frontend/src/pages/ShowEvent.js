@@ -128,7 +128,7 @@ const ShowEvent = () => {
 
   return (
     <>
-      <Box bg="#ABD699">
+      <Box bg="#FAFAFA">
         <Container pt={20} maxWidth="container.xl">
           <Flex>
             <Box flexDirection="column">

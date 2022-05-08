@@ -124,7 +124,7 @@ const CreateEvent = () => {
                     </Box>
                     <Flex>
                       <Spacer />
-                      <Box mt={2}><Button type="button" color="#90909A">Create Event</Button></Box>
+                      <Box mt={2}><Button type="submit" color="#90909A">Create Event</Button></Box>
                     </Flex>
                   </Container>
                 </Flex>

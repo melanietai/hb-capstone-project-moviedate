@@ -147,9 +147,8 @@ def create_event():
     host_fname = current_user.fname
     host_lname = current_user.lname
     for email in emails:
-        # host_email = session['current_user_email']
 
-        url = url_for('show_user_event', _external=True, event_key=event.key, email=email)
+        url = url_for('show_event', _external=True, event_key=event.key, email=email)
         message = Mail(
         from_email='moviedatecapstone@gmail.com',
         to_emails=email,
@@ -195,7 +194,7 @@ def show_events():
     return jsonify(events)
 
 
-@app.route('/events/<event_key>')
+@app.route('/events/<event_key>', methods=['GET'])
 def show_event(event_key):
     """Show an event associated with event key"""
 
@@ -228,7 +227,7 @@ def show_movie(api_id):
     return jsonify(movie)
 
 
-@app.route('/events/<event_key>/rsvp', methods=['POST'])
+@app.route('/events/<event_key>/rsvp', methods=['PUT'])
 def update_rsvp(event_key):
     """Update rsvp response"""
 
@@ -246,7 +245,7 @@ def update_rsvp(event_key):
     return jsonify(participant)
 
 
-@app.route('/events/<event_key>/vote-update', methods=['POST'])
+@app.route('/events/<event_key>/vote-update', methods=['PUT'])
 def update_vote(event_key):
     """Update voting count for a movie"""
 
@@ -269,6 +268,17 @@ def update_vote(event_key):
         movie_list.append(movie)
 
     return jsonify(movie_list)
+
+
+@app.route('/events/<event_key>', methods=['DELETE'])
+def event_delete(event_key):
+    """Delete an event"""
+
+    event = crud.get_event_by_event_key(event_key)
+    db.session.delete(event)
+    db.session.commit()
+
+    return(jsonify(event))
 
 
 @app.route('/about')

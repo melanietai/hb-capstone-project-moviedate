@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import useToken from '../components/useToken';
 import ShowEventDetails from '../components/ShowEventDetails';
 import ShowParticipantStatus from '../components/ShowParticipantStatus';
@@ -12,7 +12,8 @@ import {
   Box,
   Flex,
   Grid,
-  GridItem
+  GridItem,
+  Button
 } from "@chakra-ui/react";
 
 
@@ -24,6 +25,7 @@ const ShowEvent = () => {
   const { eventKey } = useParams();
   const { search } = useLocation();
   const [participants, setParticipants] = useState([]);
+  const navigate = useNavigate();
 
   let userEmail = null;
 
@@ -119,6 +121,20 @@ const ShowEvent = () => {
     });
   };
 
+  const onDeleteButtonClick = (evt) => {
+    evt.preventDefault();
+
+    fetch(`/events/${eventKey}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    }).then(res => res.json()).then(data => {
+        navigate('/events');
+    });
+  }
+
   return (
     <>
       <Box bg="#FAFAFA" pt={10}>
@@ -154,6 +170,7 @@ const ShowEvent = () => {
                 </Box>
               </Box>
         </Container>
+        <Button onClick={onDeleteButtonClick} fontSize="xs">Delete this event</Button>
       </Box>
       
     </>

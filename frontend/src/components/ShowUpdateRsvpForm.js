@@ -12,7 +12,7 @@ const ShowUpdateRsvpForm = (props) => {
     evt.preventDefault();
 
     fetch(`/events/${eventKey}/rsvp`, {
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify({ email: participant.email, rsvp }),
       headers: {
         'Content-Type': 'application/json'

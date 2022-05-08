@@ -40,7 +40,7 @@ const MovieCard = ({ movie, disableAddMovieButton, addMovieButtonClick }) => {
     <Box key={movie.id} mt={3} borderWidth="1px" rounded="lg" overflow="hidden">
       <Image
         src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-        alt='popular movie poster'
+        alt="popular movie poster"
       />
       <Container height="280px" bg="#16123F">
         <Box color="#FFE26A" p={3}>

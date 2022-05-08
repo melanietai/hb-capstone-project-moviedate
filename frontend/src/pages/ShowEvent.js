@@ -10,7 +10,9 @@ import qs from 'qs';
 import { 
   Container,
   Box,
-  Flex
+  Flex,
+  Grid,
+  GridItem
 } from "@chakra-ui/react";
 
 
@@ -119,13 +121,14 @@ const ShowEvent = () => {
 
   return (
     <>
-      <Box bg="#FAFAFA">
-        <Container pt={20} maxWidth="container.xl">
+      <Box bg="#FAFAFA" pt={10}>
+        <Container p={20} maxWidth="container.xl">
+          <Box borderWidth={4} borderColor="#75C9B7">
+            <ShowEventDetails event={event} />
+          </Box>
           <Flex>
             <Box flexDirection="column">
-              <Box>
-                <ShowEventDetails event={event} />
-              </Box>
+              
               <Box mt={6}>
                 {participants.map(participant => <ShowParticipantStatus key={participant.participant_id} participant={participant} />)}
               </Box>
@@ -136,18 +139,20 @@ const ShowEvent = () => {
                 </div> : null}
               </Box>
             </Box>
-            <Box flexDirection="column" ml={10}>
-              <Box>
-                {participant ?
-                <div>
-                  <ShowVotingForm participant={participant} movies={movies} eventKey={eventKey} onVotedList={onVotedList} updateVotingStatus={updateVotingStatus} />
-                </div> : null}
-              </Box>
-              <Box mt={6}>
-                {movies.map(movie => <ShowMovieDetails key={movie.movie_id} movie={movie}/>)}
-              </Box>
-            </Box>
           </Flex>
+            <Box flexDirection="column">
+                <Box mt={6}>
+                  <Grid templateColumns="repeat(5, 1fr)" gap={1}>
+                    {movies.map(movie => <GridItem><ShowMovieDetails key={movie.movie_id} movie={movie}/></GridItem>)}
+                  </Grid>
+                </Box>
+                <Box>
+                  {participant ?
+                  <div>
+                    <ShowVotingForm participant={participant} movies={movies} eventKey={eventKey} onVotedList={onVotedList} updateVotingStatus={updateVotingStatus} />
+                  </div> : null}
+                </Box>
+              </Box>
         </Container>
       </Box>
       

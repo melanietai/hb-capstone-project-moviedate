@@ -38,9 +38,9 @@ const EventsListItem = (props) => {
         p={4}
         maxWidth="20rem"
         borderWidth={4}
-        borderColor="#ABD699"
-        bg="#FFE26A"
-        color="#16123F"
+        borderColor="#75C9B7"
+        bg="#16123F"
+        color="#FFE26A"
         margin={2}
       >
         <MoviePoster apiId={apiId}/>

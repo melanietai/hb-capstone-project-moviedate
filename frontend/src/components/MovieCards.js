@@ -1,18 +1,29 @@
 import MovieCard from './MovieCard';
+import { 
+  Grid,
+  GridItem,
+  Box
+} from "@chakra-ui/react";
+
 
 const MovieCards = ({ movies, addedMovieIds, addMovieButtonClick }) => {
 
   return(
     <> 
-      {movies.map(movie => {
-        let disableAddMovieButton = false;      
-        if ((addedMovieIds.includes(movie.id)) || (addedMovieIds.length >= 5)) {
-          disableAddMovieButton = true;
-        }
-        return <MovieCard key={movie.id} movie={movie} disableAddMovieButton={disableAddMovieButton} addMovieButtonClick={addMovieButtonClick} />
-      } )}
+      <Box>
+        <Grid templateColumns="repeat(2, 1fr)" gap={1}>
+          {movies.map(movie => {
+            let disableAddMovieButton = false;      
+            if ((addedMovieIds.includes(movie.id)) || (addedMovieIds.length >= 5)) {
+              disableAddMovieButton = true;
+            }
+            return <GridItem><MovieCard key={movie.id} movie={movie} disableAddMovieButton={disableAddMovieButton} addMovieButtonClick={addMovieButtonClick} /></GridItem>
+          } )}
+        </Grid>
+      </Box>
     </>
   )
 };
+
 
 export default MovieCards;

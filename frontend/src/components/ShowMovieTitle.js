@@ -7,7 +7,7 @@ const ShowMovieTitle = (props) => {
 
   useEffect(() => {
     if (apiId) {
-      fetch(`/api/movie/${apiId}`, {
+      fetch(`/movie/${apiId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -18,8 +18,6 @@ const ShowMovieTitle = (props) => {
     }
   }, [apiId]);
 
-  console.log('hello');
-
 
   return(
     <div>
@@ -27,5 +25,6 @@ const ShowMovieTitle = (props) => {
     </div>
   );
 };
+
 
 export default ShowMovieTitle;

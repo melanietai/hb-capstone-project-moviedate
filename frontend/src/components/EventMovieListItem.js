@@ -6,6 +6,7 @@ import {
   Button
 } from "@chakra-ui/react";
 
+
 const EventMovieListItem = (props) => {
   const movie = props.movie;
   const removeMovieButtonClick = props.removeMovieButtonClick;

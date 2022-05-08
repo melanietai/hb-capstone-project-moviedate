@@ -11,7 +11,7 @@ const ShowUpdateRsvpForm = (props) => {
   const onSubmitButtonClick = (evt) => {
     evt.preventDefault();
 
-    fetch(`/api/events/${eventKey}/rsvp`, {
+    fetch(`/events/${eventKey}/rsvp`, {
       method: 'POST',
       body: JSON.stringify({ email: participant.email, rsvp }),
       headers: {
@@ -41,5 +41,6 @@ const ShowUpdateRsvpForm = (props) => {
     </div>
   );
 };
+
 
 export default ShowUpdateRsvpForm;

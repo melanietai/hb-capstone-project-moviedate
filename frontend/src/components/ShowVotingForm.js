@@ -19,7 +19,7 @@ const ShowVotingForm = (props) => {
   const onSubmitButtonClick = (evt) => {
     evt.preventDefault();
 
-    fetch(`/api/events/${eventKey}/vote-update`, {
+    fetch(`/events/${eventKey}/vote-update`, {
       method: 'POST',
       body: JSON.stringify({ "apiIdList": apiIdList, "participantId": participant.participant_id }),
       headers: {

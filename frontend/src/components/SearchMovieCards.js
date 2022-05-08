@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { SearchIcon } from '@chakra-ui/icons';
+import MovieCards from "./MovieCards";
 import { 
   FormControl,
   Input,
@@ -6,8 +8,7 @@ import {
   Flex,
   Button
 } from "@chakra-ui/react";
-import { SearchIcon } from '@chakra-ui/icons';
-import MovieCards from "./MovieCards";
+
 
 const SearchMovieCards = ({ token, addedMovieIds, addMovieButtonClick }) => {
   const [keyword, setKeyword] = useState("");
@@ -15,7 +16,7 @@ const SearchMovieCards = ({ token, addedMovieIds, addMovieButtonClick }) => {
 
   const onSearchButtonClick = () => {
     if (keyword) {
-      fetch('/api/search-movies', {
+      fetch('/keyword-search', {
         method: 'POST',
         body: JSON.stringify({ keyword: keyword }),
         headers: {
@@ -47,5 +48,6 @@ const SearchMovieCards = ({ token, addedMovieIds, addMovieButtonClick }) => {
 
   )
 };
+
 
 export default SearchMovieCards;

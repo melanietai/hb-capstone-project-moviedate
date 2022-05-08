@@ -9,10 +9,9 @@ const ShowMovieDetails = (props) => {
 
   useEffect(() => {
     if (apiId) {
-      fetch(`/api/movie/${apiId}`, {
+      fetch(`/movie/${apiId}`, {
         method: 'GET',
         headers: {
-          // Authorization: 'Bearer ' + token,
           'Content-Type': 'application/json',
         },
       }).then(res => res.json()).then(movie => {
@@ -20,8 +19,6 @@ const ShowMovieDetails = (props) => {
       });
     }
   }, [apiId]);
-
-  console.log(movieDetails);
 
 
 
@@ -36,5 +33,6 @@ const ShowMovieDetails = (props) => {
     </Fragment>
   );
 };
+
 
 export default ShowMovieDetails;

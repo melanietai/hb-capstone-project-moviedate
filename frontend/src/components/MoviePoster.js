@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import {
   Image,
-  Box,
   AspectRatio
 } from "@chakra-ui/react";
 
+
 const MoviePoster = (props) => {
-  // const { token } = useToken();
   const [movie, setMovie] = useState([]);
 
   const apiId = props.apiId;
 
   useEffect(() => {
     if (apiId) {
-      fetch(`/api/movie/${apiId}`, {
+      fetch(`/movie/${apiId}`, {
         method: 'GET',
         headers: {
-          // Authorization: 'Bearer ' + token,
           'Content-Type': 'application/json',
         },
       }).then(res => res.json()).then(data => {
@@ -41,5 +39,6 @@ const MoviePoster = (props) => {
     </>
   );
 };
+
 
 export default MoviePoster;

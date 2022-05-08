@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import MovieCards from './MovieCards';
 
+
 const PopularMovieCards = ({ addedMovieIds, addMovieButtonClick }) => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    console.log('fetch');
-    fetch(`/api/popular-movies`)
+    fetch(`/popular-movies`)
     .then(res => res.json())
     .then(data => {
       setMovies(data);
@@ -17,5 +17,6 @@ const PopularMovieCards = ({ addedMovieIds, addMovieButtonClick }) => {
     <MovieCards movies={movies} addedMovieIds={addedMovieIds} addMovieButtonClick={addMovieButtonClick} />
   );
 };
+
 
 export default PopularMovieCards;

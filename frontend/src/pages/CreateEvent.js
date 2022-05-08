@@ -12,8 +12,11 @@ import {
   Spacer,
   Heading,
   Button,
-  Container
+  Container,
+  OrderedList,
+  ListItem
 } from "@chakra-ui/react";
+
 
 const CreateEvent = () => {
   const [title, setTitle] = useState("");
@@ -23,8 +26,6 @@ const CreateEvent = () => {
   const [eventMovieList, setEventMovieList] = useState([]);
   const { token } = useToken();
   const navigate = useNavigate();
-
-  console.log(`hello create event ${eventMovieList}`);
   
   const onSubmit = (evt) => {
     evt.preventDefault();
@@ -38,7 +39,7 @@ const CreateEvent = () => {
       }
     console.log(formInputs);
     
-    fetch('/api/create-event', {
+    fetch('/create-event', {
       method: 'POST',
       body: JSON.stringify(formInputs),
       headers: {
@@ -99,18 +100,15 @@ const CreateEvent = () => {
           <Flex w="100%" pt={16}>
             <Box flexDirection="column" pl={20} pt={3}>
               <Box maxW='container.xl'>
-                <Heading color="#16123F" size="lg" mb={4} pt={3}>Host a movie date and invite your friends!</Heading>
-                <Text pl={6} fontSize='md' color="gray.600">
-                  <ul>
-                    <li>Step 1: Enter Event name. Select a date and time.</li><br></br>
-                    <li>Step 2: Enter emails of friends you would like to invite.</li><br></br>
-                    <li>Step 3: Search movies on the right and add up to 5 movies.</li><br></br>
-                    <li>Step 4: Movies added will show under "Movies added" section.</li><br></br>
-                    <li>Step 5: Click "Create Event" button to create event.</li><br></br>
-                    <li>Step 6: Your friends will receive an RSVP email with a link to the event.</li><br></br>
-                    <li>Step 7: You and your friends can view the event's details, change RSVP status, and vote for the movies.</li>
-                  </ul>
-                </Text>
+                <Heading color="#16123F" size="lg" mb={4} pt={3}>Invite your friends to a movie date!</Heading>
+                <OrderedList pl={6} fontSize='md' color="gray.600">
+                  <ListItem p={2}>Enter event details.</ListItem>
+                  <ListItem p={2}>Enter emails of friends you would like to invite.</ListItem>
+                  <ListItem p={2}>Search movies on the right and add up to 5 movies.</ListItem>
+                  <ListItem p={2}>Movies added will show under "Movies added" section.</ListItem>
+                  <ListItem p={2}>Click "Create Event" button to create event.</ListItem>
+                  <ListItem p={2}>Your friends will receive an RSVP email with a link to the event.</ListItem>
+                </OrderedList>
               </Box>
               <form onSubmit={onSubmit}>
                 <Flex>
@@ -141,5 +139,6 @@ const CreateEvent = () => {
   
   )
 };
+
 
 export default CreateEvent;

@@ -10,4 +10,5 @@ const ShowEventDetails = (props) => {
   );
 };
 
+
 export default ShowEventDetails;

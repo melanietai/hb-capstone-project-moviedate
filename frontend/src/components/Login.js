@@ -10,6 +10,7 @@ import {
   Spacer
 } from "@chakra-ui/react";
 
+
 const Login = (props) => {
 
   const[login, setLogin] = useState({
@@ -21,7 +22,7 @@ const Login = (props) => {
 
   const onLoginButtonClick = (evt) => {
     evt.preventDefault();
-    fetch('/api/token', {
+    fetch('/token', {
       method: 'POST',
       body: JSON.stringify({
         email: login.email,
@@ -38,8 +39,6 @@ const Login = (props) => {
       }
       return res.json();
     }).then(data => {
-      console.log('login success');
-      console.log(data);
       props.setToken(data.access_token);
     }).catch((error) => {
       if (error.response) {
@@ -99,5 +98,6 @@ const Login = (props) => {
     </>
   )
 };
+
 
 export default Login;

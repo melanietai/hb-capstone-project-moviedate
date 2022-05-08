@@ -4,9 +4,9 @@ import EventsListItemDetails from './EventsListItemDetails';
 import MoviePoster from './MoviePoster';
 import { 
   Box,
-  Container,
   Stack
 } from "@chakra-ui/react";
+
 
 const EventsListItem = (props) => {
   const { token } = useToken();
@@ -17,7 +17,7 @@ const EventsListItem = (props) => {
   
   useEffect(() => {
     if (eventId) {
-      fetch(`/api/movies/${eventId}`, {
+      fetch(`/movies/${eventId}`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + token,
@@ -51,5 +51,6 @@ const EventsListItem = (props) => {
     </>
   );
 };
+
 
 export default EventsListItem;

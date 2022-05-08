@@ -1,8 +1,8 @@
 import React, { useState} from 'react';
-import MovieCards from "./MovieCards";
 import useToken from './useToken';
-import SearchMovies from "./SearchMovies";
-import { SearchIcon } from '@chakra-ui/icons'
+import TopRatedMovieCards from './TopRatedMovieCards';
+import PopularMovieCards from './PopularMovieCards';
+import SearchMovieCards from './SearchMovieCards';
 import { 
   Container,
   Box,
@@ -11,15 +11,9 @@ import {
   Tab,
   TabPanels,
   TabPanel,
-  FormControl,
-  Input,
-  Icon,
-  Flex,
-  Button
+  Spacer
 } from "@chakra-ui/react";
-import TopRatedMovieCards from './TopRatedMovieCards';
-import PopularMovieCards from './PopularMovieCards';
-import SearchMovieCards from './SearchMovieCards';
+
 
 const MovieScrollBar = ({ eventMovieList, addMovieButtonClick }) => {
   const { token } = useToken();
@@ -32,22 +26,16 @@ const MovieScrollBar = ({ eventMovieList, addMovieButtonClick }) => {
           <Box p={3}>
             <Tabs color="#16123F">
               <TabList>
-                <Tab>Popular Movies</Tab>
-                <Tab>Top Rated Movies</Tab>
                 {token ? (
                   <Tab>
                     Search by Keyword
                   </Tab>
                 ) : null}
+                <Tab>Popular Movies</Tab>
+                <Tab>Top Rated Movies</Tab>
               </TabList>
 
               <TabPanels position="right" overflowY="scroll" maxHeight="90vh">
-                <TabPanel>
-                  <PopularMovieCards addedMovieIds={movieIds} addMovieButtonClick={addMovieButtonClick} />
-                </TabPanel>
-                <TabPanel>
-                  <TopRatedMovieCards addedMovieIds={movieIds} addMovieButtonClick={addMovieButtonClick} />
-                </TabPanel>
                 {token ? (
                   <TabPanel>
                     <SearchMovieCards token={token} addedMovieIds={movieIds} addMovieButtonClick={addMovieButtonClick} />
@@ -55,6 +43,13 @@ const MovieScrollBar = ({ eventMovieList, addMovieButtonClick }) => {
                 ) : (
                   null
                 )}
+                <TabPanel>
+                  <PopularMovieCards addedMovieIds={movieIds} addMovieButtonClick={addMovieButtonClick} />
+                </TabPanel>
+                <TabPanel>
+                  <TopRatedMovieCards addedMovieIds={movieIds} addMovieButtonClick={addMovieButtonClick} />
+                </TabPanel>
+                
               </TabPanels>
             </Tabs>
           </Box>
@@ -63,6 +58,7 @@ const MovieScrollBar = ({ eventMovieList, addMovieButtonClick }) => {
     </>
   );
 };
+
 
 export default MovieScrollBar;
 

@@ -4,6 +4,7 @@ import {
   Text
 } from "@chakra-ui/react";
 
+
 const EventsListItemDetails = (props) => {
   const event = props.event;
 
@@ -20,5 +21,6 @@ const EventsListItemDetails = (props) => {
     </>
   );
 };
+
 
 export default EventsListItemDetails;

@@ -4,6 +4,7 @@ import {
   Text
 } from "@chakra-ui/react";
 
+
 const AppBar = (props) => {
   const navigate = useNavigate();
 
@@ -32,5 +33,6 @@ const AppBar = (props) => {
     </>
   );
 };
+
 
 export default AppBar;

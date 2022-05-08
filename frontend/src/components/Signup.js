@@ -10,6 +10,7 @@ import {
   Spacer
 } from "@chakra-ui/react";
 
+
 const Signup = (props) => {
   const[signup, setSignup] = useState({
     fname: '',
@@ -22,7 +23,7 @@ const Signup = (props) => {
 
   const onSignupButtonClick = (evt) => {
     evt.preventDefault();
-    fetch('/api/register-user', {
+    fetch('/user', {
       method: 'POST',
       body: JSON.stringify({
         fname: signup.fname,
@@ -41,7 +42,6 @@ const Signup = (props) => {
       }
       return res.json();
     }).then(data => {
-      console.log('signup successful');
       props.setToken(data.access_token);
     }).catch((error) => {
       if (error.response) {
@@ -63,8 +63,7 @@ const Signup = (props) => {
   return (
     <>
     <Box maxWidth="container.xl">
-      <Box color="#FAFAFA" px={10}>Sign up for an account: </Box>
-      <HStack px={10} spacing='6px'>
+      <HStack spacing='3px'>
         <InputGroup size="md">
           <Input  onChange={handleChange}
             type="text" 
@@ -101,9 +100,9 @@ const Signup = (props) => {
             color="#FAFAFA"
           />
         </InputGroup>
-        <Button onClick={onSignupButtonClick} align="center" px="4" fontSize="xs">Sign up</Button>
+        <Button onClick={onSignupButtonClick} align="center" px="4" fontSize="xs" color="#16123F">Sign up</Button>
       </HStack>
-      <Box px={10}>
+      <Box>
         <Flex>
           <Spacer />
           <Text as="i" align="center" color="#FAFAFA" fontSize="xs">

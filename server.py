@@ -1,13 +1,7 @@
-"""Movie Date application Flask server.
-
-Provides web interface for creating events, searching movies, 
-sending out RSVPs to friends, adding new events
-to events page, and voting for movies.
-
-"""
+"""The Movie Date application Flask server."""
 
 from http.client import HTTPException
-from flask import (Flask, render_template, redirect, flash, jsonify, request, session, abort, url_for)
+from flask import (Flask, render_template, jsonify, request, abort, url_for)
 import jinja2
 from model import connect_to_db, db
 import crud
@@ -17,7 +11,7 @@ import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from sqlalchemy import update
-from flask_jwt_extended import (create_access_token, get_jwt_identity, jwt_required, JWTManager, unset_jwt_cookies)
+from flask_jwt_extended import (create_access_token, get_jwt_identity, jwt_required, JWTManager)
 
 
 
@@ -46,8 +40,8 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=36000000)
 
 
 
-@app.route('/api/token', methods=['POST'])
-def api_create_token():
+@app.route('/token', methods=['POST'])
+def create_token():
     """Create token for user login."""
 
     email = request.json.get('email')
@@ -61,8 +55,8 @@ def api_create_token():
     return jsonify(access_token=access_token)
 
 
-@app.route('/api/register-user', methods=['POST'])
-def api_register_user():
+@app.route('/user', methods=['POST'])
+def register_user():
     """Register a new user."""
 
     fname = request.json.get('fname')
@@ -86,10 +80,35 @@ def api_register_user():
     return jsonify(access_token=access_token)
 
 
+@app.route('/popular-movies')
+def get_popular_movies():
+    """Show popular movies"""
 
-@app.route('/api/search-movies', methods=['POST'])
+    payload = {'api_key': os.environ['API_KEY'],
+            'language': 'en-US'}
+
+    res = requests.get(f'https://api.themoviedb.org/3/movie/popular', params=payload)
+    movies = res.json()
+    
+    return jsonify([movie for movie in movies["results"] if movie["poster_path"] != None])
+
+
+@app.route('/top-rated-movies')
+def get_top_rated_movies():
+    """Show top rated movies"""
+
+    payload = {'api_key': os.environ['API_KEY'],
+            'language': 'en-US'}
+
+    res = requests.get(f'https://api.themoviedb.org/3/movie/top_rated', params=payload)
+    movies = res.json()
+    
+    return jsonify([movie for movie in movies["results"] if movie["poster_path"] != None])
+
+
+@app.route('/keyword-search', methods=['POST'])
 @jwt_required()
-def get_search_result():
+def get_search_results():
     """Get search results."""
     
     movie_keyword = request.json.get('keyword')
@@ -105,9 +124,9 @@ def get_search_result():
     return jsonify([movie for movie in movies["results"] if movie["poster_path"] != None])
 
 
-@app.route('/api/create-event', methods=['POST'])
+@app.route('/create-event', methods=['POST'])
 @jwt_required()
-def api_create_event():
+def create_event():
     identity = get_jwt_identity()
     title = request.json.get('title')
     date = request.json.get('date')
@@ -153,16 +172,17 @@ def api_create_event():
 
     return jsonify(event)
 
-@app.route('/api/profile')
+
+@app.route('/user/profile')
 @jwt_required()
-def show_profile():
+def show_user_profile():
     """Show user profile"""
     identity = get_jwt_identity()
     user = crud.get_user_by_email(identity['email'])
     return jsonify(user)
 
 
-@app.route('/api/events')
+@app.route('/events')
 @jwt_required()
 def show_events():
     """Show all events"""
@@ -174,17 +194,18 @@ def show_events():
 
     return jsonify(events)
 
-@app.route('/api/events/<event_key>')
+
+@app.route('/events/<event_key>')
 def show_event(event_key):
-    """Show all movies from an event"""
+    """Show an event associated with event key"""
 
     event = crud.get_event_by_event_key(event_key)
     participants = event.participants
 
     return jsonify({'event': event, 'participants': participants})
 
-@app.route('/api/movies/<event_id>')
-# @jwt_required()
+
+@app.route('/movies/<event_id>')
 def show_movies(event_id):
     """Show all movies from an event"""
 
@@ -195,8 +216,7 @@ def show_movies(event_id):
     return jsonify(movies)
 
 
-@app.route('/api/movie/<api_id>')
-# @jwt_required()
+@app.route('/movie/<api_id>')
 def show_movie(api_id):
     """Show movie associated with api_id"""
 
@@ -208,31 +228,7 @@ def show_movie(api_id):
     return jsonify(movie)
 
 
-@app.route('/api/popular-movies')
-def popular_movies():
-    """Show popular movies"""
-
-    payload = {'api_key': os.environ['API_KEY']}
-
-    res = requests.get(f'https://api.themoviedb.org/3/movie/popular', params=payload)
-    movies = res.json()
-    
-    return jsonify([movie for movie in movies["results"] if movie["poster_path"] != None])
-
-
-@app.route('/api/top-rated-movies')
-def top_rated_movies():
-    """Show top rated movies"""
-
-    payload = {'api_key': os.environ['API_KEY']}
-
-    res = requests.get(f'https://api.themoviedb.org/3/movie/top_rated', params=payload)
-    movies = res.json()
-    
-    return jsonify([movie for movie in movies["results"] if movie["poster_path"] != None])
-
-
-@app.route('/api/events/<event_key>/rsvp', methods=['POST'])
+@app.route('/events/<event_key>/rsvp', methods=['POST'])
 def update_rsvp(event_key):
     """Update rsvp response"""
 
@@ -250,8 +246,7 @@ def update_rsvp(event_key):
     return jsonify(participant)
 
 
-@app.route('/api/events/<event_key>/vote-update', methods=['POST'])
-# @jwt_required()
+@app.route('/events/<event_key>/vote-update', methods=['POST'])
 def update_vote(event_key):
     """Update voting count for a movie"""
 
@@ -279,6 +274,7 @@ def update_vote(event_key):
 @app.route('/about')
 def about():
     return render_template('about.html')
+
 
 if __name__ == "__main__":
     # DebugToolbarExtension(app)

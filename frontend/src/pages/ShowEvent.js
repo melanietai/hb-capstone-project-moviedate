@@ -27,21 +27,16 @@ const ShowEvent = () => {
 
   if (user) {
     userEmail = user.email;
-    console.log(user);
   } else if (search) {
     const query = qs.parse(search.replace('?', ''));
-    console.log(query);
     userEmail = query.email;
-    console.log(query.email);
   }
 
-  console.log(userEmail);
   const participantIndex = participants.findIndex(p => p.email == userEmail);
   const participant = participants.length > 0 ? participants[participantIndex] : null;
-  console.log(`PARTICIPANT: ${participant}`);
 
   useEffect(() => {
-    fetch(`/api/profile`, {
+    fetch(`/user/profile`, {
       method: 'GET',
       headers: {
         Authorization: 'Bearer ' + token,
@@ -63,10 +58,9 @@ const ShowEvent = () => {
 
   useEffect(() => {
     if (eventKey) {
-      fetch(`/api/events/${eventKey}`, {
+      fetch(`/events/${eventKey}`, {
         method: 'GET',
         headers: {
-          // Authorization: 'Bearer ' + token,
           'Content-Type': 'application/json',
         },
       }).then(res => res.json()).then(data => {
@@ -76,14 +70,11 @@ const ShowEvent = () => {
     }
   }, [eventKey]);
 
-
-
   useEffect(() => {
     if (event) {
-      fetch(`/api/movies/${event.event_id}`, {
+      fetch(`/movies/${event.event_id}`, {
         method: 'GET',
         headers: {
-          Authorization: 'Bearer ' + token,
           'Content-Type': 'application/json',
         },
       }).then(res => res.json()).then(movies => {

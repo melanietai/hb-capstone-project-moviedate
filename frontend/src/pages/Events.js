@@ -15,7 +15,7 @@ const Events = () => {
   
   useEffect(() => {
     if (token) {
-      fetch('/api/events', {
+      fetch('/events', {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + token,

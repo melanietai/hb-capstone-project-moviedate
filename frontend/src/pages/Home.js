@@ -111,12 +111,6 @@ const Home = (props) => {
               <MovieScrollBar eventMovieList={[]} />
             </Box>
           </Flex>
-          <Flex as="footer" py="5" bg="#ABD699">
-            <Spacer />
-            <Box pr={6} fontSize='3pt' color="#FFE26A">
-              <a href="http://localhost:5000/about">About this page</a>
-            </Box>
-          </Flex>
         </Container>
       </Box>
     </>

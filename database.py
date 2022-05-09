@@ -7,6 +7,9 @@ import server
 os.system("dropdb moviedate")
 os.system('createdb moviedate')
 
+os.system("dropdb testdb")
+os.system('createdb testdb')
+
 model.connect_to_db(server.app)
 model.db.create_all()
 

@@ -2,6 +2,8 @@ from server import app
 from unittest import TestCase
 import unittest
 from model import connect_to_db, db, User
+from flask_jwt_extended import (create_access_token)
+
 
 class MyAppIntegrationTestCase(TestCase):
     """Testing Flask server."""
@@ -26,9 +28,10 @@ class MyAppIntegrationTestCase(TestCase):
     def test_create_token(self):
         """Test user login."""
 
-
         # Add sample data
-        rachel = User(fname="Rachel", lname="Smith", email="rsmith@example.com", password="rachel")
+        rachel = User(
+            fname="Rachel", lname="Smith", email="rsmith@example.com", password="rachel"
+        )
         db.session.add(rachel)
         db.session.commit()
 
@@ -37,30 +40,49 @@ class MyAppIntegrationTestCase(TestCase):
         )
 
         self.assertEqual(200, result.status_code)
-        token = result.get_json().get('access_token')
+        token = result.get_json().get("access_token")
         self.assertEqual(str, type(token))
         self.assertNotEqual(0, len(token))
 
-    # def test_user_register(self):
-    #     """Test new user registration."""
+    def test_user_register(self):
+        """Test new user registration."""
 
-    #       result = self.client.post("/user",
-    #                                 data={"fname": "Rachel",
-    #                                       "lname": "Smith",
-    #                                       "email": "abc@example.com",
-    #                                       "password": "123"
-    #                                     }
-    #                                 )
+        result = self.client.post(
+            "/user",
+            json={
+                "fname": "Rachel",
+                "lname": "Smith",
+                "email": "rsmith@example.com",
+                "password": "rachel",
+            },
+        )
 
-    #     self.assertIn()
+        self.assertEqual(200, result.status_code)
+        token = result.get_json().get("access_token")
+        self.assertEqual(str, type(token))
+        self.assertNotEqual(0, len(token))
 
-    # def test_get_popular_movies(self):
-    #     """Test external API call to get popular movies"""
+    # def test_show_user_profile(self):
+    #     """Test show user profile."""
 
-    #     result = self.client.get("/popular-movies")
+    #     # Add sample data
+    #     rachel = User(
+    #         fname="Rachel", lname="Smith", email="rsmith@example.com", password="rachel"
+    #     )
+    #     db.session.add(rachel)
+    #     db.session.commit()
+    #     with self.client.application.app_context():
+    #         access_token = create_access_token("rachel")
+    #     headers = {"Authorization": "Bearer {}".format(access_token)}
 
-    #     self.assertEqual(result.status_code, 200)
-    #     self.assertIn()
+    #     result = self.client.get("/user/profile", headers=headers)
+
+    #     self.assertEqual(200, result.status_code)
+    #     self.assertEqual("rsmith@example.com", result.get.json.get("email"))
+
+
+
+
 
 
 if __name__ == "__main__":

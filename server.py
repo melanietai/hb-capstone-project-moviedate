@@ -1,18 +1,16 @@
 """The Movie Date application Flask server."""
 
 from http.client import HTTPException
-from flask import (Flask, render_template, jsonify, request, abort, url_for)
+from flask import (Flask, render_template, jsonify, request, abort)
 import jinja2
 from model import connect_to_db, db
 import crud
 from datetime import datetime, timedelta
 import requests
 import os
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
 from sqlalchemy import update
 from flask_jwt_extended import (create_access_token, get_jwt_identity, jwt_required, JWTManager)
-
+from rsvp import send_rsvp
 
 
 app = Flask(__name__)
@@ -43,11 +41,11 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=36000000)
 @app.route('/token', methods=['POST'])
 def create_token():
     """Create token for user login."""
-
     email = request.json.get('email')
     password = request.json.get('password')
 
     user = crud.get_user_by_email(email)
+
     if not user or user.password != password:
         return ({"msg": "Invalid email or password"}), 401
     
@@ -56,7 +54,7 @@ def create_token():
 
 
 @app.route('/user', methods=['POST'])
-def register_user():
+def user_register():
     """Register a new user."""
 
     fname = request.json.get('fname')
@@ -148,26 +146,28 @@ def create_event():
     host_lname = current_user.lname
     for email in emails:
 
-        url = url_for('show_event', _external=True, event_key=event.key, email=email)
-        message = Mail(
-        from_email='moviedatecapstone@gmail.com',
-        to_emails=email,
-        subject=f'Please RSVP: Movie Date on {event.event_at.date()} at {event.event_at.time()}',
-        html_content="""\
-          <html>
-            <body>
-              <p>{host_fname} {host_lname} has invited to a movie date!</p>
-              <p>{host_email} has invited you to join a movie date on {event_date} at {event_time}. 
-              Please click on the link {url} to RSVP and view event details with your email and Access Key {key}
-              </p>
-            </body>
-          </html>
-          """.format(event_date=event.event_at.date(), host_fname=host_fname, host_lname=host_lname, event_time=event.event_at.time(), host_email=host_email, url=url, key=event.key)
-        )
+        send_rsvp(email, event, host_fname, host_lname, host_email)
 
-        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-        response = sg.send(message)
-        print(response.status_code, response.body, response.headers)
+        # url = url_for('show_event', _external=True, event_key=event.key, email=email)
+        # message = Mail(
+        # from_email='moviedatecapstone@gmail.com',
+        # to_emails=email,
+        # subject=f'Please RSVP: Movie Date on {event.event_at.date()} at {event.event_at.time()}',
+        # html_content="""\
+        #   <html>
+        #     <body>
+        #       <p>{host_fname} {host_lname} has invited to a movie date!</p>
+        #       <p>{host_email} has invited you to join a movie date on {event_date} at {event_time}. 
+        #       Please click on the link {url} to RSVP and view event details with your email and Access Key {key}
+        #       </p>
+        #     </body>
+        #   </html>
+        #   """.format(event_date=event.event_at.date(), host_fname=host_fname, host_lname=host_lname, event_time=event.event_at.time(), host_email=host_email, url=url, key=event.key)
+        # )
+
+        # sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        # response = sg.send(message)
+        # print(response.status_code, response.body, response.headers)
 
     return jsonify(event)
 
@@ -199,6 +199,9 @@ def show_event(event_key):
     """Show an event associated with event key"""
 
     event = crud.get_event_by_event_key(event_key)
+    if not event:
+        abort(404)
+        
     participants = event.participants
 
     return jsonify({'event': event, 'participants': participants})

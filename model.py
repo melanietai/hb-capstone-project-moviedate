@@ -74,7 +74,7 @@ class Movie(db.Model):
     vote_count = db.Column(db.Integer)
     event_id = db.Column(db.Integer, db.ForeignKey("events.event_id"))
 
-    event = db.relationship("Event", backref="movies")
+    event = db.relationship("Event", backref=backref("movies", cascade="all, delete"))
 
 
     def __repr__(self):

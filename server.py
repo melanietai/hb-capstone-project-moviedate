@@ -158,7 +158,7 @@ def show_user_profile():
     identity = get_jwt_identity()
 
     user = crud.get_user_by_email(identity['email'])
-    
+
     return jsonify(user)
 
 
@@ -263,11 +263,6 @@ def event_delete(event_key):
     db.session.commit()
 
     return(jsonify(event))
-
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
 
 
 if __name__ == "__main__":

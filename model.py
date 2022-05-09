@@ -11,6 +11,7 @@ An event participant wil be associated with one event and one user (
 from dataclasses import dataclass
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import backref
 
 db = SQLAlchemy()
 
@@ -100,7 +101,7 @@ class Participant(db.Model):
     event_id = db.Column(db.Integer, db.ForeignKey("events.event_id"))
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
 
-    event = db.relationship("Event", backref="participants")
+    event = db.relationship("Event", backref=backref("participants", cascade="all, delete"))
     user = db.relationship("User", backref="participants")
     
 

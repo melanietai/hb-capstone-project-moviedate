@@ -13,7 +13,8 @@ import {
   Flex,
   Grid,
   GridItem,
-  Button
+  Button,
+  Heading
 } from "@chakra-ui/react";
 
 
@@ -138,17 +139,18 @@ const ShowEvent = () => {
   return (
     <>
       <Box bg="#FAFAFA" pt={10}>
-        <Container p={20} maxWidth="container.xl">
+        <Container pt={20} pl={20} pr={20} maxWidth="container.xl">
           <Box borderWidth={4} borderColor="#75C9B7">
             <ShowEventDetails event={event} />
           </Box>
           <Flex>
             <Box flexDirection="column">
-              
+              <Heading size="md" mt={6} mb={2}>Participants Information:</Heading>
+              <Grid templateColumns="repeat(3, 1fr)" gap={4} align="center">
+                {participants.map(participant => <GridItem><ShowParticipantStatus key={participant.participant_id} participant={participant} /></GridItem>)}
+              </Grid>
               <Box mt={6}>
-                {participants.map(participant => <ShowParticipantStatus key={participant.participant_id} participant={participant} />)}
-              </Box>
-              <Box mt={6}>
+              <Heading size="md" mb={2}>Update your RSVP status: </Heading>
               {participant ?
                 <div>
                   <ShowUpdateRsvpForm participant={participant} eventKey={eventKey} onRsvp={onRsvp} />
@@ -156,8 +158,9 @@ const ShowEvent = () => {
               </Box>
             </Box>
           </Flex>
+            <Heading size="md" mt={6} mb={2}>Movie Details and Vote Counts(Please submit your vote(s) below):</Heading>
             <Box flexDirection="column">
-                <Box mt={6}>
+                <Box>
                   <Grid templateColumns="repeat(5, 1fr)" gap={1}>
                     {movies.map(movie => <GridItem><ShowMovieDetails key={movie.movie_id} movie={movie}/></GridItem>)}
                   </Grid>
@@ -170,7 +173,9 @@ const ShowEvent = () => {
                 </Box>
               </Box>
         </Container>
-        <Button onClick={onDeleteButtonClick} fontSize="xs">Delete this event</Button>
+        <Box align="center">
+          <Button onClick={onDeleteButtonClick} rounded="full" fontSize="sm" m={4}>Delete this event</Button>
+        </Box>
       </Box>
       
     </>

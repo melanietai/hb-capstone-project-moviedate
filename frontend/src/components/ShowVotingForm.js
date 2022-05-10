@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import ShowMovieTitle from './ShowMovieTitle';
+import {
+  Box,
+  Button,
+  Text
+} from "@chakra-ui/react";
 
 
 const ShowVotingForm = (props) => {
@@ -39,20 +44,24 @@ const ShowVotingForm = (props) => {
     message = (<div>You have successfuly voted! Thank you!</div>);
   } else {
     message = (
-      <div>
-        <form onSubmit={onSubmitButtonClick}>
-          Which movie(s) do you vote for?
-          {apiIds.map(apiId => {
-          return(
-            <div key={apiId}>
-              <input type="checkbox" name="movies" value={apiId} id={apiId} onChange={handleChange}/>
-              <label htmlFor={apiId}>{<ShowMovieTitle apiId={apiId} />}</label>
-            </div>
-            );
-          })}
-          <button type="submit">Submit Votes</button>
-        </form>
-      </div>
+      <>
+        <Box bg="#FFE26A" align="center">
+          <Box pb={2}>
+            <form onSubmit={onSubmitButtonClick}>
+              <Text pt={2}>Which movie(s) do you vote for?</Text>
+              {apiIds.map(apiId => {
+              return(
+                <div key={apiId}>
+                    <input type="checkbox" name="movies" value={apiId} id={apiId} onChange={handleChange}/>
+                    <label htmlFor={apiId}>{<ShowMovieTitle apiId={apiId} />}</label>
+                </div>
+                );
+              })}
+              <Button size="xs" type="submit" rounded="full" m={4}>Submit Vote(s)</Button>
+            </form>
+          </Box>
+        </Box>
+      </>
     );
   }
 

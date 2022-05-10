@@ -1,11 +1,18 @@
+import {
+  Box,
+  Text,
+  Container
+} from "@chakra-ui/react";
+
+
 const ShowParticipantStatus = (props) => {
   const participant = props.participant;
 
-  let hostMsg;
+  let participantRole;
   if (participant.is_host === true) {
-    hostMsg = <span>(host)</span>
+    participantRole = <Text fontWeight="bold">Host:</Text>
   } else {
-    hostMsg = <span></span>
+    participantRole = <Text fontWeight="bold">Invitee:</Text>
   }
 
   let rsvpStatus;
@@ -19,21 +26,24 @@ const ShowParticipantStatus = (props) => {
 
   let votingStatus;
   if (participant.voted === true) {
-    votingStatus = <span>Voted!</span>
+    votingStatus = <span>Voted</span>
   } else {
-    votingStatus = <span>Please vote!</span>
+    votingStatus = <span>Not yet voted</span>
   }
 
   return(
-    <div>
-      <ul>
-        <li>
-          Participant email: {participant.email} {hostMsg}<br></br>
-          RSVP status: {rsvpStatus}<br></br>
-          Voting status: {votingStatus}<br></br>
-        </li>
-      </ul>
-    </div>
+    <>
+      <Box>
+        <Container bg="#FFE26A" w="360px" h="120px" pt={2}>
+          <Box fontSize="xl" color="16123F">{participantRole}</Box>
+          <Box color="16123F">
+            <Text>Email: {participant.email}</Text>
+            <Text>RSVP status: {rsvpStatus}</Text>
+            <Text>Voting status: {votingStatus}</Text>
+          </Box>
+        </Container>
+      </Box>
+    </>
   );
 };
 

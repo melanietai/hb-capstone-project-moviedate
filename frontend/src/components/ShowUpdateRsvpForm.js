@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import {
+  Box,
+  Text,
+  Button,
+} from "@chakra-ui/react";
 
 
 const ShowUpdateRsvpForm = (props) => {
@@ -27,18 +32,22 @@ const ShowUpdateRsvpForm = (props) => {
 
 
   return (
-    <div>
-      <p>Update your RSVP status:</p>
-      <form onSubmit={onSubmitButtonClick} >
-        Will you be attending?
-        <input type="radio" name="btn" value="yes" id="yesbtn" onChange={handleChange} checked={rsvp == true} />
-        <label htmlFor="yesbtn">Yes</label>
+    <>
+      <Box bg="#FFE26A" align="center">
+        <Text pt={2} fontSize="xs" h="40px">(current user: {participant.email})</Text>
+        <Box pb={2}>
+          <form onSubmit={onSubmitButtonClick} >
+            <Text pr={2}>Will you be attending?</Text>
+            <input type="radio" name="btn" value="yes" id="yesbtn" onChange={handleChange} checked={rsvp == true} />
+            <label htmlFor="yesbtn">Yes</label>
 
-        <input type="radio" name="btn" value="no" id="nobtn" onChange={handleChange} checked={rsvp == false} />
-        <label htmlFor="nobtn">No</label>
-        <button type="submit">Update RSVP</button>
-      </form>
-    </div>
+            <input type="radio" name="btn" value="no" id="nobtn" onChange={handleChange} checked={rsvp == false} />
+            <label htmlFor="nobtn">No</label>
+            <Button size="xs" type="submit" rounded="full" ml={4}>Update RSVP</Button>
+          </form>
+        </Box>
+      </Box>
+    </>
   );
 };
 

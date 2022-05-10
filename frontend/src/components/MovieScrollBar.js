@@ -35,7 +35,7 @@ const MovieScrollBar = ({ eventMovieList, addMovieButtonClick }) => {
                 <Tab>Top Rated Movies</Tab>
               </TabList>
 
-              <TabPanels position="right" overflowY="scroll" maxHeight="90vh">
+              <TabPanels position="right" overflowY="scroll" maxHeight="76vh">
                 {token ? (
                   <TabPanel>
                     <SearchMovieCards token={token} addedMovieIds={movieIds} addMovieButtonClick={addMovieButtonClick} />

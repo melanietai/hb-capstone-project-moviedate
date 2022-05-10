@@ -95,7 +95,7 @@ const CreateEvent = () => {
 
   return (
     <>
-      <Box bg="#FAFAFA">
+      <Box bg="#FAFAFA" h="880px">
         <Container pt={10} maxWidth="container.xl">
           <Flex w="100%" pt={16}>
             <Box flexDirection="column" pl={20} pt={3}>

@@ -31,7 +31,7 @@ const Events = () => {
 
   return (
     <>
-      <Box bg="#FAFAFA">
+      <Box bg="#FAFAFA" h="880px">
         <Container pt={20} maxWidth="container.xl">
           <Box>
             <Grid templateColumns="repeat(3, 1fr)" gap={6} p={20}>

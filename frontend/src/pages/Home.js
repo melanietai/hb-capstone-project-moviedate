@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
 import MovieScrollBar from '../components/MovieScrollBar';
-
 import { 
   Container,
   Box,
@@ -11,6 +10,7 @@ import {
   Spacer,
   Text
 } from "@chakra-ui/react";
+
 
 const Home = (props) => {
   const [active, setActive] = useState("login");
@@ -118,7 +118,3 @@ const Home = (props) => {
 };
 
 export default Home;
-
-<div className="Footer" backgroundColor="#414A5E">
-
-</div>

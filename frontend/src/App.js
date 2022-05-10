@@ -6,6 +6,7 @@ import Events from './pages/Events';
 import ShowEvent from './pages/ShowEvent';
 import useToken from './components/useToken';
 import AppBar from './components/AppBar';
+import Footer from './components/Footer';
 
 
 const App = () => {
@@ -47,6 +48,7 @@ const App = () => {
       <div className="App">
         {children}
       </div>
+      <Footer />
     </BrowserRouter>
   );
 };

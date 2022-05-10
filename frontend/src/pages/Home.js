@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
 import MovieScrollBar from '../components/MovieScrollBar';
+import Footer from '../components/Footer';
 import { 
   Container,
   Box,
@@ -115,6 +116,7 @@ const Home = (props) => {
           </Flex>
         </Container>
       </Box>
+      <Footer />
     </>
   )
 };

@@ -6,10 +6,8 @@ import Events from './pages/Events';
 import ShowEvent from './pages/ShowEvent';
 import useToken from './components/useToken';
 import AppBar from './components/AppBar';
-import Footer from './components/Footer';
 import { 
-  Box,
-  Container
+  Box
 } from "@chakra-ui/react";
 
 
@@ -53,11 +51,9 @@ const App = () => {
       <Box>
         <Box>{children}</Box>
       </Box>
-      <Footer />
     </BrowserRouter>
   );
 };
 
 
-// Add a Footer to attribute tmdb source
 export default App;

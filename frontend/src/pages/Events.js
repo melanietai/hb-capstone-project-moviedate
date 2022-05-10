@@ -31,10 +31,14 @@ const Events = () => {
 
   return (
     <>
-      <Box bg="#FAFAFA" h="880px">
+      <Box>
         <Container pt={20} maxWidth="container.xl">
           <Box>
-            <Grid templateColumns="repeat(3, 1fr)" gap={6} p={20}>
+            <Grid templateColumns={{
+              sm: "repeat(1, 1fr)",
+              md: "repeat(2, 1fr)",
+              lg: "repeat(3, 1fr)"
+            }} gap={6} p={20}>
               {
                 events.map(event => <GridItem w="100%"><EventsListItem key={event.event_id} event={event} /></GridItem>)
               }

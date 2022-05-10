@@ -6,6 +6,7 @@ import ShowParticipantStatus from '../components/ShowParticipantStatus';
 import ShowUpdateRsvpForm from '../components/ShowUpdateRsvpForm';
 import ShowVotingForm from '../components/ShowVotingForm';
 import ShowMovieDetails from '../components/ShowMovieDetails';
+import Footer from '../components/Footer';
 import qs from 'qs';
 import { 
   Container,
@@ -184,7 +185,7 @@ const ShowEvent = () => {
           <Button onClick={onDeleteButtonClick} rounded="full" fontSize="sm" m={4}>Delete this event</Button>
         </Box>
       </Box>
-      
+      <Footer />
     </>
   );
 };

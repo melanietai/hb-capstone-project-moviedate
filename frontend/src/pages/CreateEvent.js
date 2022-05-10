@@ -5,6 +5,7 @@ import EventEmails from '../components/EventEmails';
 import EventMovieList from '../components/EventMovieList';
 import useToken from '../components/useToken';
 import MovieScrollBar from '../components/MovieScrollBar';
+import Footer from '../components/Footer';
 import { 
   Text,
   Box,
@@ -141,6 +142,7 @@ const CreateEvent = () => {
           </Flex>
         </Container>
       </Box>
+      <Footer />
   </>
   
   )

@@ -22,7 +22,7 @@ const MovieScrollBar = ({ eventMovieList, addMovieButtonClick }) => {
   return(
     <>
       <Box>
-        <Container>
+        <Container h="810px">
           <Box p={3}>
             <Tabs color="#16123F">
               <TabList>

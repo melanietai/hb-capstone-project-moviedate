@@ -34,10 +34,10 @@ const ShowParticipantStatus = (props) => {
   return(
     <>
       <Box>
-        <Container bg="#FFE26A" w="360px" h="120px" pt={2}>
+        <Container bg="#FFE26A" pt={2}>
           <Box fontSize="xl" color="16123F">{participantRole}</Box>
           <Box color="16123F">
-            <Text>Email: {participant.email}</Text>
+            <Text>{participant.email}</Text>
             <Text>RSVP status: {rsvpStatus}</Text>
             <Text>Voting status: {votingStatus}</Text>
           </Box>

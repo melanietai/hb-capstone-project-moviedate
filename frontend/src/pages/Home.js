@@ -71,10 +71,12 @@ const Home = (props) => {
       </Flex>
       <Box pt={6}>
         <Container maxWidth="container.xl" mt={20}>
-          
-          <Flex w="100%" align="center" justify="center">
+          <Flex w="100%" align="center" justify="center" flexDirection={{
+            sm: "column",
+            md: "column",
+            lg: "row"
+          }}>
             <Box flexDirection="column">
-              
               <Box pl={16}>
                 <Container maxWidth="container.xl">
                   <Flex maxWidth="max-content" alignItems='center'>

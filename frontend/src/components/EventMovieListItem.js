@@ -18,12 +18,12 @@ const EventMovieListItem = (props) => {
   
   return (
     <Flex>
-      <Box m={3}>
+      <Box m={2} fontSize="sm">
           <ListItem align="left">{movie.title}</ListItem>
       </Box>
       <Spacer />
-      <Box m={3}>
-        <Button type="button" color="#90909A" onClick={onClick}>Remove Me</Button>
+      <Box m={0}>
+        <Button type="button" fontSize="xs" color="#90909A" onClick={onClick}>Remove</Button>
       </Box>
     </Flex>
   )

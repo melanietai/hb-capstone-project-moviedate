@@ -143,12 +143,16 @@ const ShowEvent = () => {
           <Box borderWidth={4} borderColor="#75C9B7">
             <ShowEventDetails event={event} />
           </Box>
-          <Flex>
-            <Box flexDirection="column">
+          <Box>
+            <Box flexDirection="column" align="center">
               <Heading size="md" mt={6} mb={2}>Participants Information:</Heading>
-              <Grid templateColumns="repeat(3, 1fr)" gap={4} align="center">
+              <Grid templateColumns={{
+                  sm: "repeat(1, 1fr)",
+                  md: "repeat(2, 1fr)",
+                }} gap={4} align="center">
                 {participants.map(participant => <GridItem><ShowParticipantStatus key={participant.participant_id} participant={participant} /></GridItem>)}
               </Grid>
+            
               <Box mt={6}>
               <Heading size="md" mb={2}>Update your RSVP status: </Heading>
               {participant ?
@@ -157,11 +161,14 @@ const ShowEvent = () => {
                 </div> : null}
               </Box>
             </Box>
-          </Flex>
+          </Box>
             <Heading size="md" mt={6} mb={2}>Movie Details and Vote Counts(Please submit your vote(s) below):</Heading>
             <Box flexDirection="column">
                 <Box>
-                  <Grid templateColumns="repeat(5, 1fr)" gap={1}>
+                  <Grid templateColumns={{
+                      sm: "repeat(2, 1fr)",
+                      md: "repeat(5, 1fr)",
+                    }} gap={1} align="center">
                     {movies.map(movie => <GridItem><ShowMovieDetails key={movie.movie_id} movie={movie}/></GridItem>)}
                   </Grid>
                 </Box>

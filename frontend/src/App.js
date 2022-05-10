@@ -7,6 +7,11 @@ import ShowEvent from './pages/ShowEvent';
 import useToken from './components/useToken';
 import AppBar from './components/AppBar';
 import Footer from './components/Footer';
+import { 
+  Box,
+  Container
+} from "@chakra-ui/react";
+
 
 
 const App = () => {
@@ -45,9 +50,9 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div className="App">
-        {children}
-      </div>
+      <Box>
+        <Box>{children}</Box>
+      </Box>
       <Footer />
     </BrowserRouter>
   );

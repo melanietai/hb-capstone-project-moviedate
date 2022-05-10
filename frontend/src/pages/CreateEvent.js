@@ -95,16 +95,19 @@ const CreateEvent = () => {
 
   return (
     <>
-      <Box bg="#FAFAFA" h="880px">
+      <Box bg="#FAFAFA">
         <Container pt={10} maxWidth="container.xl">
-          <Flex w="100%" pt={16}>
+          <Flex w="100%" pt={16} flexDirection={{
+            sm: "column",
+            md: "column",
+            lg: "row"
+          }}>
             <Box flexDirection="column" pl={20} pt={3}>
               <Box maxW='container.xl'>
                 <Heading color="#16123F" size="lg" mb={4} pt={3}>Invite your friends to a movie date!</Heading>
                 <OrderedList pl={6} fontSize='md' color="gray.600">
-                  <ListItem p={2}>Enter event details.</ListItem>
-                  <ListItem p={2}>Enter emails of friends you would like to invite.</ListItem>
-                  <ListItem p={2}>Search movies on the right and add up to 5 movies.</ListItem>
+                  <ListItem p={2}>Enter event details and emails of friends.</ListItem>
+                  <ListItem p={2}>Search movies and pick up to 5 movies.</ListItem>
                   <ListItem p={2}>Movies added will show under "Movies added" section.</ListItem>
                   <ListItem p={2}>Click "Create Event" button to create event.</ListItem>
                   <ListItem p={2}>Your friends will receive an RSVP email with a link to the event.</ListItem>
@@ -114,23 +117,26 @@ const CreateEvent = () => {
                 <Flex>
                   <Box pt={10}>
                     <EventAt onTitleChange={onTitleChange} onTimeChange={onTimeChange} onDateChange={onDateChange} />
+                  </Box>
+                  <Box pt={10}>
                     <EventEmails emails={emails} onEmailChange={onEmailChange} onAddEmailButtonClick={onAddEmailButtonClick}/>
                   </Box>
-                  <Container ml={10} flexDirection="column" maxWidth="container.xl">
-                    <Text pt={10}>Movies added:</Text>
-                    <Box bg="gray.200" rounded="lg" >
-                      <EventMovieList eventMovieList={eventMovieList} removeMovieButtonClick={removeMovieButtonClick} />
-                      <Box py={5}></Box>
+                  <Container ml={2} flexDirection="column" maxWidth="container.xl">
+                    <Box>
+                      <Text pt={10}>Movies added:</Text>
+                      <Box bg="gray.200" rounded="lg" >
+                        <EventMovieList eventMovieList={eventMovieList} removeMovieButtonClick={removeMovieButtonClick} />
+                        <Box py={2}></Box>
+                      </Box>
+                      <Flex>
+                        <Spacer />
+                        <Box mt={2}><Button type="submit" color="#16123F">Create Event</Button></Box>
+                      </Flex>
                     </Box>
-                    <Flex>
-                      <Spacer />
-                      <Box mt={2}><Button type="submit" color="#90909A">Create Event</Button></Box>
-                    </Flex>
                   </Container>
                 </Flex>
               </form>
             </Box>
-            <Spacer />
             <MovieScrollBar addMovieButtonClick={addMovieButtonClick} eventMovieList={eventMovieList} />
           </Flex>
         </Container>

@@ -34,7 +34,7 @@ const ShowUpdateRsvpForm = (props) => {
   return (
     <>
       <Box bg="#FFE26A" align="center">
-        <Text pt={2} fontSize="xs" h="40px">(current user: {participant.email})</Text>
+        <Text pt={2} fontSize="xs">(current user: {participant.email})</Text>
         <Box pb={2}>
           <form onSubmit={onSubmitButtonClick} >
             <Text pr={2}>Will you be attending?</Text>

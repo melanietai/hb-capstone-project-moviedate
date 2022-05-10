@@ -31,9 +31,9 @@ const EventEmails = (props) => {
 
   return (
     <>
-      <Stack pt={6} maxW="300px">
+      <Stack ml={4} maxW="300px">
         <Box>
-          <Text>Email friend(s) that you would like to invite: </Text>
+          <Text>Invite friend(s): </Text>
           {emailsComponents}
         </Box>
         <Button type="button" color="#90909A" onClick={props.onAddEmailButtonClick}>Add another email</Button>

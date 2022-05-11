@@ -46,7 +46,7 @@ The Movie Date is built with Python Flask on the backend with a PostgreSQL datab
 
 ### Languages:
 * Python
-* JavaScript (AJAX, JSON)
+* JavaScript
 * HTML5
 * CSS
 * SQL
@@ -56,9 +56,11 @@ The Movie Date is built with Python Flask on the backend with a PostgreSQL datab
 * Flask
 * Flask-JWT
 * Chakra
+* SQLAlchemy
+* Python Unittest
 
 ### Database:
-* PostgreSQL / SQLAlchemy
+* PostgreSQL
 
 ### APIs:
 * The Movie Data Base (TMDB)

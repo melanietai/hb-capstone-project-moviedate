@@ -10,8 +10,8 @@ The Movie Date is built with Python Flask on the backend with a PostgreSQL datab
 
 ### Create Account / Login
 
-Users can create / login to an account from the homepage.
-<img src="/static/homepage.png" alt="Homepage" width="500px"/>
+<p>Users can create / login to an account from the homepage.</p>
+<img src="/static/homepage.png" alt="Homepage" width="900px"/>
 
 ### Create Event
 

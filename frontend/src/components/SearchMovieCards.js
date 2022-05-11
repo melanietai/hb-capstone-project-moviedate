@@ -16,7 +16,7 @@ const SearchMovieCards = ({ token, addedMovieIds, addMovieButtonClick }) => {
 
   const onSearchButtonClick = () => {
     if (keyword) {
-      fetch('/keyword-search', {
+      fetch('/api/keyword-search', {
         method: 'POST',
         body: JSON.stringify({ keyword: keyword }),
         headers: {

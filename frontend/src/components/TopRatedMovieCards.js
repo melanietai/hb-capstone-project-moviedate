@@ -6,7 +6,7 @@ const TopRatedMovieCards = ({ addedMovieIds, addMovieButtonClick }) => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    fetch(`/top-rated-movies`)
+    fetch(`/api/top-rated-movies`)
     .then(res => res.json())
     .then(data => {
       setMovies(data);

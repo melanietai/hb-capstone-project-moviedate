@@ -23,7 +23,7 @@ const ShowMovieDetails = (props) => {
 
   useEffect(() => {
     if (apiId) {
-      fetch(`/movie/${apiId}`, {
+      fetch(`/api/movie/${apiId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

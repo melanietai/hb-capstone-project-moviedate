@@ -6,7 +6,7 @@ const PopularMovieCards = ({ addedMovieIds, addMovieButtonClick }) => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    fetch(`/popular-movies`)
+    fetch(`/api/popular-movies`)
     .then(res => res.json())
     .then(data => {
       setMovies(data);

@@ -27,8 +27,7 @@ const Home = (props) => {
   };
 
   useEffect(() => {
-    console.log('fetch');
-    fetch(`/popular-movies`)
+    fetch(`/api/popular-movies`)
     .then(res => res.json())
     .then(data => {
       setPopularMovies(data);
@@ -36,7 +35,7 @@ const Home = (props) => {
   }, []);
 
   useEffect(() => {
-    fetch(`/top-rated-movies`)
+    fetch(`/api/top-rated-movies`)
     .then(res => res.json())
     .then(data => {
       setTopRatedMovies(data);

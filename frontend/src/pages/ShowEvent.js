@@ -42,7 +42,7 @@ const ShowEvent = () => {
   const participant = participants.length > 0 ? participants[participantIndex] : null;
 
   useEffect(() => {
-    fetch(`/user/profile`, {
+    fetch(`/api/user/profile`, {
       method: 'GET',
       headers: {
         Authorization: 'Bearer ' + token,
@@ -64,7 +64,7 @@ const ShowEvent = () => {
 
   useEffect(() => {
     if (eventKey) {
-      fetch(`/events/${eventKey}`, {
+      fetch(`/api/events/${eventKey}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ const ShowEvent = () => {
 
   useEffect(() => {
     if (event) {
-      fetch(`/movies/${event.event_id}`, {
+      fetch(`/api/movies/${event.event_id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

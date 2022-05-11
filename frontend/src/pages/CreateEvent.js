@@ -38,9 +38,8 @@ const CreateEvent = () => {
         emails: emails.filter((email) => email.length > 0),
         movieList: eventMovieList,
       }
-    console.log(formInputs);
     
-    fetch('/create-event', {
+    fetch('/api/create-event', {
       method: 'POST',
       body: JSON.stringify(formInputs),
       headers: {

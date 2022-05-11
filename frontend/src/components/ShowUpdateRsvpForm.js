@@ -16,7 +16,7 @@ const ShowUpdateRsvpForm = (props) => {
   const onSubmitButtonClick = (evt) => {
     evt.preventDefault();
 
-    fetch(`/events/${eventKey}/rsvp`, {
+    fetch(`/api/events/${eventKey}/rsvp`, {
       method: 'PUT',
       body: JSON.stringify({ email: participant.email, rsvp }),
       headers: {

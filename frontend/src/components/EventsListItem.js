@@ -17,7 +17,7 @@ const EventsListItem = (props) => {
   
   useEffect(() => {
     if (eventId) {
-      fetch(`/movies/${eventId}`, {
+      fetch(`/api/movies/${eventId}`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + token,

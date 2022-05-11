@@ -23,7 +23,7 @@ const Signup = (props) => {
 
   const onSignupButtonClick = (evt) => {
     evt.preventDefault();
-    fetch('/user', {
+    fetch('/api/user', {
       method: 'POST',
       body: JSON.stringify({
         fname: signup.fname,

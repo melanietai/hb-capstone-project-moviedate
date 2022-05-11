@@ -13,7 +13,7 @@ from flask_jwt_extended import (create_access_token, get_jwt_identity, jwt_requi
 from rsvp import send_rsvp
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='', static_folder='frontend/build')
 
 # Store secret key in secrets.sh file if you deploy your application
 # A secret key is needed to use Flask sessioning features
@@ -38,7 +38,7 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=36000000)
 
 
 
-@app.route('/token', methods=['POST'])
+@app.route('/api/token', methods=['POST'])
 def create_token():
     """Create token for user login."""
     email = request.json.get('email')
@@ -53,7 +53,7 @@ def create_token():
     return jsonify(access_token=access_token)
 
 
-@app.route('/user', methods=['POST'])
+@app.route('/api/user', methods=['POST'])
 def user_register():
     """Register a new user."""
 
@@ -78,7 +78,7 @@ def user_register():
     return jsonify(access_token=access_token)
 
 
-@app.route('/popular-movies')
+@app.route('/api/popular-movies')
 def get_popular_movies():
     """Show popular movies"""
 
@@ -91,7 +91,7 @@ def get_popular_movies():
     return jsonify([movie for movie in movies["results"] if movie["poster_path"] != None])
 
 
-@app.route('/top-rated-movies')
+@app.route('/api/top-rated-movies')
 def get_top_rated_movies():
     """Show top rated movies"""
 
@@ -104,7 +104,7 @@ def get_top_rated_movies():
     return jsonify([movie for movie in movies["results"] if movie["poster_path"] != None])
 
 
-@app.route('/keyword-search', methods=['POST'])
+@app.route('/api/keyword-search', methods=['POST'])
 @jwt_required()
 def get_search_results():
     """Get search results."""
@@ -122,7 +122,7 @@ def get_search_results():
     return jsonify([movie for movie in movies["results"] if movie["poster_path"] != None])
 
 
-@app.route('/create-event', methods=['POST'])
+@app.route('/api/create-event', methods=['POST'])
 @jwt_required()
 def create_event():
     identity = get_jwt_identity()
@@ -151,7 +151,7 @@ def create_event():
     return jsonify(event)
 
 
-@app.route('/user/profile')
+@app.route('/api/user/profile')
 @jwt_required()
 def show_user_profile():
     """Show user profile"""
@@ -162,7 +162,7 @@ def show_user_profile():
     return jsonify(user)
 
 
-@app.route('/events')
+@app.route('/api/events')
 @jwt_required()
 def show_events():
     """Show all events"""
@@ -175,7 +175,7 @@ def show_events():
     return jsonify(events)
 
 
-@app.route('/events/<event_key>', methods=['GET'])
+@app.route('/api/events/<event_key>', methods=['GET'])
 def show_event(event_key):
     """Show an event associated with event key"""
 
@@ -188,7 +188,7 @@ def show_event(event_key):
     return jsonify({'event': event, 'participants': participants})
 
 
-@app.route('/movies/<event_id>')
+@app.route('/api/movies/<event_id>')
 def show_movies(event_id):
     """Show all movies from an event"""
 
@@ -199,7 +199,7 @@ def show_movies(event_id):
     return jsonify(movies)
 
 
-@app.route('/movie/<api_id>')
+@app.route('/api/movie/<api_id>')
 def show_movie(api_id):
     """Show movie associated with api_id"""
 
@@ -211,7 +211,7 @@ def show_movie(api_id):
     return jsonify(movie)
 
 
-@app.route('/events/<event_key>/rsvp', methods=['PUT'])
+@app.route('/api/events/<event_key>/rsvp', methods=['PUT'])
 def update_rsvp(event_key):
     """Update rsvp response"""
 
@@ -229,7 +229,7 @@ def update_rsvp(event_key):
     return jsonify(participant)
 
 
-@app.route('/events/<event_key>/vote-update', methods=['PUT'])
+@app.route('/api/events/<event_key>/vote-update', methods=['PUT'])
 def update_vote(event_key):
     """Update voting count for a movie"""
 
@@ -240,7 +240,7 @@ def update_vote(event_key):
     event_id = event.event_id
 
     movie_list = []
-    print('************votingstatus')
+
     crud.update_voted_for_participant_id(participant_id)
 
     for api_id in api_ids:
@@ -254,7 +254,7 @@ def update_vote(event_key):
     return jsonify(movie_list)
 
 
-@app.route('/events/<event_key>', methods=['DELETE'])
+@app.route('/api/events/<event_key>', methods=['DELETE'])
 def event_delete(event_key):
     """Delete an event"""
 

@@ -22,7 +22,7 @@ const Login = (props) => {
 
   const onLoginButtonClick = (evt) => {
     evt.preventDefault();
-    fetch('/token', {
+    fetch('/api/token', {
       method: 'POST',
       body: JSON.stringify({
         email: login.email,

@@ -12,6 +12,7 @@ from sqlalchemy import update
 from flask_jwt_extended import (create_access_token, get_jwt_identity, jwt_required, JWTManager)
 from rsvp import send_rsvp
 
+ENV = os.getenv('ENV', 'dev')
 
 app = Flask(__name__, static_url_path='', static_folder='frontend/build')
 
@@ -37,6 +38,8 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=36000000)
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
+if ENV == 'production':
+    connect_to_db(app)
 
 @app.route('/api/token', methods=['POST'])
 def create_token():

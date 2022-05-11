@@ -14,7 +14,7 @@ from rsvp import send_rsvp
 
 ENV = os.getenv('ENV', 'dev')
 
-app = Flask(__name__, static_url_path='', static_folder='frontend/build')
+app = Flask(__name__, static_folder='frontend/build')
 
 # Store secret key in secrets.sh file if you deploy your application
 # A secret key is needed to use Flask sessioning features
@@ -270,8 +270,10 @@ def event_delete(event_key):
 @app.route("/", defaults={'path':''})
 @app.route('/<path:path>')
 def serve(path):
-    print(f'serving path: {path}')
-    return send_from_directory(app.static_folder,'index.html')
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == "__main__":
     # DebugToolbarExtension(app)

@@ -3,7 +3,9 @@ import ShowMovieTitle from './ShowMovieTitle';
 import {
   Box,
   Button,
-  Text
+  Text,
+  Flex,
+  Container
 } from "@chakra-ui/react";
 
 
@@ -52,8 +54,10 @@ const ShowVotingForm = (props) => {
               {apiIds.map(apiId => {
               return(
                 <div key={apiId}>
-                    <input type="checkbox" name="movies" value={apiId} id={apiId} onChange={handleChange}/>
-                    <label htmlFor={apiId}>{<ShowMovieTitle apiId={apiId} />}</label>
+                  <Container alignItems="center">
+                    <Flex align="center"><input type="checkbox" name="movies" value={apiId} id={apiId} onChange={handleChange}/>
+                    <label htmlFor={apiId}>{<ShowMovieTitle apiId={apiId} />}</label></Flex>
+                  </Container>  
                 </div>
                 );
               })}

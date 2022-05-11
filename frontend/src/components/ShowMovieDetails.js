@@ -63,7 +63,7 @@ const ShowMovieDetails = (props) => {
           </Box>
 
           <Box color="#75C9B7" fontSize="sm">
-            <Text>Current Vote Count: {voteCount}</Text>
+            <Text fontWeight="bold">Current Vote Count: {voteCount}</Text>
           </Box>
 
           <Box

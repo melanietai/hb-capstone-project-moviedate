@@ -163,12 +163,12 @@ const ShowEvent = () => {
               </Box>
             </Box>
           </Box>
-            <Heading size="md" mt={6} mb={2}>Movie Details and Vote Counts(Please submit your vote(s) below):</Heading>
+            <Heading size="md" mt={6} mb={2} align="center">Please vote for the movie(s) you would like to watch together:</Heading>
             <Box flexDirection="column">
-                <Box>
+                <Box bg="#FFE26A">
                   <Grid templateColumns={{
                       sm: "repeat(2, 1fr)",
-                      md: "repeat(5, 1fr)",
+                      md: "repeat(5, 3fr)",
                     }} gap={1} align="center">
                     {movies.map(movie => <GridItem><ShowMovieDetails key={movie.movie_id} movie={movie}/></GridItem>)}
                   </Grid>

@@ -270,6 +270,7 @@ def event_delete(event_key):
 @app.route("/", defaults={'path':''})
 @app.route('/<path:path>')
 def serve(path):
+    print(f'serving path: {path}')
     return send_from_directory(app.static_folder,'index.html')
 
 if __name__ == "__main__":

@@ -3,8 +3,7 @@
 import os
 import model
 import server
-
-ENV = os.getenv('ENV', 'dev')
+from server import ENV
 
 if ENV == 'dev':
   os.system("dropdb moviedate")

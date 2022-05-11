@@ -1,7 +1,7 @@
 """The Movie Date application Flask server."""
 
 from http.client import HTTPException
-from flask import (Flask, render_template, jsonify, request, abort)
+from flask import (Flask, render_template, jsonify, request, abort, send_from_directory)
 import jinja2
 from model import connect_to_db, db
 import crud
@@ -264,6 +264,9 @@ def event_delete(event_key):
 
     return(jsonify(event))
 
+@app.route("/", defaults={'path':''})
+def serve(path):
+    return send_from_directory(app.static_folder,'index.html')
 
 if __name__ == "__main__":
     # DebugToolbarExtension(app)

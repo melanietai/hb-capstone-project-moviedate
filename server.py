@@ -35,7 +35,7 @@ jwt = JWTManager(app)
 
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=36000000)
 
-
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 
 @app.route('/api/token', methods=['POST'])

@@ -4,11 +4,14 @@ import os
 import model
 import server
 
-os.system("dropdb moviedate")
-os.system('createdb moviedate')
+ENV = os.getenv('ENV', 'dev')
 
-os.system("dropdb testdb")
-os.system('createdb testdb')
+if ENV == 'dev':
+  os.system("dropdb moviedate")
+  os.system('createdb moviedate')
+
+  os.system("dropdb testdb")
+  os.system('createdb testdb')
 
 model.connect_to_db(server.app)
 model.db.create_all()

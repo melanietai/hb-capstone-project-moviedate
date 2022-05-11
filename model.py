@@ -7,7 +7,7 @@ An event participant wil be associated with one event and one user (
     if the event participant signed up as an user.)
 
 """
-
+import os
 from dataclasses import dataclass
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
@@ -109,7 +109,7 @@ class Participant(db.Model):
         return f"<Participant participant_id={self.participant_id} email={self.email}>"
 
 
-def connect_to_db(flask_app, db_uri="postgresql:///moviedate", echo=True):
+def connect_to_db(flask_app, db_uri=os.environ['DATABASE_URL'], echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

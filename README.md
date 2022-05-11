@@ -4,7 +4,7 @@
 
 The Movie Date is a web app that allows users to host movie dates with friends. Users can create event, view events, update events, and delete events. After users create an event, RSVP email(s) will be sent to the invitee(s). The email will include a link, which the invitee can click to access to the event, update RSVP status and submit vote(s) for movies.
 
-The Movie Date is built with Python Flask on the backend with a PostgreSQL database, and React on the frontend along with Chakra for styling.
+The Movie Date is built with Python Flask on the backend with a PostgreSQL database, and React on the frontend using Chakra for styling.
 
 ## Features
 

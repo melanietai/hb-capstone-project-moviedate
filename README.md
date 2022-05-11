@@ -11,31 +11,36 @@ The Movie Date is built with Python Flask on the backend with a PostgreSQL datab
 ### Create Account / Login
 
 <p>Users can create / login to an account from the homepage.</p>
-<img src="/static/homepage.png" alt="Homepage" width="900px"/>
+<img src="/static/homepage.png" alt="Homepage" width="1200px"/>
 
 ### Create Event
 
-Users can enter event details, friends' emails, and add up to 5 movies from the movie scroll bar. The movie scroll bar allows users to search movie by keyword or select movies from the Popular Movies and Top-Rated Movies categories. Users can read overview of an movie by clicking on the "OVERVIEW" button.
+<p>Users can enter event details, friends' emails, and add up to 5 movies from the movie scroll bar. The movie scroll bar allows users to search movie by keyword or select movies from the Popular Movies and Top-Rated Movies categories. Users can read overview of an movie by clicking on the "OVERVIEW" button.</p>
+<img src="/static/createevent.png" alt="Create Event Page" width="1200px"/>
 
 ### RSVP email
 
-After creation of an event, each user's friend will receive an RSVP via email, which includes an invitation link for the friend to access the event. Both user and friend can view the event, update RSVP status, and submit vote(s) for movie(s).
+<p>After creation of an event, each user's friend will receive an RSVP via email, which includes an invitation link for the friend to access the event. Both user and friend can view the event, update RSVP status, and submit vote(s) for movie(s).</p>
+<img src="/static/email.png" alt="RSVP Email" width="1200px"/>
 
 ### Events
 
-Users can view all the events under the events tab.
+<p>Users can view all the events by clicking on the "View Events" tab.</p>
+<img src="/static/events.png" alt="View Events" width="1200px"/>
 
 ### View A Single Event
 
-Users can view the event by clicking on the name of the event in the events page. Invitee can view the event by clicking on the invitation link on the RSVP email.
+<p>Users can view the event by clicking on the name of the event in the events page. Invitee can view the event by clicking on the invitation link on the RSVP email.</p>
 
-### Update RSVP Status
+#### Update RSVP Status
 
-Users and invitees can update RSVP status.
+<p>Users and invitees can view all participants and update RSVP status.</p>
+<img src="/static/event_1.png" alt="Update RSVP" width="1200px"/>
 
-### Submit Votes For Movies
+#### Submit Votes For Movies
 
-Users and invitees can vote for movies and view current counts of votes for each movie.
+<p>Users and invitees can vote for movies and view current counts of votes for each movie.</p>
+<img src="/static/event_2.png" alt="Submit Votes" width="1200px"/>
 
 ## Technologies
 

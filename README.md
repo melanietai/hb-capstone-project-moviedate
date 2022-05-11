@@ -6,6 +6,9 @@ The Movie Date is a web app that allows users to host movie dates with friends. 
 
 The Movie Date is built with Python Flask on the backend with a PostgreSQL database, and React on the frontend using Chakra for styling.
 
+## The Movie Date Web App is DEPLOYED!
+<strong>Check out my web app:</strong> [https://themoviedate.herokuapp.com/](https://themoviedate.herokuapp.com/)
+
 ## Features
 
 ### Create Account / Login

@@ -84,13 +84,13 @@ To download and use The Movie Date please follow these instructions:
   12. Open a new terminal, cd into the frontend directory `cd project/frontend`
   13. Install the required dependencies with `npm install`
   14. Launch the frontend server with `npm start`
-  15. The application will automatically be launched in your broswer [localhost:3000](http://localhost:3000)
+  15. The application will automatically be launched on your broswer [localhost:3000](http://localhost:3000)
 
 ## Coming Soon...
 
 A few ideas of features to add in the future:
 
-* Add additional movie details
+* Include watch providers, genres and cast information under movie details
 * Add hyperlinks to movie trailers
 * Enable text notifications
 * Allow uers to create public movie date events

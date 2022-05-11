@@ -14,7 +14,7 @@ from rsvp import send_rsvp
 
 ENV = os.getenv('ENV', 'dev')
 
-app = Flask(__name__, static_folder='frontend/build')
+app = Flask(__name__, static_url_path='', static_folder='frontend/build')
 
 # Store secret key in secrets.sh file if you deploy your application
 # A secret key is needed to use Flask sessioning features

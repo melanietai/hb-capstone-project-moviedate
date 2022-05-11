@@ -22,7 +22,6 @@ class User(db.Model):
     fname: str
     lname: str
     email: str
-    password: str
 
     __tablename__ = "users"
 

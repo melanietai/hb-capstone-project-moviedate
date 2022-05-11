@@ -268,6 +268,7 @@ def event_delete(event_key):
     return(jsonify(event))
 
 @app.route("/", defaults={'path':''})
+@app.route('/<path:path>')
 def serve(path):
     return send_from_directory(app.static_folder,'index.html')
 

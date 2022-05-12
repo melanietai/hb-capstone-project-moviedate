@@ -11,11 +11,12 @@ import qs from 'qs';
 import { 
   Container,
   Box,
-  Flex,
   Grid,
   GridItem,
   Button,
-  Heading
+  Heading,
+  Spacer,
+  Flex
 } from "@chakra-ui/react";
 
 
@@ -165,12 +166,12 @@ const ShowEvent = () => {
           </Box>
             <Heading size="md" mt={6} mb={2} align="center">Please vote for the movie(s) you would like to watch together:</Heading>
             <Box flexDirection="column">
-                <Box bg="#FFE26A">
+                <Box bg="#16123F">
                   <Grid templateColumns={{
                       sm: "repeat(2, 1fr)",
                       md: "repeat(5, 3fr)",
-                    }} gap={1} align="center">
-                    {movies.map(movie => <GridItem><ShowMovieDetails key={movie.movie_id} movie={movie}/></GridItem>)}
+                    }} gap={0} align="center">
+                    {movies.map(movie => <Flex align="center"><GridItem><ShowMovieDetails key={movie.movie_id} movie={movie}/></GridItem></Flex>)}
                   </Grid>
                 </Box>
                 <Box>

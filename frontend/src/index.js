@@ -9,7 +9,6 @@ import theme from './theme.js';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* Wrap ChakraProvider at the root of your app */}
     <ChakraProvider theme={theme}>
       <App />
     </ChakraProvider>

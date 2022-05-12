@@ -127,7 +127,7 @@ const ShowEvent = () => {
   const onDeleteButtonClick = (evt) => {
     evt.preventDefault();
 
-    fetch(`/events/${eventKey}`, {
+    fetch(`/api/events/${eventKey}`, {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + token,

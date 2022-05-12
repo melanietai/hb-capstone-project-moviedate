@@ -31,7 +31,7 @@ const Events = () => {
 
   return (
     <>
-      {events ? (
+      {events.length > 0 ? (
         <Box>
           <Container pt={20} maxWidth="container.xl">
             <Box>

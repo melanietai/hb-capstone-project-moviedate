@@ -41,7 +41,7 @@ const Events = () => {
                 lg: "repeat(3, 1fr)"
               }} gap={6} p={20}>
                 {
-                  events.map(event => <GridItem w="100%" key={event.event_id}><EventsListItem key={event.event_id} event={event} /></GridItem>)
+                  events.map(event => <GridItem w="100%" key={event.event_id}><EventsListItem event={event} /></GridItem>)
                 }
               </Grid>
             </Box>

@@ -17,7 +17,7 @@ const MovieCards = ({ movies, addedMovieIds, addMovieButtonClick }) => {
             if ((addedMovieIds.includes(movie.id)) || (addedMovieIds.length >= 5)) {
               disableAddMovieButton = true;
             }
-            return <GridItem><MovieCard key={movie.id} movie={movie} disableAddMovieButton={disableAddMovieButton} addMovieButtonClick={addMovieButtonClick} /></GridItem>
+            return <GridItem key={movie.id}><MovieCard  movie={movie} disableAddMovieButton={disableAddMovieButton} addMovieButtonClick={addMovieButtonClick} /></GridItem>
           } )}
         </Grid>
       </Box>

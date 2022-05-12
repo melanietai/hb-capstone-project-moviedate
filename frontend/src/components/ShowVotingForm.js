@@ -55,7 +55,7 @@ const ShowVotingForm = (props) => {
               {apiIds.map(apiId => {
               return(
                 <>
-                  <Flex  alignItems="center">
+                  <Flex alignItems="center">
                     <Spacer />
                     <Center key={apiId}>
                       <input type="checkbox" name="movies" value={apiId} id={apiId} onChange={handleChange}/>

@@ -18,8 +18,7 @@ const EventEmails = (props) => {
       props.onEmailChange(evt.target.value, i);
     }
     emailsComponents.push(
-      <Box><Input
-        key={i}
+      <Box key={i}><Input
         onChange={onChange}
         type="email"
         placeholder="Type email..."

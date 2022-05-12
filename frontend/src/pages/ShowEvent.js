@@ -152,7 +152,7 @@ const ShowEvent = () => {
                   sm: "repeat(1, 1fr)",
                   md: "repeat(2, 1fr)",
                 }} gap={4} align="center">
-                {participants.map(participant => <GridItem><ShowParticipantStatus key={participant.participant_id} participant={participant} /></GridItem>)}
+                {participants.map(participant => <GridItem key={participant.participant_id}><ShowParticipantStatus  participant={participant} /></GridItem>)}
               </Grid>
             
               <Box mt={6}>
@@ -171,7 +171,7 @@ const ShowEvent = () => {
                       sm: "repeat(2, 1fr)",
                       md: "repeat(5, 3fr)",
                     }} gap={0} align="center">
-                    {movies.map(movie => <Flex align="center"><GridItem><ShowMovieDetails key={movie.movie_id} movie={movie}/></GridItem></Flex>)}
+                    {movies.map(movie => <Flex align="center"><GridItem key={movie.movie_id}><ShowMovieDetails  movie={movie}/></GridItem></Flex>)}
                   </Grid>
                 </Box>
                 <Box>

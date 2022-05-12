@@ -171,7 +171,7 @@ const ShowEvent = () => {
                       sm: "repeat(2, 1fr)",
                       md: "repeat(5, 3fr)",
                     }} gap={0} align="center">
-                    {movies.map(movie => <Flex align="center"><GridItem key={movie.movie_id}><ShowMovieDetails  movie={movie}/></GridItem></Flex>)}
+                    {movies.map(movie => <Flex key={movie.movie_id} align="center"><GridItem ><ShowMovieDetails  movie={movie}/></GridItem></Flex>)}
                   </Grid>
                 </Box>
                 <Box>

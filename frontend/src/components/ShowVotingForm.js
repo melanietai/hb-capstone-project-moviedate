@@ -54,16 +54,14 @@ const ShowVotingForm = (props) => {
               <Text pt={2}>Which movie(s) do you vote for?</Text>
               {apiIds.map(apiId => {
               return(
-                <>
-                  <Flex alignItems="center">
+                  <Flex key={apiId} alignItems="center">
                     <Spacer />
-                    <Center key={apiId}>
+                    <Center >
                       <input type="checkbox" name="movies" value={apiId} id={apiId} onChange={handleChange}/>
                       <label htmlFor={apiId}>{<ShowMovieTitle apiId={apiId} />}</label>
                     </Center>
                     <Spacer />
                   </Flex>
-                </>
                 );
               })}
               <Button size="xs" type="submit" rounded="full" m={4}>Submit Vote(s)</Button>

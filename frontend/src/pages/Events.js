@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import useToken from '../components/useToken';
 import EventsListItem from '../components/EventsListItem';
+import { useNavigate } from 'react-router-dom';
 import { 
   Grid,
   GridItem,
   Box,
   Container,
-  Text
+  Text,
+  Button
 } from "@chakra-ui/react";
+
+
+
 
 const Events = () => {
   const { token } = useToken();
   const [events, setEvents] = useState([]);
-
+  const navigate = useNavigate();
   
   useEffect(() => {
     if (token) {
@@ -28,6 +33,10 @@ const Events = () => {
     }
   }, [token]);
 
+  const onButtonClick = (evt) => {
+    evt.preventDefault();
+    navigate("/");
+  };
 
   return (
     <>
@@ -48,7 +57,14 @@ const Events = () => {
           </Container>
         </Box>
       ) : (
-        <p>You currently have no events</p>
+        <>
+          <Box>
+            <Container align="center" pt={20} maxWidth="container.xl">
+              <Text>You currently have no events</Text>
+              <Button onClick={onButtonClick} color="#16123F" ml={4}>Click to Create Your First Event!</Button>
+            </Container>
+          </Box>
+        </>
       )}
     </>
   );

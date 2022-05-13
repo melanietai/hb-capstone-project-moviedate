@@ -20,11 +20,6 @@ app = Flask(__name__, static_folder='frontend/build')
 # A secret key is needed to use Flask sessioning features
 app.secret_key = 'dev'
 
-# Normally, if you refer to an undefined variable in a Jinja template,
-# Jinja silently ignores this. This makes debugging difficult, so we'll
-# set an attribute of the Jinja environment that says to make this an
-# error.
-app.jinja_env.undefined = jinja2.StrictUndefined
 
 # This configuration option makes the Flask interactive debugger
 # more useful (you should remove this line in production though)
@@ -280,4 +275,4 @@ if __name__ == "__main__":
     connect_to_db(app)
 
 
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=False, host="0.0.0.0")

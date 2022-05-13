@@ -62,23 +62,6 @@ class MyAppIntegrationTestCase(TestCase):
         self.assertEqual(str, type(token))
         self.assertNotEqual(0, len(token))
 
-    # def test_show_user_profile(self):
-    #     """Test show user profile."""
-
-    #     # Add sample data
-    #     rachel = User(
-    #         fname="Rachel", lname="Smith", email="rsmith@example.com", password="rachel"
-    #     )
-    #     db.session.add(rachel)
-    #     db.session.commit()
-    #     with self.client.application.app_context():
-    #         access_token = create_access_token("rachel")
-    #     headers = {"Authorization": "Bearer {}".format(access_token)}
-
-    #     result = self.client.get("/user/profile", headers=headers)
-
-    #     self.assertEqual(200, result.status_code)
-    #     self.assertEqual("rsmith@example.com", result.get.json.get("email"))
 
 
 

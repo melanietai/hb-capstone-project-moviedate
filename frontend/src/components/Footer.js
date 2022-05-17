@@ -27,7 +27,7 @@ const Footer = () => {
           <Image h="14px" src={GitHub} mt={0.5}/>
           <Text ml={2} fontSize="12px">github.com/melanietai</Text>
           <Spacer />
-          <Text fontSize="12px">Made at Hackbright, June 2022</Text>
+          <Text fontSize="12px">Developed solely by Melanie Tai. Made at Hackbright, May 2022</Text>
         </Flex>
         <Flex>
           <Image h="12px" src={LinkedIn} mt={1}/>

@@ -87,19 +87,17 @@ const Home = (props) => {
                             Welcome to The Movie Date!
                           </Box>
                         </Heading>
+                        <Box ml={1}>Let's participate together to close the gap of social distancing.</Box>
                         <Heading as="h4" fontSize="lg" color="#161231" pt={6}>
                           <Box m="8" fontWeight="medium">
-                          Want to watch a movie with friends at the convenience inside your home?
-                          </Box>
-                          <Box m="8" fontWeight="medium">
-                          You are at the right place! 
+                          Connect with your friends and families at the comfort of your own home.
                           </Box>
                           <Box m="8" fontWeight="medium">
                           You'll be able to host or join virtual movie dates.
                           </Box>
                           <Box m="8" fontWeight="medium">
                           You can search for movies, create events, invite your 
-                          friends, view events, vote for movies, and many more!
+                          friends and families, view events, vote for movies, and many more!
                           </Box>
                         </Heading>
                       </Box>

@@ -5,7 +5,7 @@ import os
 
 
 def send_rsvp(email, event, host_fname, host_lname, host_email):
-    url = url_for('show_event', _external=True, event_key=event.key, email=email)
+    url = url_for('event_page', _external=True, event_key=event.key, email=email)
     message = Mail(
     from_email='moviedatecapstone@gmail.com',
     to_emails=email,

@@ -186,6 +186,11 @@ def show_event(event_key):
     return jsonify({'event': event, 'participants': participants})
 
 
+@app.route('/events/<event_key>', methods=['GET'])
+def event_page(event_key):
+    return send_from_directory(app.static_folder, 'index.html')
+
+
 @app.route('/api/movies/<event_id>')
 def show_movies(event_id):
     """Show all movies from an event"""

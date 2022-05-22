@@ -37,6 +37,7 @@ if ENV == "production":
 @app.route("/api/token", methods=["POST"])
 def create_token():
     """Create token for user login."""
+
     email = request.json.get("email")
     password = request.json.get("password")
 
@@ -80,7 +81,7 @@ def user_register():
 
 @app.route("/api/popular-movies")
 def get_popular_movies():
-    """Show popular movies"""
+    """Show popular movies."""
 
     payload = {"api_key": os.environ["API_KEY"], "language": "en-US"}
 
@@ -94,7 +95,7 @@ def get_popular_movies():
 
 @app.route("/api/top-rated-movies")
 def get_top_rated_movies():
-    """Show top rated movies"""
+    """Show top rated movies."""
 
     payload = {"api_key": os.environ["API_KEY"], "language": "en-US"}
 
@@ -128,6 +129,8 @@ def get_search_results():
 @app.route("/api/create-event", methods=["POST"])
 @jwt_required()
 def create_event():
+    """Create an event."""
+
     identity = get_jwt_identity()
     title = request.json.get("title")
     date = request.json.get("date")
@@ -162,7 +165,7 @@ def create_event():
 @app.route("/api/user/profile")
 @jwt_required()
 def show_user_profile():
-    """Show user profile"""
+    """Show user profile."""
     identity = get_jwt_identity()
 
     user = crud.get_user_by_email(identity["email"])
@@ -173,7 +176,7 @@ def show_user_profile():
 @app.route("/api/events")
 @jwt_required()
 def show_events():
-    """Show all events"""
+    """Show all events."""
 
     identity = get_jwt_identity()
 
@@ -185,7 +188,7 @@ def show_events():
 
 @app.route("/api/events/<event_key>", methods=["GET"])
 def show_event(event_key):
-    """Show an event associated with event key"""
+    """Show an event associated with event key."""
 
     event = crud.get_event_by_event_key(event_key)
     if not event:
@@ -198,12 +201,14 @@ def show_event(event_key):
 
 @app.route("/events/<event_key>", methods=["GET"])
 def event_page(event_key):
+    """Serve user requested path."""
+    
     return send_from_directory(app.static_folder, "index.html")
 
 
 @app.route("/api/movies/<event_id>")
 def show_movies(event_id):
-    """Show all movies from an event"""
+    """Show all movies from an event."""
 
     movies = crud.get_movies_by_event_id(event_id)
 
@@ -214,7 +219,7 @@ def show_movies(event_id):
 
 @app.route("/api/movie/<api_id>")
 def show_movie(api_id):
-    """Show movie associated with api_id"""
+    """Show movie associated with movie api id."""
 
     payload = {"api_key": os.environ["API_KEY"]}
 
@@ -226,7 +231,7 @@ def show_movie(api_id):
 
 @app.route("/api/events/<event_key>/rsvp", methods=["PUT"])
 def update_rsvp(event_key):
-    """Update rsvp response"""
+    """Update rsvp response."""
 
     res = request.json.get("rsvp")
     email = request.json.get("email")
@@ -248,7 +253,7 @@ def update_rsvp(event_key):
 
 @app.route("/api/events/<event_key>/vote-update", methods=["PUT"])
 def update_vote(event_key):
-    """Update voting count for a movie"""
+    """Update voting count for a movie."""
 
     api_ids = request.json.get("apiIdList")
     participant_id = request.json.get("participantId")
@@ -273,7 +278,7 @@ def update_vote(event_key):
 
 @app.route("/api/events/<event_key>", methods=["DELETE"])
 def event_delete(event_key):
-    """Delete an event"""
+    """Delete an event."""
 
     event = crud.get_event_by_event_key(event_key)
     db.session.delete(event)
@@ -285,6 +290,8 @@ def event_delete(event_key):
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def serve(path):
+    """Serve user requested path."""
+
     if path != "" and os.path.exists(app.static_folder + "/" + path):
         return send_from_directory(app.static_folder, path)
     else:

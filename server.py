@@ -202,7 +202,7 @@ def show_event(event_key):
 @app.route("/events/<event_key>", methods=["GET"])
 def event_page(event_key):
     """Serve user requested path."""
-    
+
     return send_from_directory(app.static_folder, "index.html")
 
 
@@ -211,8 +211,6 @@ def show_movies(event_id):
     """Show all movies from an event."""
 
     movies = crud.get_movies_by_event_id(event_id)
-
-    print(movies)
 
     return jsonify(movies)
 
@@ -253,7 +251,7 @@ def update_rsvp(event_key):
 
 @app.route("/api/events/<event_key>/vote-update", methods=["PUT"])
 def update_vote(event_key):
-    """Update voting count for a movie."""
+    """Update vote count for a movie."""
 
     api_ids = request.json.get("apiIdList")
     participant_id = request.json.get("participantId")

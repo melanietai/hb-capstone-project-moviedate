@@ -1,8 +1,6 @@
 """The Movie Date application Flask server."""
 
-from http.client import HTTPException
-from flask import Flask, render_template, jsonify, request, abort, send_from_directory
-import jinja2
+from flask import Flask, jsonify, request, abort, send_from_directory
 from model import connect_to_db, db
 import crud
 from datetime import datetime, timedelta
@@ -24,12 +22,6 @@ app = Flask(__name__, static_folder="frontend/build")
 # Store secret key in secrets.sh file if you deploy your application
 # A secret key is needed to use Flask sessioning features
 app.secret_key = "dev"
-
-
-# This configuration option makes the Flask interactive debugger
-# more useful (you should remove this line in production though)
-app.config["PRESERVE_CONTEXT_ON_EXCEPTION"] = True
-
 
 # Setup the Flask-JWT-Extended extension
 jwt = JWTManager(app)

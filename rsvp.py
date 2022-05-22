@@ -5,7 +5,7 @@ import os
 
 
 def send_rsvp(email, event, host_fname, host_lname, host_email):
-    """Send an RSVP email."""
+    """A helper function to send an RSVP email."""
 
     url = url_for("event_page", _external=True, event_key=event.key, email=email)
     message = Mail(

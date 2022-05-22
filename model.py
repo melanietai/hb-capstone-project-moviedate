@@ -1,10 +1,8 @@
-"""Models for movie date app.
+"""Models for The Movie Date web application.
 
-Relationships:
-A user can be many event participants.
-An event can have many event participants.
-An event participant wil be associated with one event and one user (
-    if the event participant signed up as an user.)
+users -> participants (one to many relationships)
+participants -> events (many to one relationships)
+events -> movies (one to many relationships)
 
 """
 import os
@@ -36,6 +34,7 @@ class User(db.Model):
     def __repr__(self):
         return f"<User user_id={self.user_id} name={self.fname} {self.lname} email={self.email}>"
 
+
 @dataclass
 class Event(db.Model):
     """An event."""
@@ -56,7 +55,8 @@ class Event(db.Model):
 
     def __repr__(self):
         return f"<Event event_id={self.event_id} movie={self.movie} event_at={self.event_at}>"
-    
+
+
 @dataclass
 class Movie(db.Model):
     """A movie."""
@@ -64,7 +64,6 @@ class Movie(db.Model):
     api_id: int
     vote_count: int
     event_id: int
-
 
     __tablename__ = "movies"
 
@@ -75,14 +74,13 @@ class Movie(db.Model):
 
     event = db.relationship("Event", backref=backref("movies", cascade="all, delete"))
 
-
     def __repr__(self):
         return f"<Movie movie_id={self.movie_id} api_id={self.api_id} vote_count={self.vote_count}>"
 
-    
+
 @dataclass
 class Participant(db.Model):
-    """Each event participant."""
+    """A participant."""
     participant_id: int
     email: str  
     is_host: bool   
@@ -102,7 +100,6 @@ class Participant(db.Model):
 
     event = db.relationship("Event", backref=backref("participants", cascade="all, delete"))
     user = db.relationship("User", backref="participants")
-    
 
     def __repr__(self):
         return f"<Participant participant_id={self.participant_id} email={self.email}>"
@@ -123,9 +120,5 @@ def connect_to_db(flask_app, db_uri=os.environ['DATABASE_URL'], echo=False):
 
 if __name__ == "__main__":
     from server import app
-
-    # Call connect_to_db(app, echo=False) if your program output gets
-    # too annoying; this will tell SQLAlchemy not to print out every
-    # query it executes.
 
     connect_to_db(app)

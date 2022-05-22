@@ -41,23 +41,29 @@ def get_user_by_email(email):
 
 
 def create_event(event_at, title):
-    """Create and return a new event"""
+    """Create and return a new event."""
 
+    # Generate a secret key for each event
     key = secrets.token_urlsafe(8)
 
     return Event(title=title, event_at=event_at, key=key)
 
 
 def create_participant(email, is_host, RSVP, event_id, user_id, voted):
+    """Create and return a new participant."""
 
     return Participant(email=email, is_host=is_host, RSVP=RSVP, event_id=event_id, user_id=user_id, voted=voted)
 
+
 def get_participant_by_email_and_event_id(email, event_id):
+    """Return a participant by email and event id."""
 
     return Participant.query.filter(Participant.email == email, Participant.event_id == event_id).first()
 
 
 def create_event_with_emails(user_email, event_at, title, emails):
+    """Create and return an event with event title, datetime, and participant emails."""
+
     event = create_event(event_at=event_at, title=title)
     db.session.add(event)
     db.session.flush()
@@ -80,6 +86,8 @@ def create_event_with_emails(user_email, event_at, title, emails):
     
 
 def get_events_by_user_id(user_id):
+    """Return all events by user id."""
+
     events = (
         db.session.query(Event)
         .join(Participant)
@@ -91,13 +99,19 @@ def get_events_by_user_id(user_id):
 
 
 def get_event_by_event_id(event_id):
+    """Return an event by event id."""
+
     return Event.query.filter(Event.event_id == event_id).first()
 
 
 def get_event_by_event_key(event_key):
+    """Return an event by event key."""
+
     return Event.query.filter(Event.key == event_key).first()
 
 def get_event_by_email_and_key(email, key):
+    """Return an event by participant email and event key."""
+
     event = (
         db.session.query(Event)
         .join(Participant)
@@ -110,6 +124,7 @@ def get_event_by_email_and_key(email, key):
 
 
 def create_movie(api_id, event_id, vote_count=0):
+    """Create and return a new movie."""
 
     movie = Movie(api_id=api_id, vote_count=vote_count, event_id=event_id)
     db.session.add(movie)
@@ -119,23 +134,30 @@ def create_movie(api_id, event_id, vote_count=0):
 
 
 def get_movies_by_event_id(event_id):
+    """Return all movies by event id."""
 
     return Movie.query.filter(Movie.event_id == event_id).all()
 
 
 def get_movie_by_event_id_and_api_id(event_id, api_id):
+    """Return a movie by event id and movie api id."""
 
     return Movie.query.filter(Movie.event_id == event_id, Movie.api_id == api_id).first()
 
+
 def update_vote_for_movie(movie):
+    """Update vote for a movie."""
 
     movie.vote_count += 1
     db.session.commit()
 
+
 def update_voted_for_participant_id(participant_id):
+    """Update voting status for a participant."""
     participant = Participant.query.filter(Participant.participant_id == participant_id).first()
     participant.voted = True
     db.session.commit()
+    
 
 if __name__ == "__main__":
     from server import app

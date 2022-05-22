@@ -36,7 +36,7 @@ class MyAppIntegrationTestCase(TestCase):
         db.session.commit()
 
         result = self.client.post(
-            "/token", json={"email": "rsmith@example.com", "password": "rachel"}
+            "/api/token", json={"email": "rsmith@example.com", "password": "rachel"}
         )
 
         self.assertEqual(200, result.status_code)
@@ -48,7 +48,7 @@ class MyAppIntegrationTestCase(TestCase):
         """Test new user registration."""
 
         result = self.client.post(
-            "/user",
+            "/api/user",
             json={
                 "fname": "Rachel",
                 "lname": "Smith",

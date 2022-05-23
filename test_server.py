@@ -23,6 +23,7 @@ class MyAppIntegrationTestCase(TestCase):
 
     def tearDown(self):
         """Teardown after each test."""
+        db.session.commit()
         db.drop_all()
 
     def test_create_token(self):
@@ -67,7 +68,7 @@ class MyAppIntegrationTestCase(TestCase):
 
         # Add sample data
         event = Event(
-            event_id=1, title="testing", event_at=datetime.now(), key="test"
+            title="testing", event_at=datetime.now(), key="test"
         )
 
         db.session.add(event)
@@ -87,11 +88,11 @@ class MyAppIntegrationTestCase(TestCase):
 
         # Add sample data
         event = Event(
-            event_id=1, title="testing", event_at=datetime.now(), key="test"
+            title="testing", event_at=datetime.now(), key="test"
         )
 
         movie = Movie(
-            movie_id=123, api_id=321, vote_count=0, event_id=1
+            api_id=321, vote_count=0, event_id=1
         )
 
         db.session.add_all([event, movie])
@@ -111,10 +112,10 @@ class MyAppIntegrationTestCase(TestCase):
 
         # Add sample data
         event = Event(
-            event_id=1, title="testing", event_at=datetime.now(), key="test"
+            title="testing", event_at=datetime.now(), key="test"
         )
         participant = Participant(
-            participant_id=1, email="abc@example.com", is_host=False, RSVP=False, voted=False, event_id=1
+            email="abc@example.com", is_host=False, RSVP=False, voted=False, event_id=1, user_id=None
         )
 
         db.session.add_all([event, participant])
@@ -137,13 +138,13 @@ class MyAppIntegrationTestCase(TestCase):
 
         # Add sample data
         event = Event(
-            event_id=1, title="testing", event_at=datetime.now(), key="test"
+            title="testing", event_at=datetime.now(), key="test"
         )
         movie = Movie(
-            movie_id=123, api_id=321, vote_count=0, event_id=1
+            api_id=321, vote_count=0, event_id=1
         )
         participant = Participant(
-            participant_id=123, email="abc@example.com", is_host=False, RSVP=False, voted=False, event_id=1
+            email="abc@example.com", is_host=False, RSVP=False, voted=False, event_id=1, user_id=None
         )
 
         db.session.add_all([event, movie, participant])
@@ -153,13 +154,32 @@ class MyAppIntegrationTestCase(TestCase):
             f"/api/events/{event.key}/vote-update",
             json={
                 "apiIdList": ["321"],
-                "participantId": "123",
+                "participantId": 1,
             },
         )
         data = result.get_json()
 
         self.assertEqual(200, result.status_code)
         self.assertEqual(1, data[0]["vote_count"])
+    
+    def test_event_delete(self):
+        """Test delete an event."""
+
+        # Add sample data
+        event = Event(
+            title="testing", event_at=datetime.now(), key="test"
+        )
+        db.session.add(event)
+        db.session.commit()
+
+        result = self.client.delete(
+            f"/api/events/{event.key}"
+        )
+
+        find_event = Event.query.filter(Event.event_id == 1).first()
+
+        self.assertEqual(200, result.status_code)
+        self.assertEqual(None, find_event)
 
 
 if __name__ == "__main__":

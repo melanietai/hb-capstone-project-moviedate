@@ -54,7 +54,7 @@ class Event(db.Model):
     # movies = a list of Movie objects
 
     def __repr__(self):
-        return f"<Event event_id={self.event_id} movie={self.movie} event_at={self.event_at}>"
+        return f"<Event event_id={self.event_id} title={self.title} event_at={self.event_at}>"
 
 
 @dataclass
@@ -87,6 +87,7 @@ class Participant(db.Model):
     RSVP: bool
     voted: bool  
     event_id: int
+    user_id: int
 
     __tablename__ = "participants"
 

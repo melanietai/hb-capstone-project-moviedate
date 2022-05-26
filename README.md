@@ -73,21 +73,22 @@ The Movie Date is built with Python Flask on the backend with a PostgreSQL datab
 
 To download and use The Movie Date please follow these instructions:
 
-  1. In your terminal, `git clone` this repository
-  2. `cd project`
-  3. Create virtual environment with `virtualenv env`
-  4. Activate the virtual environment with `source env/bin/activate`
-  5. `pip3 install -r requirements.txt`
-  6. Sign up for an account with [The Movie Data Base](https://developers.themoviedb.org/3/getting-started/introduction) and [Twilio SendGrid](https://www.twilio.com/sendgrid/email-api) 
-  7. Fill out the application to obtain your secret API keys. You will need an API_KEY from TMDB and a SENDGRID_API_KEY from Twilio SendGrid API.
-  8. Create a new file in the project directory called secrets.sh and paste both keys. You should add one key per line and it should follow the names listed in the above step. Each line should read: `export KEY_NAME="yoursecretkeygoeshere"`
-  9. Back in your terminal, run `source secrets.sh`
-  10. Next, run `python3 database.py`
-  11. Run the backend server with `python3 server.py`
-  12. Open a new terminal, cd into the frontend directory `cd project/frontend`
-  13. Install the required dependencies with `npm install`
-  14. Launch the frontend server with `npm start`
-  15. The application will automatically be launched on your broswer [localhost:3000](http://localhost:3000)
+  1. Download [PostgreSQL](https://www.postgresql.org/download/)
+  2. In your terminal, `git clone` this repository
+  3. `cd project`
+  4. Create virtual environment with `virtualenv env`
+  5. Activate the virtual environment with `source env/bin/activate`
+  6. `pip3 install -r requirements.txt`
+  7. Sign up for an account with [The Movie Data Base](https://developers.themoviedb.org/3/getting-started/introduction) and [Twilio SendGrid](https://www.twilio.com/sendgrid/email-api) 
+  8. Fill out the application to obtain your secret API keys. You will need an API_KEY from TMDB and a SENDGRID_API_KEY from Twilio SendGrid API.
+  9. Create a new file in the project directory called secrets.sh and paste both keys. You should add one key per line and it should follow the names listed in the above step. Each line should read: `export KEY_NAME="yoursecretkeygoeshere"`
+  10. Back in your terminal, run `source secrets.sh`
+  11. Next, run `python3 database.py`
+  12. Run the backend server with `python3 server.py`
+  13. Open a new terminal, cd into the frontend directory `cd project/frontend`
+  14. Install the required dependencies with `npm install`
+  15. Launch the frontend server with `npm start`
+  16. The application will automatically be launched on your broswer [localhost:3000](http://localhost:3000)
 
 ## Coming Soon...
 

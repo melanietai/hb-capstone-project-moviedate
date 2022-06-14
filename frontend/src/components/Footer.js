@@ -16,12 +16,15 @@ const Footer = () => {
   return(
     <>
      <Box as="footer" 
-        px="6"
-        py="4"
+        px="4"
+        py="2"
         backgroundColor="#16123F"
         w="100%"
+        h="50px"
         justify="space-between"
         color="#FAFAFA"
+        position="fixed"
+        bottom="0"
       >
         <Flex>
           <Image h="14px" src={GitHub} mt={0.5}/>

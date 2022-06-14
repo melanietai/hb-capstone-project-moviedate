@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React from 'react';
 import useToken from './useToken';
 import TopRatedMovieCards from './TopRatedMovieCards';
 import PopularMovieCards from './PopularMovieCards';
@@ -11,7 +11,6 @@ import {
   Tab,
   TabPanels,
   TabPanel,
-  Spacer
 } from "@chakra-ui/react";
 
 

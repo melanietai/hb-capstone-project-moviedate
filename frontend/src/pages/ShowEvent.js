@@ -15,7 +15,6 @@ import {
   GridItem,
   Button,
   Heading,
-  Spacer,
   Flex
 } from "@chakra-ui/react";
 

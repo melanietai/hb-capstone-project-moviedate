@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useToken from '../components/useToken';
 import EventsListItem from '../components/EventsListItem';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
 import { 
   Grid,
   GridItem,
@@ -64,6 +65,7 @@ const Events = () => {
               <Button onClick={onButtonClick} color="#16123F" ml={4}>Click to Create Your First Event!</Button>
             </Container>
           </Box>
+          <Footer />
         </>
       )}
     </>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
 import MovieScrollBar from '../components/MovieScrollBar';
@@ -15,8 +15,6 @@ import {
 
 const Home = (props) => {
   const [active, setActive] = useState("login");
-  const [popularMovies, setPopularMovies] = useState([]);
-  const [topRatedMovies, setTopRatedMovies] = useState([]);
   
   const switchToLogin = () => {
     setActive("login");
@@ -25,22 +23,6 @@ const Home = (props) => {
   const switchToSignup = () => {
     setActive("signup");
   };
-
-  useEffect(() => {
-    fetch(`/api/popular-movies`)
-    .then(res => res.json())
-    .then(data => {
-      setPopularMovies(data);
-    });
-  }, []);
-
-  useEffect(() => {
-    fetch(`/api/top-rated-movies`)
-    .then(res => res.json())
-    .then(data => {
-      setTopRatedMovies(data);
-    });
-  }, []);
 
   let children;
   if (active == "login") {
